@@ -192,7 +192,7 @@ The angles of this unitary triangle denoted as $\alpha, \beta, \gamma$ are defin
 \label{fig:triangle}}
 \end{figure}
 
-The values of those angles cannot be predicted using the Standard Model framework. Instead, they can be measured experimentally. Any possible discrepancy in relation \ref{eq:unitary} may indicate a contribution from physics beyond the Standard Model. Figure \ref{fig:traingle constrains} shows the overall status of the CKM unitary triangle in the $\overline{\rho}, \overline{\eta}$ plane, with a global fit to the apex. Within the current experimental uncertainties, there are no significant deviations from the Standard Model predictions. 
+The values of those angles cannot be predicted using the Standard Model framework. Instead, they can be measured experimentally. Any possible discrepancy in relation \ref{eq:unitary} may indicate a contribution from physics beyond the Standard Model. Figure \ref{fig:traingle} shows the overall status of the CKM unitary triangle in the $\overline{\rho}, \overline{\eta}$ plane, with a global fit to the apex. Within the current experimental uncertainties, there are no significant deviations from the Standard Model predictions. 
 
 \begin{figure}
 \centering
@@ -205,9 +205,19 @@ The values of those angles cannot be predicted using the Standard Model framewor
 \section{Neutral Meson Mixing and $CP$ violation}
 
 One of the promising channel that can be used in order to measure the $CP$ violation and it is a manifestation the fact that the mass eigenstates are not the same as the weak eigenstates is the phenomenon of flavor oscillation in neutral mesons ($K^0$, $D^0$, $B^0$, and $B^0_ s$ ). 
-Those mixing processes can be described by the so-called box diagram presented in figure \ref{}. 
-The mass eigenstates are written as a superposition of flavor eigenstates:
+Those mixing processes can be described by the so-called box diagram presented in figure \ref{fig:Mixinig}. 
 
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.9]{figures/Box-diagrams-depicting-K-0-K-0-mixing.png}
+\caption{Box diagrams illustrating the mixing of $K^{0}$ mesons. In both cases virtual $W$ bosons
+and quarks connect the four vertexes. Figure adopted from \cite{Mixing}.
+\label{fig:Mixinig}}
+\end{figure}
+
+
+The mass eigenstates are written as a superposition of flavor eigenstates:
 \begin{equation}
     \begin{split}
         \ket{M_L} = p \ket{M} + q \ket{\overline{M}} \\
@@ -230,11 +240,59 @@ where $\textbf{M}$ and $\textbf{\Gamma}$ are the mass and width matrices, respec
     \textbf{\Gamma} &=  \left( \begin{matrix} \Gamma_{11} & \Gamma_{12}  \\ \Gamma_{12}^{*} & \Gamma_22 \end{matrix} \right) 
 \end{align}
 
-The Hamiltonian of the process, equation \ref{eq:mixing_hamiltonian}, is not hermitian, thus ensures that the neutral meson may eventually decay. The on-diagonal elements of both $\textbf{M}$ and $\textbf{\Gamma}$ matrixes are the same due to $CPT$  theorem, moreover both  $\textbf{M}$ and $\textbf{\Gamma}$ are hermitian. 
-The time evolution of the flavor eigenstates obeys the time-dependent Schroodinger equation:
+The Hamiltonian of the process, equation \ref{eq:mixing_hamiltonian}, is not hermitian, thus ensures that the neutral meson may eventually decay. The on-diagonal elements of both $\textbf{M}$ and $\textbf{\Gamma}$ matrixes are the same due to $CPT$  theorem, and if the off-diagonal elements are equal to zero the meson states are degenerated and the mixing would not occur. Moreover both  $\textbf{M}$ and $\textbf{\Gamma}$ are hermitian. 
+The time evolution of the flavor eigenstates obeys the time-dependent Schrodinger equation:
 
+\begin{align}
+\label{eq:time dependent hamiltonian}
+\centering
+    i\frac{d}{dt} \left(\begin{matrix} \ket{M(t)}  \\ \ket{\overline{M}(t)} \end{matrix}  \right) 
+    &= \mathcal{H} \left(\begin{matrix} \ket{M(t)}  \\ \ket{\overline{M}(t)} \end{matrix}  \right) \\
+    i\frac{d}{dt} \left(\begin{matrix} \ket{M(t)}  \\ \ket{\overline{M}(t)} \end{matrix}  \right) 
+    &=\left( \begin{matrix} M_{11} - i\frac{1}{2}\Gamma_{11} & M_{12} -i\frac{1}{2}\Gamma_{11} \\ M_{12}^{*} - i\frac{1}{2}\Gamma_{12}^{*} & M_22-i\frac{1}{2}\Gamma_{22} \end{matrix} \right) \left(\begin{matrix} \ket{M(t)}  \\ \ket{\overline{M}(t)} \end{matrix}  \right) 
+\end{align}
 
+The solution of the equation \ref{eq:time dependent hamiltonian} is a pair of eigenvalues given by:
 
+\begin{align}
+\centering
+    v_{1} &= \left( \begin{matrix} p  \\ q \end{matrix} \right), & 
+    v_{2} &=  \left( \begin{matrix} p \\ -q \end{matrix} \right) 
+\end{align}
+
+Those eigenvalues allows to diagonalize the hamiltonian: 
+
+\begin{align}
+   Q\mathcal{H}Q^{-1} &= P =  \left( \begin{matrix} M_{L} - \frac{i}{2}\Gamma_{L} & 0  \\ 0 &  M_{H} - \frac{i}{2}\Gamma_{H}  \end{matrix} \right) 
+\end{align}
+where $Q$ is a matrix composed of vertically stacked $v_1$ and $v_2$, and $P$ is a auxiliary matrix introduced to simplify notation. 
+Using mentioned notation the time evolution of the flavor states can be written as:
+
+\begin{align}
+\label{eq:time_evaluation}
+  \left(\begin{matrix} \ket{M(t)}  \\ \ket{\overline{M}(t)} \end{matrix}  \right) 
+  = QPQ^{-1} \left(\begin{matrix} \ket{M}  \\ \ket{M} \end{matrix}  \right) 
+  = \left(\begin{matrix} g_{+}(t) &  \frac{q}{p}g_{-}(t)  \\  \frac{p}{1}g_{-}(t)  & g_{+}(t)  \end{matrix}\right) 
+  \left(\begin{matrix} \ket{M}  \\ \ket{M} \end{matrix}  \right)   
+\end{align}
+
+where the parameters $g_{\pm}$ are given :
+
+\begin{align}
+    g_{+} &= e^{-imt}e^{\Gamma \frac{t}{2}} \left[ \cosh(\frac{\Delta \Gamma t}{4})\cos(\frac{\Delta M t}{2})  - i\sinh(\frac{\Delta \Gamma t}{4})\sin(\frac{\Delta M t}{2})  \right] \\ 
+    g_{-} &= e^{-imt}e^{\Gamma \frac{t}{2}} \left[ \sinh(\frac{\Delta \Gamma t}{4})\cos(\frac{\Delta M t}{2})  - i\cosh(\frac{\Delta \Gamma t}{4})\sin(\frac{\Delta M t}{2})  \right]   
+\end{align}
+and $m = \frac{1}{2}(M_{L}+M_H)$, $\Gamma =  \frac{1}{2}(\Gamma_{L}+\Gamma_{H})$, $\Delta M = M_{H}- M_{L}$, $ \Delta \Gamma =(\Gamma_{L}-\Gamma_{H})$.
+
+The equation \ref{eq:time_evaluation} allows to express probability of mixing from particle to their antiparticle and vise-versa. Those probabilities are given by 
+
+\begin{align}
+\label{eq:mixing_prob}
+|\bra{\overline{M}} \mathcal{H} \ket{M}|^{2} = \left|\frac{q}{p}\right|^{2} |g_{-}(t)| = \frac{e^{\Gamma t}}{2} \left|\frac{q}{p}\right|^{2}  \left[ \cosh(\frac{\Delta \Gamma t}{2})\cos(\Delta M t) \right] \\ 
+|\bra{M} \mathcal{H} \ket{\overline{M}}|^{2} = \left|\frac{p}{q}\right|^{2} |g_{-}(t)| = \frac{e^{\Gamma t}}{2} \left|\frac{p}{q}\right|^{2}  \left[ \cosh(\frac{\Delta \Gamma t}{2})\cos(\Delta M t) \right]
+\end{align}
+
+The equation \ref{eq:mixing_prob} clearly indicates that the mass difference between light and heavy states drives the mixing frequency. It is also important to analyze ratio $\frac{p}{q}$. If it differ from 1 then the mixing process violate $CP$ symmetry. The word average of this mixing parameter in $B^{0}$ is  $\frac{p}{q} = 1.0009 \pm 0.0013$ and  for $B_s$  $\frac{p}{q} = 1.0003 \pm 0.0014$ \cite{PDG}, which means the results are consistent with $CP$ symmetry. 
 
 \section{The Baryon Asymmetry of the Universe and Sakharov conditions}
 
