@@ -286,6 +286,5 @@ BoldItalicFont=ArnoPro-BoldItalic
 \usepackage{subcaption}
 \captionsetup{compatibility=false}
 
-\usepackage{floatpag}
 \usepackage{multirow}
 

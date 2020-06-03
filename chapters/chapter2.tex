@@ -5,26 +5,26 @@ The Artificial Intelligence is the New Electricity.
 
 \chapter{Principles of Machine Learning}
 
-This chapter provides a formal introduction to Machine Learning. It begins by presenting the concept of supervised learning. The next section is dedicated to discussing each of the models, which were taken into consideration during the author's study. It contains a brief mathematical description of each model and the overall approach to training them. The next section introduces the methodology of how the performance of each model can be measured and discusses the problem of the model’s prediction interpretation. In other words, it tries to answer the vital question "why should I trust the model that I built?". 
-The final section covers the idea of bonsai Boosted Decision Trees, which are the binarizing version of the selected classifier. It explains the concept of discretization, its implementation as well as the reason why this approach was chosen, and what issue it addresses. 
+This chapter provides a formal introduction to Machine Learning. It begins by presenting the concept of supervised learning. The next section is dedicated to discussing each of the models, which were taken into consideration during the author's study. It contains a brief mathematical description of each model and the overall approach to training them. The next section introduces the methodology of how the performance of each model can be measured and discusses the problem of the model's prediction interpretation. In other words, it tries to answer the vital question, "why should I trust the model that I built?". 
+The final section covers the idea of bonsai Boosted Decision Trees, which are the binarizing version of the selected classifier. It explains the concept of discretization, its implementation, the reason this approach was chosen, and the issue it addresses. 
 
 \section{What is Machine Learning}
-This introductory section is dedicated to provide answers to the following questions: 
+This introductory section is dedicated to providing answers to the following questions: 
 \begin{itemize}
     \item What is Machine Learning? 
     \item Are there any difference between Machine Learning and classical algorithms? 
-    \item What types of Machine Learning model can be distinguished? 
+    \item What types of Machine Learning models can be distinguished? 
     \item Why is Machine Learning becoming more and more popular? 
     \item What kind of problems can Machine Learning solve? 
 \end{itemize}
 
 The classical approach to building software contains the following steps: collect system and software requirements,
-design the software architecture, then there is a coding and testing part and finally, the software goes to the maintenance phase. The presented model is the simplest one called the Waterfall\footnote{The other approach to the software project management is called \textit{agile} which is a practice that promotes continuous iteration of development and testing throughout the software development lifecycle of the project. Both development and testing activities are concurrent.}. The most important part is the coding phase, in which the developer or group of developers need to convert the system requirements, written in the Natural Language, into the code, which is understandable by a computer. They have to create a step-by-step set of instructions to process an individual input to determine the exact output. 
-This strategy is not sufficient for many problems such as spam detection, image processing, or Natural Language understanding, where the number of possible scenarios, e.g. sentences to translate from English to Polish, is so enormous, that it is infeasible to create the logic for each. 
+design the software architecture, then there is a coding and testing part, and the software finally goes to the maintenance phase. The presented model is the simplest one called the Waterfall\footnote{The other approach to the software project management is called \textit{agile}, which is a practice that promotes continuous iteration of development and testing throughout the software development lifecycle of the project. Both development and testing activities are concurrent.}. The most important part is the coding phase, in which the developer or group of developers need to convert the system requirements, written in the Natural Language, into the code, which is understandable by a computer. They have to create a step-by-step set of instructions to process an individual input to determine the exact output. 
+This strategy is not sufficient for many problems such as spam detection, image processing, or Natural Language understanding, where the number of possible scenarios, e.g., sentences to translate from English to Polish, is so enormous that it is infeasible to create the logic for each. 
 
-In such cases, Machine Learning comes to help. Instead of writing explicit instruction, the researcher provides examples and a model is trained using the data to extract the hidden patterns. The only remaining problem is to collect sufficient amount of data. But is it a problem at all? 
+In such cases, Machine Learning comes to help. Instead of writing explicit instructions, the researcher provides examples and train the model using the data to extract the hidden patterns. The only remaining problem is to collect a sufficient amount of data. However, is it a problem at all? 
 
-Figure \ref{fig:big_data} shows the quantity of data generated per minutes by the most frequent used online services. Facebook recently reported that the system that is designed to collect the logs generates abut 2.5 PB of data per second \cite{facebook}. Another example of the online service that generates a huge amount of data is Twitter, according to the its technical report, Twitter's users compose messages that required about 8 PB/day of data storage. For comparison, the LHCb experiment produces about 750 MB/s. One of the most challenging problem that needs to be solved by the industry is to understand the data and make profitable conclusion base on it.
+Figure \ref{fig:big_data} shows the quantity of data generated per minute by the most frequently used online services. Facebook recently reported that the system that is designed to collect the logs generates about 2.5 PB of data per second \cite{facebook}. Another example of the online service that generates a massive amount of data is Twitter, according to its technical report, Twitter's users compose messages that required about 8 PB/day of data storage. For comparison, the LHCb experiment produces about 750 MB/s. One of the most challenging problems that the industry needs to solve is to understand the data and make a profitable conclusion based on it.
 
 \begin{figure}[h]
 \centering
@@ -35,11 +35,11 @@ Figure \ref{fig:big_data} shows the quantity of data generated per minutes by th
 
 Machine Learning as discipline can be divided into three main subdivisions: \textbf{supervised},\textbf{unsupervised} and \textbf{reinforcement learning}. Figure \ref{fig:ML_types} presents all mentioned types of Machine Learning problems together with a sub-problems that can be extracted from them. 
 
-The unsupervised learning describes problems, where the data has no manually assigned target value. One of the most interesting unsupervised problem is a synthetically data generation, which is usually performed using the idea of Generative Adversarial Networks (GANs) \cite{GAN}. Another type of unsupervised problem is a dimensionality reduction which is a process of reducing the number of random variables under consideration, by obtaining a set of principal variables. 
-One of the method, that is widely used is Principal Component Analysis. 
-PCA is a statistical procedure that reduce dimentionality of the dataset by creating new uncorrelated variables that successively maximize variance. Finding such new variables, the principal components, reduces to solving an eigenvalue/eigenvector problem \cite{PCA}. 
+The unsupervised learning describes problems, where the data has no manually assigned target value. One of the most interesting unsupervised problems is a synthetical data generation, which is usually performed using the idea of Generative Adversarial Networks (GANs) \cite{GAN}. Another type of unsupervised problem is a dimensionality reduction, which reduces the number of random variables under consideration by obtaining a set of principal variables. 
+One of the methods that is widely used is the Principal Component Analysis. 
+PCA is a statistical procedure that reduces the dimensionality of the dataset by creating new uncorrelated variables that successively maximize variance. Finding such new variables, the principal components, reduces to solving an eigenvalue/eigenvector problem \cite{PCA}. 
 
-Reinforcement learning employs an agent that interact with an external environment and tries to learn the optimal behaviour strategy. This approach may lead to creating the program, that is capable to archive superhuman performance in such games as chess or Go \cite{alphago}, or protein folding \cite{alpha_fold}.   
+Reinforcement learning employs an agent that interacts with an external environment and tries to learn the optimal behavior strategy. This approach may lead to creating the program, that is capable to archive superhuman performance in such games as chess or Go \cite{alphago}, or protein folding \cite{alpha_fold}.   
 
 \begin{figure}[h]
 \centering
@@ -48,15 +48,15 @@ Reinforcement learning employs an agent that interact with an external environme
 \label{fig:ML_types}}
 \end{figure}
 
-And finally, supervised learning is a type of problems that are characterized by presence of label that was assigned to each of the examples.  supervised learning can be further split into classification and regressions tasks.
- Regression is a method of modeling a continuous target value (label) based on independent predictors. This method is mostly used for forecasting \footnote{One of the examples that are usually used when the regression problem is introduced is finding a house price when such features as house area or number of bedrooms are given.} and finding out cause and effect relationship between variables. 
+And finally, supervised learning is a type of problems that are characterized by presence of label that was assigned to each of the examples. Supervised learning can be further split into classification and regressions tasks.
+ Regression is a method of modeling a continuous target value (label) based on independent predictors. This method is mostly used for forecasting \footnote{One of the examples that are usually used when the regression problem is introduced is finding a house price when such features as house area or the number of bedrooms are given.} and finding out cause and effect relationship between variables. 
  
 
- From the perspective of this thesis, the classification is the most important type of problem, therefore the remainder of this section will focus on it.  In this task, the model tries to find the mapping between the input space and one of the \textit{k} labeled output. 
+ From the perspective of this thesis, the classification is the most important type of problem. Therefore the remainder of this section will focus on it.  In this task, the model tries to find the mapping between the input space and one of the \textit{k} labeled output. 
  
-As a concrete example, let consider a problem of seed track selection, which is a topic of section \ref{Sec:Downstrean Overview}. This is a supervised classification problem, because the input to the model was a pair $(track_seed, label)$ which were obtained using Monte Carlo simulation and the task is to predict whether a particular seed is eligible for further processing. 
+As a concrete example, let consider a problem of seed track selection, which is a topic of section \ref{Sec:Downstrean Overview}. This is a supervised classification problem because the input to the model was a pair $(track_seed, label)$, which were obtained using Monte Carlo simulation, and the task is to predict whether a particular seed is eligible for further processing. 
 
-To give a more precise definition of the classification task, let consider a given a set of $N$ training examples of the form \\ $\{(x_0,y_0), \dotsb , (x_{N-1} , y_{N-1})\}$, where $x_{i} \in R^{M}$ is a M-dimensional feature vector and $y_i \in R^{k}$ is a label, a learning algorithm tries to find the function $f: X\rightarrow Y$, where the X is a input space and Y is the output space. The function $f$ is an element of some space of all possible mapping function, which by convention, is called hypothesis space and denoted as $\mathcal{H}$. To measure how well the function $f$ fits to the training data, a loss function $\mathcal{L}(y,f(x))$ needs to be defined \cite{DLBook}. This function reduces all the various good and bad aspects of a possibly complex system down to a single number, a scalar value, which allows candidate solutions to be ranked and compared.
+To give a more precise definition of the classification task, let consider a given a set of $N$ training examples of the form \\ $\{(x_0,y_0), \dotsb , (x_{N-1} , y_{N-1})\}$, where $x_{i} \in R^{M}$ is a M-dimensional feature vector and $y_i \in R^{k}$ is a label, a learning algorithm tries to find the function $f: X\rightarrow Y$, where the X is a input space and Y is the output space. The function $f$ is an element of some space of all possible mapping function, which by convention, is called hypothesis space and denoted as $\mathcal{H}$. To measure how well the function $f$ fits to the training data, a loss function $\mathcal{L}(y,f(x))$ needs to be defined \cite{DLBook}. This function reduces all the various good and bad aspects of a possibly complex system down to a single number, a scalar value that allows candidate solutions to be ranked and compared.
 
 
 When the loss function is selected the training procedure aims to minimize it with respect to the function's parameters. This statement can be formalized in a following way: 
@@ -72,11 +72,11 @@ where $f:X \rightarrow Y$, and the $S$ is a subset where the function $f$ is def
 
 \paragraph{Information Theory}
 
-To get a better understanding of a typical choice for the cost function, the reminder of this section provides a brief introduction to Information Theory.
-Back in the 1964 Claude Shannon and Warren Weaver published paper "The mathematical theory of communication" \cite{Shannon}, where they introduced the concept of information entropy. This quantity was used to determine the optimal, with respect to the expected length,  message encoding. The basic intuition behind the entropy is that more likely events are less informative than the rare ones. To be more precise, the entropy needs to fulfill the following requirements:
+To get a better understanding of a common choice for the cost function, the remainder of this section provides a brief introduction to Information Theory.
+Back in 1964, Claude Shannon and Warren Weaver published the paper "The mathematical theory of communication" \cite{Shannon}, where they introduced the concept of information entropy. This quantity was used to determine the optimal, with respect to the expected length,  message encoding. The basic intuition behind the entropy is that more likely events are less informative than the rare ones. To be more precise, the entropy needs to fulfill the following requirements:
 \begin{enumerate}
 \item Rare events should have high information content. 
-\item In opposition likely events should have very low information content, and in the case of certain event the information content should be $0$. 
+\item In opposition, likely events should have very low information content, and in the case of a certain event, the information content should be $0$. 
 \item The information content of two independent events should be equal to the sum of it. 
 \end{enumerate}
 To satisfy above properties, the Shannon entropy is defined in the following manner:  
@@ -85,13 +85,13 @@ H(P) =\mathbf{E}_{x\sim P}\left[\frac{1}{log P(x)} \right] = - \mathbf{E}_{x\sim
 \end{equation}
 Where: $P(x)$ is the probability distribution of an event $x$ to occur, and $\mathbf{E}$ is an expectation value operator, and $x \sim P$ signifies that random variable $x$ comes from distribution $P$. 
 
-To summarize the Shannon entropy measures the expected amount of information drawn from distribution $P$. It provides a lower bound on the length of encoding needed, on average, to encode a symbol taken from distribution $P$, which is visualized in figure \ref{fig:entropy}.
+To summarize, the Shannon entropy measures the expected amount of information drawn from distribution $P$. It provides a lower bound on the length of encoding needed, on average, to encode a symbol is taken from distribution $P$, which is visualized in figure \ref{fig:entropy}.
 
 
 \begin{figure}[h]
 \centering
 \includegraphics{figures/Entropy.png}
-\caption{Visualization of the entropy.The x-axis measures the proportion of data points belonging to the positive class and  y-axis axis measures their respective entropies. Entropy is lowest at the extremes, when the data either contains no positive instances or only positive instances. That is, when the dataset is pure the disorder is 0. Entropy is highest in the middle when the data is evenly split between positive and negative instances. Extreme disorder, because there is no majority. Figure adopted from \cite{DS_for_buisness}   
+\caption{Visualization of the entropy. The x-axis measures the proportion of data points belonging to the positive class, and the y-axis axis measures their respective entropies. Entropy is lowest at the extremes when the data either contains no positive instances or only positive instances. That is, when the dataset is pure, the disorder is 0. Entropy is highest in the middle when the data is evenly split between positive and negative instances. Extreme disorder, because there is no majority. Figure adapted from \cite{DS_for_buisness}   
 \label{fig:entropy}}
 \end{figure}
 
@@ -108,9 +108,9 @@ Which indicates that providing a better encoding the sender can save, on average
     \text{average code length}= \frac{1}{2}\cdot 1 + \frac{1}{4}\cdot 2 + \frac{1}{8}\cdot 3 = 1.75 \text{bits}
 \end{equation}
 
-Equation \ref{eq:entropy example} shows a very interesting relation between entropy and optimal coding. In general, the entropy is a lower bond on the number of bits needed to transmit the state of random variable. There is no way to get an average message length smaller that the entropy value.   
+Equation \ref{eq:entropy example} shows a very interesting relation between entropy and optimal coding. In general, the entropy is a lower bound on the number of bits needed to transmit the state of a random variable. There is no way to get an average message length smaller than the entropy value.   
 
-The concept of entropy can be extended to the case of two separate probability distributions $P(x)$ and $Q(x)$ over the same random variable $x$.  In such a case, the quantity called \textbf{Cross Entropy}  measures the amount of information needed to send a message containing symbols drown from distribution $P(x)$, when using encoding designed to minimize the length of messages came from the probability distribution $Q(x)$.  
+The concept of entropy can be extended to the case of two separate probability distributions $P(x)$ and $Q(x)$ over the same random variable $x$.  In such a case, the quantity called \textbf{Cross Entropy}  measures the amount of information needed to send a message containing symbols drawn from distribution $P(x)$, when using encoding designed to minimize the length of messages came from the probability distribution $Q(x)$.  
 The cross entropy is defined in a following way:
 
 \begin{equation}
@@ -125,11 +125,11 @@ For the binary classification, this is the case where the number of classes to p
 \end{equation}
 
 
-The figure \ref{fig:ML_flow} presents, in the form of a flowchart, a typical methodology to build a Machine Learning system. 
-Within this process we can distinguish two phases: Creation and Production. The creation phase starts from collecting the data, then the entire data is split into two subsets train and test. The training set is usually split into two, disjoint sets training and validation sets.
+Figure \ref{fig:ML_flow} presents a typical methodology to build a Machine Learning system in the form of a flowchart. 
+Within this process we can distinguish two phases: Creation and Production. The creation phase starts by collecting the data, and then the entire data is split into two subsets train and test. The training set is usually split into two disjoint sets training and validation sets.
 
 The training set is used to select the hypothesis function, and the test set is used to verify the model's performance.
-The process of training the model is usually a very complicated iterative procedure, which consist of such steps as selecting the hypothesis space, finding optimal set of model's hyperparameters, etc. 
+The process of training the model is usually a very complicated iterative procedure, which consists of such steps as selecting the hypothesis space, finding an optimal set of model's hyperparameters, etc. 
 
 \begin{figure}
 \centering
@@ -141,8 +141,8 @@ The process of training the model is usually a very complicated iterative proced
 
 \section{Classification metrics overview}
 \subsubsection{Confusion matrix}
-The starting point in every discussion of the classifier performance measurement is a confusion matrix. The idea of the confusion matrix was invented by Karl Pearson in 1904. For binary classification problem, the outcome of the classification can have four possible values. If the particular example has a positive label \footnote{In the field of High Energy Physics the  positive example is usually called the signal, and the negative one the background} and the classification result is positive the outcome is called \textbf{true positive}; if it is classified as negative, it is counted as \textbf{false negative}. In case of the true label was negative and the classification gives negative it is counted as \textbf{true negative}, otherwise, the outcome is called \textbf{false positive}. The false positive and false negative are also known as type I and type II error respectively. 
-Using the set of example, usually called the test set, a two-by-two matrix can be constructed for better understanding and visualization of the classification outcome. Figure \ref{fig:CM} shows a confusion matrix along with equations of selected common metrics that can be derived from it. The elements from the diagonal represent the correct decision made by the classifier. In opposition, the off-diagonal numbers corresponds to the miss-classified examples. 
+The starting point in every discussion of the classifier performance measurement is a confusion matrix. Karl Pearson invented the idea of the confusion matrix in 1904. For a binary classification problem, the outcome of the classification can have four possible values. If the particular example has a positive label \footnote{In the field of High Energy Physics the positive example is usually called the signal, and the negative one the background} and the classification result is positive the outcome is called \textbf{true positive}; if it is classified as negative, it is counted as \textbf{false negative}. In case of the true label was negative and the classification gives negative it is counted as \textbf{true-negative}, otherwise, the outcome is called \textbf{false-positive}. The false-positive and false negative are also known as type I and type II error, respectively. 
+A two-by-two matrix can be constructed for better understanding and visualization of the classification outcome using the set of examples, usually called the test set. Figure \ref{fig:CM} shows a confusion matrix along with equations of selected standard metrics that can be derived from it. The elements from the diagonal represent the correct decision made by the classifier. In opposition, the off-diagonal numbers correspond to the miss-classified examples. 
 
 \begin{figure}[h]
 \hspace*{-2cm}                                                           
@@ -151,23 +151,23 @@ Using the set of example, usually called the test set, a two-by-two matrix can b
 \label{fig:CM}}
 \end{figure}
 
-Using the information that Confusion Matrix is built on, one can calculate the following metrics:
+Using the information that the Confusion Matrix is built on, one can calculate the following metrics:
 
 \begin{itemize}
-    \item $\mathbf{accuracy} = \frac{TP+TN}{P+N}$, defines the number of examples that were correctly classified. However, this quantity may by misleading. Consider problem of imbalanced dataset where number of positive example is 98\% of the entire dataset. The dummy classifier, which always returns 1, achieves 98\% accuracy score.
-    \item $\mathbf{precission}=\frac{TP}{TP+FP}$; measure what proportion of events, that were correctly classified to a given class to all events that were classified to this class. Precision is a good measure to determine, when the costs of False Positive is high. 
-    \item $\mathbf{recall}=\frac{TP}{TP+FN}$ actually expresses how many of the actual positives model correctly classified. Recall shall be the model metric in use to select the best model when there is a high cost associated with False Negative. Recall can be interpreted as a measure of model's sensitivity.
+    \item $\mathbf{accuracy} = \frac{TP+TN}{P+N}$, defines the number of examples that were correctly classified. However, this quantity may be misleading. Consider the problem of an imbalanced dataset where the number of positive examples is 98\% of the entire dataset. The dummy classifier, which always returns 1, achieves a 98\% accuracy score.
+    \item $\mathbf{precission}=\frac{TP}{TP+FP}$; measure what proportion of events, that were correctly classified to a given class to all events that were classified to this class. Precision is a good measure to determine when the costs of False Positive is high. 
+    \item $\mathbf{recall}=\frac{TP}{TP+FN}$ actually expresses how many of the actual positives model correctly classified. Recall shall be the model metric in use to select the best model when there is a high cost associated with False Negative. Recall can be interpreted as a measure of the model's sensitivity.
     \item $\mathbf{F1} =\frac{2}{\frac{1}{precision}+ \frac{1}{recall}}$ should be use, when the researcher seeks for a balance between Precision and Recall and there is an uneven class distribution. 
 \end{itemize}
 
 \subsubsection{Receiver operating characteristics}
 \label{sec:ROC}
-The Receiver Operating Characteristics graphs are two-dimensional ones where true positive
-rate (Y-axis) is plotted against false positive rate (X-axis). A ROC graph depicts relative trade-off between benefits (true positives) and costs (false positives).
+The Receiver Operating Characteristics graphs are two-dimensional ones where the true positive
+rate (Y-axis) is plotted against the false positive rate (X-axis). A ROC graph depicts relative trade-off between benefits (true positives) and costs (false positives).
 
-The origin, point (0,0), represents the classifier that never issuing a positive classification outcome, which means its prediction regardless of the input vector is always 0. Such a classifier commits no false-positive errors but also gains no true positives. On contrary, point (1,1) represent classifier which always returns a true value. Generally, all points that lay on a straight line that satisfies equation $y=x$ correspond to the random guessing policy, and the corresponding classifiers are useless, they have not extracted any patterns from the data.  
+The origin, point (0,0), represents the classifier, which never issuing a positive classification outcome, which means its prediction regardless of the input vector is always 0. Such a classifier commits no false-positive errors but also gains no true positives. On the contrary, point (1,1) represents classifier, which always returns a true value. Generally, all points that lay on a straight line that satisfies equation $y=x$ correspond to the random guessing policy, and the corresponding classifiers are useless, and they have not extracted any patterns from the data.  
 
-Point D $(0,1)$ corresponds to the perfect classification, which means all negative examples are suppressed and all positive are preserved. In general, the classifier is better than another if its corresponding point in a ROC space is to the northwest of the first. Classifiers appearing on the upper right-hand side of a ROC graph may be considered as a \textit{liberal}. They make positive classifications with weak evidence so they classify nearly all positives correctly, but they often have high false-positive rates. Therefore the point A is more conservative than point B. The point E corresponds to the strategy, which is worst than the random guessing, this indicates some issue with data labeling and usually, there are no such points in practical applications. 
+Point D $(0,1)$ corresponds to the perfect classification, which means all negative examples are suppressed, and all positive are preserved. In general, the classifier is better than another if its corresponding point in a ROC space is to the northwest of the first. Classifiers appearing on the upper right-hand side of a ROC graph may be considered as a \textit{liberal}. They make positive classifications with weak evidence, so they classify nearly all positives correctly, but they often have high false-positive rates. Therefore the point A is more conservative than point B. The point E corresponds to the strategy, which is worst than the random guessing, this indicates some issue with data labeling, and usually, there are no such points in practical applications. 
 
 \begin{figure}[!ht]
 \centering
@@ -176,22 +176,22 @@ Point D $(0,1)$ corresponds to the perfect classification, which means all negat
 \label{fig:ROC_eg}}
 \end{figure}
 
-Most of the classifiers, instead of returning a discrete value, return the probability or score.  to which an example is a member of a class. These probabilities can be thresholded to produce the binary classification.  Each threshold value produces a different point in the ROC space, and a collection of those points creates the ROC curve. The ROC curve is a very convenient way to find the classifier operating point. 
-The curve provides a convenient diagnostic tool to investigate one classifier with different threshold values and the effect on the True Positive Rate and False Positive Rate. One might choose a threshold in order to bias the predictive behavior of a classification model. For instance, in the case of track seed classification problem classifier has to preserve almost all true tracks while keeping the background as low as possible. Therefore, the classification threshold was selected in such a way that the true positive rate should be equal to 0.99.  
+Most of the classifiers, instead of returning a discrete value, return the probability or score. These probabilities can be thresholded to produce the binary classification.  Each threshold value produces a different point in the ROC space, and a collection of those points creates the ROC curve. The ROC curve is a very convenient way to find the classifier operating point. 
+The curve provides a convenient diagnostic tool to investigate one classifier with different threshold values and the effect on the True Positive Rate and False Positive Rate. One might choose a threshold in order to bias the predictive behavior of a classification model. For instance, in the case of track seed classification problem classifier has to preserve almost all true tracks while keeping the background as low as possible. Therefore, the classification threshold was selected so that the true positive rate would be equal to 0.99.  
 
-ROC curve is a popular diagnostic tool for classifiers on balanced and imbalanced binary prediction problems alike because it is not biased to the majority or minority class. ROC analysis, in oposition to the stude based on a accuracy metrics, does not have any bias toward models that perform well on the majority class at the expense of the majority class, which is a desire property that is quite attractive when dealing with imbalanced data \cite{imbalanced_learnig}.
+ROC curve is a popular diagnostic tool for classifiers on balanced and imbalanced binary prediction problems alike because it is not biased to the majority or minority class. ROC analysis, in opposition to the study based on accuracy metrics, does not have any bias toward models that perform well on the majority class at the expense of the majority class, which is a desirable property that is quite attractive when dealing with imbalanced data \cite{imbalanced_learnig}.
 
-The ROC curve is a two-dimensional representation of classifier performance. This representation is not convenient when comparing a performance of two or more classifiers.  
- Thus, it is convenient to reduce the ROC curve to a single scalar value representing the expected classifier performance, while keeping its properties. The common practice is to calculate the Area Under the ROC Curve (ROC AUC).  From the statistical point of view, the ROC AUC can be interpreted as a probability that the classifier will rank a randomly chosen positive example higher than a randomly chosen negative sample. 
+The ROC curve is a two-dimensional representation of classifier performance. This representation is not convenient when comparing the performance of two or more classifiers.  
+ Thus, it is convenient to reduce the ROC curve to a single scalar value representing the expected classifier performance while keeping its properties. The common practice is to calculate the Area Under the ROC Curve (ROC AUC).  From the statistical point of view, the ROC AUC can be interpreted as a probability that the classifier will rank a randomly chosen positive example higher than a randomly chosen negative sample. 
 
 \section{Model selection}
 
-This section provides detailed description of model selection and validation procedure. Within the scope of this project four different models were tested. Each of the subsection starts from presenting the mathematical formalism of a particular model. The next part focuses on applied methodology to find the optimal, in sense of maximizing the selected metric score, set of model's hyperparameters, see section \ref{sec:hyperparameters}. 
+This section provides a detailed description of the model selection and validation procedure. Within the scope of this project, four different models were tested. Each of the subsection starts by presenting the mathematical formalism of a particular model. The next part focuses on applied methodology to find the optimal, in the sense of maximizing the selected metric score, set of model's hyperparameters, see section \ref{sec:hyperparameters}. 
 The first two presented models were constructed using the sklearn library. 
 
 \subsection{$k$-Nearest Neighbors classifier}
-The $k$-NN was selected to play a role of a study baseline. The $k$-NN  is a \textbf{non-parametric} model, which means it takes no assumption on the underlying probability distribution of data \cite{knn}. 
-Instead, the model's fundamental assumption is that similar inputs should produce similar outputs. To make a prediction the model looks at the K points in the training set, that are nearest to the input $x_i$ and counts how many members of each class are in this set and finally return the empirical fraction as the estimate. That statement can be formalized in terms of probability:  
+The $k$-NN was selected to play the role of a study baseline. The $k$-NN  is a \textbf{non-parametric} model, which means it takes no assumption on the underlying probability distribution of data \cite{knn}. 
+Instead, the model's fundamental assumption is that similar inputs should produce similar outputs. To make a prediction, the model looks at the K points in the training set nearest to the input $x_i$ and counts how many members of each class are in this set and finally returns the empirical fraction as the estimate. That statement can be formalized in terms of probability:  
 \begin{equation}
 p(y=k,\mathcal{D}, K) = \frac{1}{K} \sum_{i\in N_K(x,\mathcal{D})} \mathds{1}(y_i=k)
 \end{equation}
@@ -216,7 +216,7 @@ Find the k training data points $x_i$, which has the shortest distance$\mathcal{
 Decide $\hat{y}$ with a majority vote among those k nearest neighbours;  
 \end{algorithm}
 
-The number of neighbours $k$ and distance function are the two only hyperparameters that needs to be priory selected by the Machine Learning practitioner. Figure \ref{fig:knn decision boundary} visualize the influence of different value of $k$ into the classifier decision boundaries. The decision boundary is a disjoint region where each of the points are classified to the same class. It is clearly visible, that taking more neighbours into consideration produce smoother decision boundary. 
+The number of neighbors $k$ and distance function are the two only hyperparameters that need to be priory selected by the Machine Learning practitioner. Figure \ref{fig:knn decision boundary} visualize the influence of the different values of $k$ into the classifier decision boundaries. The decision boundary is a disjoint region where each of the points is classified into the same class. It is clearly visible that considering more neighbors produce a smoother decision boundary. 
 
 \begin{figure}[!h]
    \centering
@@ -228,18 +228,18 @@ The number of neighbours $k$ and distance function are the two only hyperparamet
    \label{fig:knn decision boundary}}
 \end{figure}
 
-K-NN model has two limitations. First of all the K-NN’s prediction time and space grow linearly with a number of training examples\footnote{There are a couple of methods like KD-trees that reduce K-NN evaluation complexity, but it doesn’t affect the space complexity of the model}, which make this model infeasible when the amount of the data is significant.
+K-NN model has two limitations. First of all the K-NN's prediction time and space grow linearly with a number of training examples\footnote{There are a couple of methods like KD-trees that reduce K-NN evaluation complexity, but it does not affect the space complexity of the model}, which make this model infeasible when the amount of the data is significant.
   
-The second limitation of the $k$-NN models is the fact that this model suffers from the\textbf{ curse of dimensionality}.  In low dimensional spaces, data may seem very similar but the higher the dimension the further these data points may seem to be. To illustrate this phenomenon let consider a collection of points $x_i$ that are sampled uniformly within the unit  $d$ dimensional hypercube $\forall i, x_i \in [0,1]^{d} $, and the model that is looking for $k=10$ neighbours of a particular test point. Let $l$ be the edge of the smaller hypercube that contains all $k$-nearest neighbor of a give test point, then 
+The second limitation of the $k$-NN models is the fact that this model suffers from the\textbf{ curse of dimensionality}.  In low dimensional spaces, data may seem very similar, but the higher the dimension, the further these data points may seem to be. To illustrate this phenomenon let consider a collection of points $x_i$ that are sampled uniformly within the unit  $d$ dimensional hypercube $\forall i, x_i \in [0,1]^{d} $, and the model that is looking for $k=10$ neighbours of a particular test point. Let $l$ be the edge of the smaller hypercube that contains all $k$-nearest neighbor of a give test point, then 
 
 \begin{align}
 l^{d} \approx \frac{k}{n} \nonumber \\
 l \approx (\frac{k}{n})^{\frac{1}{d}}
 \end{align}
 
-If the training dataset contains $n=1000$ entries each of dimensionality $d=20$, then $l \approx 80\%$, which means almost the entire space is needed to find the 10-NN. This breaks the $k$-NN  assumption, because the $k$ neighbors are not particularly closer, and therefore similar, to any other data points in the training set. 
+If the training dataset contains $n=1000$ entries each of dimensionality $d=20$, then $l \approx 80\%$, which means almost the entire space is needed to find the 10-NN. This breaks the $k$-NN  assumption because the $k$ neighbors are not particularly closer, and therefore similar, to any other data points in the training set. 
 
-Taking into consideration that dimensionality of the track classification problem, it is not expected to get a promising results. Although, training the $k$-NN is pretty fast, so seems to be a perfect choice for a baseline model. 
+Taking into consideration that dimensionality of the track classification problem, it is not expected to get promising results. Although training the $k$-NN is pretty fast, so seems to be a perfect choice for a baseline model. 
 
 \subsection{Logistic Regression}
 
@@ -249,12 +249,12 @@ The second type of models, that is usually trained in order to get a study basel
     y(x) = \sigma (w^{T}x + b) = \sigma \left(\sum_{i=1}^{D}w_ix_i +b\right) 
 \end{equation}
 
-where: $w^{T}x$ is a dot product between the input vector $x$ and the model’s weights $w$, and $b$ is a bias term. In this context, bias term means the model’s output when no input signal is given. Do not confuse with the statistical “bias” which represents the difference between true parameter value and estimator expected value. The $\sigma$ is a \textbf{sigmoid} function. It is defined as: 
+where: $w^{T}x$ is a dot product between the input vector $x$ and the model's weights $w$, and $b$ is a bias term. In this context, the bias term means the model's output when no input signal is given. Do not confuse with the statistical "bias", which represents the difference between true parameter value and estimator expected value. The $\sigma$ is a \textbf{sigmoid} function. It is defined as: 
 \begin{equation}
 \label{eg:sigmoid}
     \sigma(x) = \frac{1}{1+\exp(-x)}
 \end{equation}
-The term "sigmoid" means S-shaped, which is shown in figure \ref{fig:sigmoid}. This function is used to map the whole real axis into a finite interval. In the case of classification it squash the regression output (term $w^{T}x$) into the interval $\{0,1\}$, which can be interpreted as a probability. Positive input numbers become high probabilities and the negative values become low ones. 
+The term "sigmoid" means S-shaped, which is shown in figure \ref{fig:sigmoid}. This function is used to map the whole real axis into a finite interval. In the case of classification, it squashes the regression output (term $w^{T}x$) into the interval $\{0,1\}$, which can be interpreted as a probability. Positive input numbers become high probabilities, and the negative values become low ones. 
 The first derivative of this function can be expressed in the following way:
 
 \begin{equation}
@@ -286,7 +286,7 @@ where: $Ber(z|\theta)$ is a Bernoulli  distribution defined as:
 \end{equation}
 the $\theta$ is a probability of a success. The Bernoulli distribution is a special case of a binomial distribution, where $n=1$. 
 
-The model fitting procedure\footnote{model fitting is an algorithm that aims to estimate the model's parameter using the data } can be derived from Maximum Likelihood Estimation (MLE) \footnote{ MLE is used to find $\Tilde{\theta} = \underset{\theta}{\mathrm{argmin}} log p(D|\theta)$, where $D$ is a data} \cite{bishop}. Likelihood function is a quantity similar in its nature to the probability. The difference is that the probability is used to describe future outcome of the random process, and the likelihood tells what is the probability that observed data was sampled from the process described by some specific model.  
+The model fitting procedure\footnote{model fitting is an algorithm that aims to estimate the model's parameter using the data } can be derived from Maximum Likelihood Estimation (MLE) \footnote{ MLE is used to find $\Tilde{\theta} = \underset{\theta}{\mathrm{argmin}} log p(D|\theta)$, where $D$ is a data} \cite{bishop}. The likelihood function is a quantity similar in its nature to the probability. The difference is that the probability is used to describe future outcome of the random process, and the likelihood tells what is the probability that observed data was sampled from the process described by some specific model.  
 
 For a dataset $D:=\{x_{n}, y_n\}$ where $y_{n} \in \{0,1\}$ and $n=1 \cdots N$ the likelihood of the entire dataset can be written as: 
 
@@ -303,14 +303,13 @@ The equation \ref{eq:liklehood} assumes that the training examples are independe
     NLL(w) = \sum_{i=1}^{N}y_{i}log\left( \sigma(w^{T}x_{i}\right)+(1-y_i)log(1-\sigma(w^{T}x_{i}))
 \end{equation}
 
-Formula \ref{eq:NLL logistic} is identical to the cross entropy \ref{eq:CE_binary} for a case when number of classes is two. This provide an additional justification of using cross entropy as a cost function. 
+Formula \ref{eq:NLL logistic} is identical to the cross-entropy \ref{eq:CE_binary} for a case when number of classes is two. This provides an additional justification for using cross-entropy as a cost function. 
 
-The regular approach to find a minimum of the cost function, setting the derivatives of the this function with respect to the parameters $w$, fails due to the lack of closed form for the minimum. Instead, iterative optimization algorithm has be to be applied. Within the scope of this thesis the Gradient Descent algorithm will be discussed.    
+The conventional approach to finding a minimum of the cost function and setting the derivatives of this function with respect to the parameters $w$ fails due to the lack of closed-form for the minimum. Instead, the iterative optimization algorithm has to be applied. Within the scope of this thesis, the Gradient Descent algorithm will be discussed.    
 
 \paragraph{Gradient Descent Optimization} \mbox{}
-\\
 
-The Gradient Descent is an optimization algorithm, that tries to find a minimum of a function by taking small steps in the direction of the gradient vector and eventually ends in the local minimum. In the case of a linear model, it can be proved that it will always be a global minimum \cite{bishop}. The proof is based on analysis of the Hessian matrix, which for the case of linear model \footnote{linear term in linear models refers to the parameters but not necessarily to the features, for instance, $f(x)=w_1x+w_2x^2 + w_3 \sin(x)$ is considered as a linear model} is always positive defined\footnote{$n \times n$ matrix $M$ is positive defined if for all vector $\vec{x} \in R^{n}$ $\vec{x}^{T}M\vec{x} > 0$. Intuitively, positive defined matrix is a matrix generalization of a positive number, which if  }. 
+The Gradient Descent is an optimization algorithm that tries to find a minimum of a function by taking small steps in the direction of the gradient vector and ends at the local minimum. In the case of a linear model, it can be proved that it will always be a global minimum \cite{bishop}. The proof is based on analysis of the Hessian matrix, which for the case of linear model \footnote{linear term in linear models refers to the parameters but not necessarily to the features, for instance, $f(x)=w_1x+w_2x^2 + w_3 \sin(x)$ is considered as a linear model} is always positive defined\footnote{$n \times n$ matrix $M$ is positive defined if for all vector $\vec{x} \in R^{n}$ $\vec{x}^{T}M\vec{x} > 0$. Intuitively, a positive defined matrix is a matrix generalization of a positive number, which does not change the sign of the number}. 
 That kind of optimization is called convex, and it is a reason why generalized linear models still play an important role in classical Machine Learning.  
 
 During a single optimization step the new, updated value of the parameter $w_i$ calculated according to the following formula: 
@@ -321,7 +320,7 @@ During a single optimization step the new, updated value of the parameter $w_i$ 
     &= w_{i}^{old} - \eta  \cdot \sum_{j=0}^{N} \left( \sigma((w^{old})^{T}x_{j}) - y_{j} \right) x_j
 \end{align}
 
-Where: $\eta$ it is a step size also called learning rate, which has to be set before training procedure. The wrong choice of the learning rate value can cause failure of the training algorithm, which is shown in the figure \ref{fig:Gradient decent}. 
+Where: $\eta$ is a step size, also called learning rate, which has to be set before the training procedure. The wrong choice of the learning rate value can cause the failure of the training algorithm, which is shown in figure \ref{fig:Gradient decent}. 
 
 
 
@@ -333,17 +332,17 @@ Where: $\eta$ it is a step size also called learning rate, which has to be set b
 \end{figure}
 
 
-The second parameter of the gradient decent algorithm \ref{eq:Gradient decent} is a number of examples $N$, that are taken to calculate the weight's update. There are three version of this optimization method. The first one, also called, Stochastic Gradient Decent update weights on every single training example which is equivalent to set $N=1$, on the other hands putting $N$ equals to all examples is called Batch Gradient Decent.  
+The second parameter of the gradient descent algorithm \ref{eq:Gradient decent} is a number of examples $N$, that are taken to calculate the weight's update. There are three versions of this optimization method. The first one, also called Stochastic Gradient Descent, update weights on every single training example, which is equivalent to set $N=1$. On the other hand putting $N$ equals to all examples is called Batch Gradient Descent.  
 
 \paragraph{Regularization} \mbox{}
-\\
 
-When training any classification model, the general task is to make it perform well not only on a training set but also on a new, previously unseen example. This objective is called generalization and can be quantified by a test error. One of the strategies to reduce the gap between training and test errors is called regularization. There are many forms of regularization, but within the scope of this thesis, the modification of the cost function \footnote{The other popular regularization method is data augmentation, which is used to generate a new training example by applying some transformation function on old examples. The proper choice of a transformation function in the case of high-dimensional tabular data is not obvious, that why it was not implemented.} in order to discourage the parameters from reaching a large value. A model with one or a few large parameters means that model is relatively using only a small subset of features to make a decision. To avoid that kind of situation, the additional penalty term can be added to the loss function: 
+
+When training any classification model, the general task is to make it perform well not only on a training set but also on a new, previously unseen example. This objective is called generalization and can be quantified by a test error. One of the strategies to reduce the gap between training and test errors is called regularization. There are many forms of regularization, but within this thesis's scope, the modification of the cost function \footnote{The other popular regularization method is data augmentation, which is used to generate a new training example by applying some transformation function on old examples. The proper choice of a transformation function in the case of high-dimensional tabular data is not obvious; that why it was not implemented.} in order to discourage the parameters from reaching a large value. A model with one or a few large parameters means that model is relatively using only a small subset of features to make a decision. To avoid that kind of situation, the additional penalty term can be added to the loss function: 
 
 \begin{equation}
     \mathcal{L}_{reg}(w) = \mathcal{L}(w) + \Omega(w) 
 \end{equation}
-where: $\mathcal{L}$ is the previous, non regularized loss function, and the $\Omega(w)$ is a regularization term that is a function of a model's weights. 
+where: $\mathcal{L}$ is the previous, non-regularized loss function, and the $\Omega(w)$ is a regularization term that is a function of a model's weights. 
 
 The simplest and most popular choice of the $\Omega(w)$ is a sum of squares of the the model's coefficients\footnote{that kind of regularization is also called Ridge Regression or $L^2$}. In such a case the cross entropy loss function \ref{eq:CE_binary} is expressed by the following formula:
 
@@ -374,7 +373,7 @@ The statistical justification of using both $L1$ and $L2$ regularization comes f
 \paragraph{Logistic Regression linear separability} \mbox{}
 \\
 
-Logistic Regression model has zero training error rate only when the data is linearly separable, which means that exist a n-dimensional hyperplane, that can separate data into classes. Figure \ref{fig:linear separability} presents example of such a data.
+The logistic regression model has zero training error rate only when the data is linearly separable, which means that there is an n-dimensional hyperplane that can separate data into classes. Figure \ref{fig:linear separability} presents example of such a data.
 
 
 
@@ -386,7 +385,7 @@ Logistic Regression model has zero training error rate only when the data is lin
 \end{figure}
 
 
-The linear separability of the data is a strong assumption and in practical applications holds rarely. To produce the nonlinear decision boundaries two methods can be a used. The first one is to handcraft the function $\phi(x)$ that transforms data into the form that makes it linearly separable. This task is very challenging, taking into consideration high dimensionality of the practical classification problems. The second idea, discussed in the next sections, is to build a classifier that can generate non-linear classification rule. 
+The linear separability of the data is a strong assumption and, in practical applications, holds rarely. To produce the nonlinear decision boundaries, two methods can be used. The first one is to handcraft the function $\phi(x)$ that transforms data into the form that makes it linearly separable. This task is very challenging, taking into consideration the high dimensionality of the practical classification problems. The second idea, discussed in the next sections, is to build a classifier that can generate nonlinear classification rules. 
 
 \begin{figure}
   \centering
@@ -428,7 +427,7 @@ The decision whether to make an additional split is based on the information gai
     IG(P,a) = H(P) - H(P|a)
 \end{equation}
 
-where $ H(P|a)$ is a conditional entropy of $P$ given the value of attribute $a$. The information gain can be interpreted as a change in the entropy when attribute $a$ is observed. The process of partitioning the input space is performed by the procedure, which greedy selects the attribute that gives the highest information gain. 
+where $ H(P|a)$ is a conditional entropy of $P$ given the value of attribute $a$. The information gain can be interpreted as a change in the entropy when attribute $a$ is observed. The process of partitioning the input space is performed by the procedure, in which greedy selects the attribute that gives the highest information gain. 
 From the practical perspective Decision Tree algorithm is implemented in the following way: 
 
 
@@ -462,7 +461,7 @@ return Tree
     \label{fig:Decision Tree}%
 \end{figure}
 
-Figure \ref{fig:Decision Tree} presents the exemplary Decision Tree Classifier, that was trained in order to classify different spices of iris plant \cite{fisher} \cite{anderson}. It is clearly visible that each node of the tree is composed of a single "yes or no" type question, and the prediction is calculated by recursively answering for those questions (starting from the root node) using the information decoded within the input vector. One of the most important features of this model is that its prediction is easily interpreted by a human. One can get the intuition of why the model made a particular decision by looking at each question-answer pair and comparing them with an initial problem's domain knowledge.
+Figure \ref{fig:Decision Tree} presents the exemplary Decision Tree Classifier, that was trained in order to classify different spices of iris plant \cite{fisher} \cite{anderson}. It is clearly visible that each node of the tree is composed of a single "yes or no" type question, and the prediction is calculated by recursively answering for those questions (starting from the root node) using the information decoded within the input vector. One of the most critical features of this model is that a human easily interprets its prediction. One can get the intuition of why the model made a particular decision by looking at each question-answer pair and comparing them with an initial problem's domain knowledge.
 
 \subsubsection{Gradient Boosting}
 
@@ -529,7 +528,7 @@ where $g_i$ and $h_i$ are gradient and hessian defined as follow:
     h_i = \left[\frac{\partial^2 \mathcal{L}(y_{i},\hat{y}^{(t-1)})}{\partial \hat{y}^{(t-1)}} \right]
 \end{equation}
 
-Learning objective written in a form of \ref{eq:xgboost_taylor} is very convenient from the perspective of the code implementation. To add customized loss function, one need to provide implementation of gradient and hessian. The procedure, that minimize \ref{eq:xgboost_taylor} is visualized in figure \ref{eq:xgboost_taylor}. 
+Learning objective written in the form of \ref{eq:xgboost_taylor} is very convenient from the perspective of the code implementation. To add customized loss function, one needs to provide the implementation of gradient and hessian. The procedure, that minimize \ref{eq:xgboost_taylor} is visualized in figure \ref{eq:xgboost_taylor}. 
 
 \begin{figure}
 \centering
@@ -551,13 +550,13 @@ XGBoost is a perfect combination of software and hardware optimization technique
     \begin{equation}
         \mathcal{L}_{xgboost}(\theta) = \mathcal{L}(\theta) + \Omega(\theta)
     \end{equation}
-    where $\Omega(\vartheta)$ is a  regularization term that depends on a complexity of the model. Most of the implementation, including TMVA \cite{tmva}, miss this term and thus is more prune to overtaining. 
+    where $\Omega(\vartheta)$ is a  regularization term depends on the complexity of the model. Most of the implementation, including TMVA \cite{tmva}, miss this term and thus is more prone to overtraining. 
 \end{itemize}
 
 
 \subsection{Deep Neural Network}
 \label{sec:DNN}
-Indispensable part of building the Neural Network is understanding the Deep Learning Framework. 
+The indispensable part of building the Neural Network is understanding the Deep Learning Framework. 
 
 
 \subsection{Hyperparameter optimization}
@@ -583,7 +582,7 @@ Subsequently, one of the subsets is used to check the model's performance and th
 
 \subsubsection{Grid and Random Search}
 \label{sec:GS and RS}
-Grid Search, except of manual search, is the most basic methodology to tune hyperparamters. It splits the hyperparameter space into rectangular hype-regions. Each of the region represent one trial. In other words, Grid Search choose a set of values per each variable $(\lambda_{1} \ldots \lambda_{K})$, where $K$ is a number of hyperparameters, and then a set of trials is formed by assembling every combination of values for each hyperparameter, therefore the number o trials in a Grid Search is:
+Grid Search, except for manual search, is the most basic methodology to tune hyperparameters. It splits the hyperparameter space into rectangular hype-regions. Each of the regions represents one trial. In other words, Grid Search choose a set of values per each variable $(\lambda_{1} \ldots \lambda_{K})$, where $K$ is a number of hyperparameters, and then a set of trials is formed by assembling every combination of values for each hyperparameter; therefore the number o trials in a Grid Search is:
 \begin{equation}
     S=\prod^{K}_{k=1}|\lambda_{k}|  
 \end{equation}
@@ -594,46 +593,44 @@ This product over $K$ hyperparameters makes Grid Search suffer from the curse of
 \centering
 \includegraphics{figures/GridSearch.png}
 \caption{Comparison of the Grid Search and Random Search methods of hyper-parameters tuning. 
-On both of the figures x-axis represents a hyper-parameter, that modification of its value has negligible effect on model performance and the y-axis present a hyper-parameter that has large impact on the model classification ability \cite{RandomSearch}. 
+On both of the figures, the x-axis represents a hyper-parameter. The modification of its value has a negligible effect on model performance, and the y-axis presents a hyper-parameter that has a large impact on the model classification ability \cite{RandomSearch}. 
 \label{fig:GridSearch}}
 \end{figure} 
 
-The only real difference between Grid Search and Random Search is on the step 1 of the strategy cycle – Random Search picks the point randomly from the configuration space. 
-The researcher needs to provide a set of distributions, one per hyperparameter, to generate trials. From a practical perspective, the usual choice for these distributions are uniform and log-uniform distributions. The second one is a typical choice when dealing with such hyperparameter as the learning rate, where the hyperparameter's value range that needs to be check is   $ \lambda_k \in (1\times 10^{-6},1)$. 
+The only real difference between Grid Search and Random Search is on step 1 of the strategy cycle – Random Search picks the point randomly from the configuration space. 
+The researcher needs to provide a set of distributions, one per hyperparameter, to generate trials. From a practical perspective, the usual choice for these distributions is uniform and log-uniform distributions. The second one is a common choice when dealing with such hyperparameter as the learning rate, where the hyperparameter's value range that needs to be check is   $ \lambda_k \in (1\times 10^{-6},1)$. 
 
 
-To compare these two methods a toy experiment was shown in figure \ref{fig:GridSearch}. It presented a search for nine trials for optimizing a function \\ $f(x,y) = g(x) + h(y) \approx g(x)$. With Grid Search, nine trials only test $g(x)$ in three distinct places, in comparison Random Search leveraged all nine trials to explore distinct value of $g(x)$. The failure of Grid Search is the rule rather than the exception in high dimensional hyperparameter optimization \cite{RandomSearch}. 
+To compare these two methods a toy experiment was shown in figure \ref{fig:GridSearch}. It presented a search for nine trials for optimizing a function \\ $f(x,y) = g(x) + h(y) \approx g(x)$. With Grid Search, nine trials test $g(x)$ in three distinct places only, in comparison Random Search leveraged all nine trials to explore distinct value of $g(x)$. The failure of Grid Search is the rule rather than the exception in high dimensional hyperparameter optimization \cite{RandomSearch}. 
  
 
 
 \subsubsection{Bayesian optimization}
 \label{sec:BayesOpt}
-Both of the previously described methods have one drawback. Neither of them leverage the previous evaluation results to reject the regions where there is a small probability of finding the maximum value of the function $f(x)$. The enhancement to these methods should make use of accumulated observations $D_{1:t} = \{ x_{1:t}, f(x_{1:t}) \}$, where $x_i$ is a $i$th sample. One of the methods that fulfill this condition is Bayesian optimization.  
+Both of the previously described methods have one drawback. Neither of them leverages the previous evaluation results to reject the regions where there is a small probability of finding the maximum value of the unknown objective function $f(x)$, which is a nonlinear function defined over a compact set $\mathcal{A}$. This section is dedicated to describing the general idea of Bayesian Optimization, which can be applied to any regression problems. It is not limited to the optimal hyperparameter search. The enhancement to these methods should make use of accumulated observations $D_{1:t} = \{ x_{1:t}, f(x_{1:t}) \}$, where $x_i$ is a $i$th sample, and $f(x_i)$ is a observation of the objective function at $x_i$.   \footnote{In the case of hyperparameters optimization, $f$ is a specific metric used to measure model performance, within this thesis, the ROC AUC was selected,  and $x$ represents a vector of hyperparameters }. One of the methods that fulfill this condition is Bayesian optimization.  
  
-Bayesian optimization is a technique that is widely used for solving the regression problems when function evaluation is expensive, and the derivative is usually unknown. The method's name comes from the famous Bayes theorem. In the case of optimization problem the posterior distribution can be expressed in the following manner: 
+Bayesian optimization is a technique widely used for solving the regression problems when function evaluation is expensive, and the derivative is usually unknown. Thus the usual optimization methods like Gradient Descent are not applicable. The hyperparameter optimization problem belongs to this area. The model training takes a lot of o time (in the case of XGboost, one trial takes more than an hour), and the model performance derivative with respect to for instance, the tree depth is not defined. 
+
+The method's name comes from the famous Bayes theorem. In the case of an optimization problem, the posterior distribution can be expressed in the following manner: 
 
 \begin{equation}
 \label{eq:BO_posteriori}
-    P(f|D_{1:t}) \propto P(D_{1:t} | f) \codt  P(f)
+    P(f|D_{1:t}) \propto P(D_{1:t} | f) \cdot  P(f)
 \end{equation}
 
-where $ P(D_{1:t} | f)$ is a likelihood function. // dodac P(f)
-// zdefiniowac objective function najlepiej wczesniej na samym pocztku
+where $ P(D_{1:t} | f)$ is a likelihood function, $D_{1:t}$ is a dataset of previous observation that contains $t$  consecutive trials, $P(f)$ is a priory function that express ones belief on a objective function $f$, and  $P(f|D_{1:t})$ is a posterior distribution. The assumption of the Bayesian optimization method is the function $f$ has to be \textbf{Lipschitz-continuous}, which means that exist some constant $C$, such for all pairs $x_1, x_2  \in \mathcal{A}$ the following inequality holds:
 
+\begin{equation}
+||f(x_1)-f(x_2)|| \leq C ||x_1-x_2|| 
+\end{equation}
 
 The posterior probabilities capture updated beliefs about the unknown objective function. 
-This may be interpreted a single step of the Bayesian optimization procedure, which is an estimation of the objective function with a surrogate model. 
-\\ wyjasnic surrogate model
+This may be interpreted as a single step of the Bayesian optimization procedure, which is an estimation of the objective function with a surrogate model. The surrogate modeling is a technique which builds the approximating model of the objection function using models that are cheap and fast to evaluate. 
 
-
-To sample efficiently // co samplowac,
-// zmienic x na lambda
-
-Bayesian optimization has the second component - acquisition function $u(x|D_{1:t})$. This function is used to determine the next trial location $x_{t+1}$. The acquisition function should be able to find a trade-off between exploration (searching for a region where the surrogate function is very uncertain) and exploitation (searching for a values of $x$ where $f(x)$ is expected to be high). 
-\\ odnosnik do rysunku 
-
+To sample efficiently trails $x$ \footnote{In the case of hyperparameters optimization $x$ corresponds to the vector of hyperparameters $x= (\lambda_1, \lambda_2, \cdots)^{T}$}, Bayesian optimization has the second component - acquisition function $u(x|D_{1:t})$. This function is used to determine the next trial location $x_{t+1}$. The acquisition function should be able to find a trade-off between exploration (searching for a region where the surrogate function is very uncertain) and exploitation (searching for values of $x$ where $f(x)$ is expected to be high), which is shown in figure \ref{fig:BO}. 
 
 \begin{algorithm}[caption={Bayesian Optimization}, label={alg:Bayesian Optimization}]
+\label{alg:BO}
 for t = 1,2, .., do:
    Find the next sampling point $x_{t+1}$ by optimizing the acquisition function: $x_t = argmax_x u(x| D_{1:t}) $
    Sample a possibly noisy objective function $y_{t+1} = f(x_{t+1}) + \epsilon_{t+1}$ 
@@ -641,31 +638,27 @@ for t = 1,2, .., do:
 end for
 \end{algorithm}
 
-\paragraph{Gaussian Process}
-\\
+\paragraph{Gaussian Process} \mbox{}
 
-A popular surrogate model for Bayesian optimization is Gaussian process. 
-A Gaussian Process is a random process where every point $x \in \mathcal{R}^{d}$ 
-
-// what is 
-
-is assigned to a random variable f(x), which can be interpreted as an extension of the multivariate Gaussian distribution to an infinite dimension or distribution over functions. For such a process any finite combination of dimensions will be a Gaussian distribution. Gaussian Process is completely specified by its mean function $m$ and $k$ covariance function: 
+A popular surrogate model for Bayesian optimization is a Gaussian process. 
+A Gaussian Process is a random process where every point $x \in \mathcal{R}^{d}$, where $d$ is a dimensionality of the optimization problem, for the problem of hyperparameter optimization $d$ is equal to the number of hyperparameters taken into consideration during the study, 
+is assigned to a random variable f(x). The Gaussian Process can be interpreted as an extension of the multivariate Gaussian distribution to an infinite dimension or distribution over functions. For such a process, any finite combination of dimensions will be a Gaussian distribution. Gaussian Process is completely specified by its mean function $m$ and $k$ covariance function: 
 
 \begin{equation}
     f(x) \sim  \mathcal{N} \left( m(x), k(x,x')  \right)
 \end{equation}
 
-Intuitively, the Gaussian process is a function that for each value of $x$ returns a mean and variance over all possible values of $f$ at $x$, which is shown in figure \ref{fig:GP}.  
+Intuitively, the Gaussian Process is a function that, for each value of $x$ returns a mean and variance over all possible values of $f$ at $x$, which is shown in figure \ref{fig:GP}.  
 
 \begin{figure}
 \centering
 \includegraphics[scale=0.7]{figures/GaussianProcess.png}
-\caption{ Simple 1D Gaussian process with three observations $x_{1:3}$. The solid black line is the mean prediction of the Gaussian Process and the shaded area is one sigma region around mean value.   
+\caption{ Simple 1D Gaussian process with three observations $x_{1:3}$. The solid black line is the mean prediction of the Gaussian Process, and the shaded area is one sigma region around mean value.   
 Graph taken from \cite{BayesianOpt}.
 \label{fig:GP}}
 \end{figure}
 
-The convenient and common choice of mean function is $m(x) = 0$ \footnote{ Within the scope of this thesis the Gaussian process is limited to model that describe a noise function in a form of $f(x) = g(x) + \epsilon$ and $\epsilon \sim \mathcal{N}(0, \sigma)$ }. 
+The convenient and common choice of mean function is $m(x) = 0$ \footnote{ Within the scope of this thesis the Gaussian process is limited to model a noise function in a form of $f(x) = g(x) + \epsilon$ and $\epsilon \sim \mathcal{N}(0, \sigma)$ }. 
 The second building block of the Gaussian Process is the covariance function, also called kernel function. Literature discussed a number of choices of the kernel function but within the scope of this thesis only the most popular and basic one is discussed, ie squared exponential function: 
 
 \begin{equation}
@@ -673,12 +666,10 @@ The second building block of the Gaussian Process is the covariance function, al
     k(x_i,x_j) = exp\left( - \frac{1}{2} ||x_i - x_j||^2 \right)
 \end{equation}
 
-The function \ref{eq:kernel_function} approaches $0$ when $x_i$ and $x_j$ get apart and 1 when they are very close to each other. The interpretation of the function is straightforward, when two points are close they have significant influence to each other. 
+The function \ref{eq:kernel_function} approaches $0$ when $x_i$ and $x_j$ get apart and 1 when they are very close to each other. The interpretation of the function is straightforward. When two points are close, they have a significant influence on each other. 
 
-// zmienic na optymalizacje dla naszego zadania. 
-
-In the optimization task, the data come from an external model's evaluation and fits the Gaussian Process to get the posterior. //dlaczego my to robimy 
-Assuming that the data from the previous iterations is denoted as $\{ (x_{1:t}, f_{1:}) \}$, the $f(t+1)$ is: // zmienic te notacje 
+In the optimization task, the data come from an external model's evaluation and fits the Gaussian Process to get the posterior. In the hyperparameters optimization case, the data refer to the model performance that was training using a particular combination of hyperparameters.     
+Assuming that the data from the previous iterations is denoted as $\{ (x_{1:t}, f_{1:t}) \}$, the $f(t+1)$ is:
 
 \begin{equation}
 \label{eq:GP_priory}
@@ -705,7 +696,8 @@ and
         k(x_{t+1},x_1) &  k(x_{t+1},x_2) &  \ldots & k(x_{t+1},x_t) 
         \end{bmatrix}
 \end{equation}
-The formula \ref{eq:GP_priory} comes from the properties of the Gaussian Process, which states that the joint distribution of Gaussian distributed variables is also Gaussian. Putting together equations \ref{eq:GP_priory} and \ref{eq:BO_posteriori}one can obtain the expression for the predictive distribution can be written as \cite{GaussianProcesses}: 
+
+Formula \ref{eq:GP_priory} comes from the properties of the Gaussian Process, which states that the joint distribution of Gaussian distributed variables is also Gaussian. Putting together equations \ref{eq:GP_priory} and \ref{eq:BO_posteriori} one can obtain the expression for the predictive distribution can be written as \cite{GaussianProcesses}: 
 
 \begin{equation}
     P(f_{t+1}|D_{1:t, x_{t+1}}) \propto \mathcal{N} (\mu_{t}(x_{t+1}), \sigma_{t}^{2}(x_{t+1}) 
@@ -719,71 +711,72 @@ where:
      \end{aligned}
 \end{equation*}
 
-// dodac po co to :D 
+To summarize Gaussian process allows leverage information obtained from the previous objective function evaluation.
 
 
-\begin{figure}[!h]
-\thisfloatpagestyle{empty}
+\begin{figure}[!ht]
 \centering
-\includegraphics[scale=0.6]{figures/BO.png}
-\caption{An example of using Bayesian optimization on a 1D optimization problem. 
-Above figures show a Gaussian process approximation of the objective function over four iteration of sampled value of the objective function. The figures also presents the acquisition function (green curve). The acquisition function has high value in the region where GP predicts a high objective and where the prediction uncertainty is high. Figure taken from \cite{BayesianOpt}. 
-\label{fig:CV}}
+\vspace*{-2cm}
+\includegraphics[scale=0.55]{figures/BO.png}
+\caption{An example of using Bayesian optimization on a 1D optimization problem - finding maximum of function $f(x)$. 
+The figures on the left side show a Gaussian process approximation of the objective unknown function (golden dashed curve) over ten iterations of the sampled value of the objective function. The figures on the right present the acquisition function (red curve). The acquisition function has a high value in the region where GP predicts a high objective, and the prediction uncertainty is high. 
+\label{fig:BO}}
 \end{figure}
+
+
 
 
 \paragraph{ Acquisition Function for Bayesian Optimization} \mbox{}
 
-This paragraph is dedicated to the second component of Bayesian Optimization, the acquisition function. The role of this object is to drive the search for the optimum solution. It is defined in such a way that its high values correspond to the potentially high values of the objective function. Maximization of the acquisition function is used to select the next point at which the objective function is evaluated. A typical choice of the acquisition function is Expected Improvement defined as: 
+This paragraph is dedicated to the second component of Bayesian Optimization, the acquisition function. The role of this object is to drive the search for the optimum solution, see the right side of figure \ref{fig:BO}. It is defined in such a way that its high values correspond to the potentially high values of the objective function. The maximum acquisition function is used to select the next point at which the objective function is evaluated see right side of figure \ref{fig:BO}. A typical choice of the acquisition function is Expected Improvement defined as: 
 
 \begin{equation}
-    EI(x) = \mathbf{E}\left(max( f(x)-f(x^{\dagger}) , 0) \right) 
+    EI(x) = \mathbf{E}\left(max( f(x)-f(\widetilde{x}) , 0) \right) 
 \end{equation}
 
-where $x^{\dagger}$ is best location so far $x^{\dagger} = \underset{{x_i \in x_{1:t}}}{\mathrm{argmax}} f(x_i)$. // zaminc dagger na cos innego tylda
+where $\widetilde{x}$ is best location so far $\widetilde{x} = \underset{{x_i \in x_{1:t}}}{\mathrm{argmax}} f(x_i)$. 
 
 The expected improvement can be evaluated analytically using the Gaussian Process model \cite{GaussianProcesses}: 
 
 \begin{equation}
     EI(x) =   \left\{ \begin{array}{ll}
-(\mu(x)-f(x^{\dagger}))\Phi(Z) + \sigma(x)\phi(Z) & \textrm{if $\sigma(x)>0$}\\
+(\mu(x)-f(\widetilde{x}))\Phi(Z) + \sigma(x)\phi(Z) & \textrm{if $\sigma(x)>0$}\\
 0 & \textrm{if  $\sigma=0$}\\
 \end{array} \right.
 \end{equation}
-where $Z= \fraC{\mu_{x}-f(x^{\dagger})}{\sigma(x)}-\xi$, $\mu(x)$ and $\sigma(x)$ are the mean and standard deviation of the Gaussian Process posterior predicted at $x$, $\Phi$ and $\phi$ are CDF (nazwa) and PDF (nazwa) of standard distribution respectively, $\xi$ is the exploration-exploitation trade-off parameter, it is proportional to the amount of exploration during optmization. 
-// 
+where $Z= \frac{\mu_{x}-f(x^{\dagger})}{\sigma(x)}-\xi$, $\mu(x)$ and $\sigma(x)$ are the mean and standard deviation of the Gaussian Process posterior predicted at $x$, $\Phi$ and $\phi$ are cumulative distribution function (CDF) and probability density function (PDF) of standard distribution respectively, $\xi$ is the exploration-exploitation trade-off parameter, it is proportional to the amount of exploration during optmization. 
 
 \subsection{Model interpretation}
 
-One of the crucial problems when building \footnote{in this context model building is understood as a whole model selection and validation processes} a complex Machine Learning model is lack of interpretability of its prediction. This fact raises the question of why the researcher should trust the prediction that model generates. The Machine Learning model's interpretability is an active research area and many ideas were recently published. To make sure that the model, that was trained to classify the track seeds provide reliable predictions two methods, except measuring overall statistics\footnote{in this context overall statistic is understood as a single number that was calculated based on a whole validation or test set.}, were proposed: LIME ( Local Interpretable Model-Agnostic Explanations) \cite{lime}  and SHAP (Shapley Additive exPlanations) \cite{shap}. This section starts by presenting a brief overview of both methods. The section \ref{xxx} resents the results obtained in order to understand the prediction of the trained seed classifier.
+One of the crucial problems when building \footnote{in this context model building is understood as a complete model selection and validation processes} a complex Machine Learning model is lack of interpretability of its prediction. This fact raises the question of why the researcher should trust the prediction that model generates. The Machine Learning model's interpretability is an active research area, and many ideas were recently published. To make sure that the model, that was trained to classify the track seeds provide reliable predictions two methods, except measuring overall statistics\footnote{in this context overall statistic is understood as a single number that was calculated based on a whole validation or test set.}, were proposed: LIME ( Local Interpretable Model-Agnostic Explanations) \cite{lime}  and SHAP (Shapley Additive exPlanations) \cite{shap}. This section starts by presenting a brief overview of both methods.  Section \ref{xxx} resents the results obtained in order to understand the prediction of the trained seed classifier.
 \subsubsection{LIME - Local Interpretable Model-Agnostic Explanations }
 
-The discussion of the LIME should start from choosing models, that are human interpretable. An interpretable explanation needs to use a representation that is understandable to humans regardless of the actual model's architectures or features used to make a decision. For instance, a possible interpretable representation of the text classification is a vector of binary values indicating the presence or absence of a certain word, even though the model use more complex input features such as word embedding
-\footnote{word embedding is a collective terms for models that learned to map a set of words to a vector of numerical values. The expected properties of such a mapping is the words that has a similar meaning are represented by a vectors laying close to each others. Moreover, it allowing to use vector arithmetic to work with analogies for instance: $\overrightarrow{king} - \overrightarrow{man} + \overrightarrow{woman}= \overrightarrow{queen}$}. 
+The discussion of the LIME should start from choosing models, that are human interpretable. An interpretable explanation needs to use a representation that is understandable to humans, regardless of the actual model's architectures or features used to make a decision. For instance, a possible interpretable representation of the text classification is a vector of binary values indicating the presence or absence of a certain word, even though the model uses more complex input features such as word embedding
+\footnote{word embedding is a collective term for models that learned to map a set of words to a vector of numerical values. The expected properties of such mapping are the words that have a similar meaning are represented by vectors lying close to each other. Moreover, it allowing to use vector arithmetic to work with analogies for instance: $\overrightarrow{king} - \overrightarrow{man} + \overrightarrow{woman}= \overrightarrow{queen}$}. 
 
-To get a better intuition of what is the purpose of LIME explanation let consider a toy example where the Machine Learning model has to predict whether the patient has a flu or not. The input to this model are patient's symptoms and other features such as weight or age. LIME select the symptoms in patient's history that are most relevant and led to the prediction. With this approximations and the domain knowledge the doctor can make an informative decision about whether to trust the model's prediction or not. The visualization of this toy experiment is presented in figure \ref{fig:LIME_doctor}.
+To get a better intuition of what is the purpose of the LIME explanation, let consider a toy example where the Machine Learning model has to predict whether the patient has the flu or not. The input to this model is the patient's symptoms and other features such as weight or age. LIME selects the symptoms in the patient's history that are most relevant and led to the prediction. With these approximations and the domain knowledge, the doctor can make an informative decision about whether to trust the model's prediction or not. The visualization of this toy experiment is presented in figure \ref{fig:LIME_doctor}.
 
-\begin{figure}
+\begin{figure}[h]
 \centering
 \includegraphics{figures/lime_doctor.PNG}
-\caption{A toy example that visualize the concept of LIME individual prediction explanation. A model predicts that a patient has the flu, and LIME highlights the symptoms in the patient’s history that led to the prediction. Sneeze and headache are portrayed as contributing to the “flu” prediction, while “no fatigue” is evidence against it. Figure taken from \cite{lime}.
+\caption{A toy example that visualizes the concept of LIME individual prediction explanation. A model predicts that a patient has the flu, and LIME highlights the symptoms in the patient's history that led to the prediction. Sneeze and headache are portrayed as contributing to the "flu" prediction, while "no fatigue" is evidence against it. Figure taken from \cite{lime}.
 \label{fig:LIME_doctor}}
 \end{figure} 
 
 
-In the case of the tabular data, the model that can be used as an interpretable approximation is a linear model \footnote{the second type of interpretabe model class is a decision tree, but within the scope of this thesis only interpretation based on a linear model were studied}. 
+In the case of the tabular data, the model that can be used as an interpretable approximation is a linear model \footnote{the second type of interpretable model class is a decision tree, but within the scope of this thesis, only interpretation based on a linear model was studied}. 
 
-   That kind of explanation provides insights into the model for a single example $z$. To adopt this idea of explanation of the complex non-linear decision boundaries the LIME approximates the model response locally, around the point of interest. The point of interest is a single instance, e.g. one track seed that was classified as a true seed.  
+   That kind of explanation provides insights into the model for a single example $z$. To adopt this idea of explanation of the complex nonlinear decision boundaries, the LIME approximates the model response locally, around the point of interest. The point of interest is a single instance, e.g., one track seed that was classified as a true seed.  
 Conceptually LIME approximation is very close to the Tylor series approximation, which infinitely differentiable function transforms to a power series around the specific point $x_0$: 
 \begin{equation}
     f(x) = \sum_{n=0}^{\infty} \frac{f^{(n)}(x_0)}{n!} (x-x_0)^n
 \end{equation}
 In the case of LIME the approximation is made by taking only the first order terms.  
  
-To be more specific, let the model being explained is express as $f: \mathcal{R}^{d}\rightarrow  \mathcal{R} $ and an explanation $g \in G$, where $G$ is a class of human interpretable models. The $\pi_x(z)$ is a proximity measure kernel between an instance $z$ to $x$, which is essential to define local neighborhood of instance $z$.
+To be more specific, let the model being explained is express as $f: \mathcal{R}^{d}\rightarrow  \mathcal{R} $ and an explanation $g \in G$, where $G$ is a class of interpretable human models. The $\pi_x(z)$ is a proximity measure kernel between an instance $z$ to $x$, which is essential to define the local neighborhood of instance $z$.
 
 Finally, let $\mathcal{L}(f,g,\pi_x(z))$ be a loss, which measures how faithful the local approximation $g$ is. 
-In order to reduce the complexity of the approximation model the loss function is constructed by adding a regularization term that depends on a model complexity $\Omega(g)$. For the linear model the $\Omega(g)$ depends on a number of non-zero weights. Figure \ref{fig:lime} visualize the idea of each component of the LIME explanation method. 
+To reduce the complexity of the approximation model, the loss function is constructed by adding a regularization term that depends on a model complexity of $\Omega(g)$. For the linear model, the $\Omega(g)$ depends on a number of non-zero weights. Figure \ref{fig:lime} visualize the idea of each component of the LIME explanation method. 
 The explanation produced by LIME is obtained by finding the minimum of the following formula: 
 
 \begin{equation} \label{eq:LIME}
@@ -815,21 +808,23 @@ return $w$
 \begin{figure}
 \centering
 \includegraphics[scale=0.7]{figures/lime.png}
-\caption{Toy example to present intuition for LIME. The black-box model’s complex decision function $f$ (unknown to LIME) is represented by the blue/pink background, which cannot be approximated well by a linear model. The bold red cross is the instance
-being explained. LIME samples instances, gets predictions using f, and weighs them by the proximity to the instance being explained (represented here by size). The dashed line is the learned explanation that is locally (but not globally) faithful \cite{lime}. 
+\caption{Toy example to present intuition for LIME. The black-box model's complex decision function $f$ (unknown to LIME) is represented by the blue/pink background, which cannot be approximated well by a linear model. The bold red cross is the instance
+being explained. LIME samples instances, gets predictions using $f$, and weighs them by the proximity to the instance being explained (represented here by size). The dashed line is the learned explanation that is locally (but not globally) faithful \cite{lime}. 
 \label{fig:lime}}
 \end{figure} 
 
 
 \subsubsection{ Shap - SHapley Additive exPlanation }
 \label{sec:lime}
-To understand the final method to analyze features importance, first explanation of the shapely value and the coalitional game theory need to be provided. The fowling paragraph was adopted from \cite{GameTheory}. 
+To understand the final method of analyzing the feature's importance, an explanation of the shapely value and the coalitional game theory need to be provided. The fowling paragraph was adopted from \cite{GameTheory}. 
 
-The coalitional game is a tuple $<N,v>$, where $N=\{1,2,\ldots, n \}$ is a finite set of $n$ players, $v: 2^{N} \rightarrow \mathcal{R}$ is a characteristic function, that describe worth of each coalition. The solution of the game is to find the operator \footnote{dodac przyklad} $\phi(v) = (\phi_{1}, \ldots \phi_n ) \in \mathcal{R}^n$, which assigns to $<N,v>$ vector of payoffs for each coalition participant. To find a fair solution operator $\phi(v)$ needs to fulfill the following axioms: 
+\paragraph{Coalitional game} \mbox{}
+
+The coalitional game is a tuple $<N,v>$, where $N=\{1,2,\ldots, n \}$ is a finite set of $n$ players, $v: 2^{N} \rightarrow \mathcal{R}$ is a characteristic function, that describe worth of each coalition. The solution of the game is to find the operator $\phi(v) = (\phi_{1}, \ldots \phi_n ) \in \mathcal{R}^n$, which assigns to $<N,v>$ vector of payoffs for each coalition participant. To find a fair solution operator $\phi(v)$ needs to fulfill the following axioms: 
 
 \begin{itemize}
 \item  $\sum_{i \in N} \phi_{i}(v)= v(N)$, where $v(N)$ is a value of grand coalition consisting of all players. This axiom is called \textit{efficiency axiom}. 
-\item if for two players $i$ and $j$ $v(S\cup \{i\}) = v(S \cup \{j\})$ holds for every $S$, where $S \subset	N$ and $i,j \notin S$, then $\phi_{i}(v)= \phi_{j}(v)$. This axiom indicates symmetry property. 
+\item if for two players $i$ and $j$ $v(S\cup \{i\}) = v(S \cup \{j\})$ holds for every $S$, where $S \subset N$ and $i,j \notin S$, then $\phi_{i}(v)= \phi_{j}(v)$. This axiom indicates symmetry property. 
  \item The \textit{dummy axiom} says if $v(S\cup \{i\}) =v(S)$ holds for every $S \subset N$ and $i \notin S$, then $\phi_i(S) = 0$, and the player $i$ is a dummy player, who has no influence on the coalition game outcome. 
  \item for any pair of games $v,w: \phi(w+v)= \phi(w)+\phi(v)$. This property is called additivity axiom.   
 \end{itemize}
@@ -841,6 +836,14 @@ Shapley theorem says, that for a given game $<N,v>$ exists a unique solution $\p
 
 The proof of the above theorem can be found in the original Shapley's paper \cite{ShapleyProof}. 
 
+As an example, let consider a United Nations Security Council example. The UN council consists of 5 permanent members, namely China, Russia, France, the UK, and the US, with veto power and ten non-permanent members. All permanent members must not veto, and the majority of members need to agree to pass the resolution.  What is the Shapley value for each of the countries? 
+
+To simplify the example let consider the game $N = \{1,2,3 \}$ . The player $1$ is a permanent member with the veto power, and players $2$ and $3$ are non-permanent members. The value of this game is expressed: $ v( \{1,2 \})= v( \{1,3 \})= v( \{1,2,3\})=1$ and $v(S)=0$ otherwise. 
+The Shapley value for this game obtained using formula \ref{eq:shapley_value} is 
+$\varphi_{1} = \frac{2}{3},\varphi_{2}= \frac{1}{6}, \varphi_{3 } =  \frac{1}{6} $.  The conclusion is that both players $2$ and $3$ generates some value so they deserve to get some reward, and the player $1$ gets the most of the reward, because it is the most important since no resolution can be made without it. 
+
+\paragraph{Shap method} \mbox{}
+
 To leverage the idea of the Shapley value for the problem of model explanation let assume that the explanation model $g$ defined in the section \ref{sec:lime} is a linear function of a binary variables: 
 
 \begin{equation}
@@ -848,10 +851,7 @@ To leverage the idea of the Shapley value for the problem of model explanation l
 \end{equation}
 where $z' \in \{ 0, 1\}^{M}$ indicates whether the feature was observed ($z'=1$) or unknown ($z'=0$), and $\phi_i \in \mathcal{R}$ are feature's value.
 
-In order to evaluate the effect of missing features $i$ on model $f$ 
-// dodac co to f,
-
-it is necessary to define a mapping $h_x$, that each missing binary feature $z'$ maps to the original function. Such a mapping allows to calculate the effect $f(h_x(z'))$ of observing or not a features. To compute the Shap values, authors proposed \cite{Shap} the following assumption: 
+In order to evaluate the effect of missing features $i$ on model being explained $f$, it is necessary to define a mapping $h_x$, that each missing binary feature $z'$ maps to the original function. Such a mapping allows to calculate the effect $f(h_x(z'))$ of observing or not a features. To compute the Shap values, authors proposed \cite{shap} the following assumption: 
 
 \begin{equation} \label{eq:shap assumtion}
     f(h_x(z')) = \mathbf{E}[f(x)|x_S]
@@ -863,11 +863,13 @@ where S is the set of non-zero indexes in $z'$, and $\mathbf{E}[f(x)|x_S]$ is th
         \phi_{i} = \sum_{S \subseteq N} \frac{(M-|S|-1)!|S|!}{M!}(\mathbf{E}[f(x)| S\cup \{i\}] - \mathbf{E}[f(x)|S])
 \end{equation}
 
+Figure \ref{fig:shap_exp} visualize the idea of model explanation and feature importance based on a Shap method. 
+
 
 \begin{figure}[!h]
 \centering
-\includegraphics[scale=0.7]{figures/shap_explanation.png}
-\caption{Shap values explain the output of a function $f$ as a sum of the effect $\phi_i$ of each feature being introduced into a conditional expectation \cite{Shap}. 
+\includegraphics{figures/shap_explanation.png}
+\caption{Shap values explain the output of a function $f$ as a sum of the effect $\phi_i$ of each feature being introduced into a conditional expectation \cite{shap}. 
 \label{fig:shap_exp}}
 \end{figure} 
 
@@ -877,9 +879,9 @@ where S is the set of non-zero indexes in $z'$, and $\mathbf{E}[f(x)|x_S]$ is th
 Since the tracking algorithm is a part of the real-time LHCb High-Level Trigger system, both the execution time and memory footprint are important, so using the full continuous classifier is not an option. Instead, a binned BDT (called bonsai BDT or bBDT ) classifier that meets the speed and memory criteria of the HLT is used. This section is dedicated to present the idea of the model's binarization and the benefits drawback will be discussed. Similar idea was implemented within the LHCb HLT \cite{bbdt}.
 
 
-The idea is to replace the evaluation of each tree that constitutes the Gradient Boosted Classifier model \footnote{From the technical perspective gradient boosted model is very close to the big array of if-else statements} into an operation that is independent of the model’s complexity. The best possible choice for such an operation would be the one that has a constant time computation complexity O(1).  A lookup table \footnote{The lookup table should be implemented as a hash table} is a good candidate, thus it is a data structure that fulfills above access time requirement.   The remaining problem is how to convert a complex model into the lookup table.  The solution to this problem is data discretization, which is a process of splitting an input space into $k$ bins, and then for each of the combinations of the bins, the model’s prediction is calculated and the obtained value is saved. 
+The idea is to replace the evaluation of each tree that constitutes the Gradient Boosted Classifier model \footnote{From the technical perspective gradient boosted model is very close to the big array of if-else statements} into an operation that is independent of the model's complexity. The best possible choice for such an operation would be the one that has a constant time computation complexity O(1).  A lookup table \footnote{The lookup table should be implemented as a hash table} is the right candidate. Thus it is a data structure that fulfills the above access time requirement.   The remaining problem is how to convert a complex model into the lookup table.  The solution to this problem is data discretization, which is a process of splitting an input space into $k$ bins, and then for each of the combinations of the bins, the model's prediction is calculated, and the obtained value is saved. 
 
-To get a better understanding of how this process works, consider a 2D binary classification problem where “X” and “0” represent two possible classes, which is shown in figure \ref{fig:bbdt_theory}. For simplicity, let number of bins $k=2$, therefore in order to discretize the models one needs to calculate 4  predictions, which is a number of bins times number of features. The outcome of this process is a table presented on the right side of figure \ref{fig:bbdt_theory}. In order to calculate the prediction for a given new instance x (denoted as a red dot), the classifier needs to find corresponding bin indices and extract a value from the table, in this example the prediction is 1. 
+To get a better understanding of how this process works, consider a 2D binary classification problem where "X" and "0" represent two possible classes, which are shown in figure \ref{fig:bbdt_theory}. For simplicity, let the number of bins $k=2$, therefore in order to discretize the models, one needs to calculate four predictions, which is a number of bins times number of features. The outcome of this process is a table presented on the right side of figure \ref{fig:bbdt_theory}. In order to calculate the prediction for a given new instance x (denoted as a red dot), the classifier needs to find corresponding bin indices and extract value from the table. In this example, the prediction is 1. 
 
 
 

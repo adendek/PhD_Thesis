@@ -627,7 +627,7 @@ The previous two models were selected to provide the baseline scores. This secti
 
 The first step within this analysis was to train the model with default values of hyper-parameters to get a better understanding of the model initial performance. This step was also executed to estimate the number, or at least the order of magnitude, of weak learners that need to be added to the boosting model. This number can be estimate by detecting moment when model performance starts to saturate. 
 
-The model saturation is a situation when adding a new tree has no positive impact on the performance, measured on both training and the validation datasets. This effect can be easily detected using a learning curve plot. The learning curve plot is a two-dimensional plot with classifier performance on a y-axis and a number of trees on the x-axis. The saturation effect occurs when learning curve Plateau. 
+The model saturation is a situation when adding a new tree has no positive impact on the performance, measured on both training and the validation datasets. This effect can be easily detected using a learning curve plot. The learning curve plot is a two-dimensional plot with classifier performance on the y-axis and a number of trees on the x-axis. The saturation effect occurs when learning curve Plateau. 
 
 The initial training allows estimates of the number of trees to be around 700. The other hyperparameters, that were taken into consideration are listed below:
 
