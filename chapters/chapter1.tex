@@ -5,7 +5,7 @@ In that sense, this new knowledge has all to do with honor and country but it ha
 
 
 \chapter{The LHCb Experiment and its Upgrade}
-
+\label{chapter:detector}
 This chapter presents a detailed description of the LHCb experiment. Before I move to the explanation of the technical details of the LHCb detector, I am going to outline its background. 
 This section starts by presenting the CERN (The European Organization for Nuclear Research) . Then, I'll try to give you a basic understanding of how the LHC ( \textsc{Large Hadron Collider}, the most powerful particle accelerator, works. On the next couple of pages, I will explain the Standard Model and the Physics motivation to construct the LHCb detector. The final part of this chapter presents a technical aspect of the LHCb detector. I cover the current architecture as well as the plans and motivation for the future upgrade. 
 \section{CERN}
@@ -32,7 +32,7 @@ To achieve this performance the particle acceleration is done by a series of acc
 \label{fig:LHC}}
 \end{figure}
 
-The entire boosting process starts from the small red bottle full of hydrogen. It is shown in figure \ref{fig:Bottle}. This bottle is the only and sufficient proton source for entire, huge LHC acceleration system. This shows, how sophisticated and resource efficient LHC is. Then, the hydrogen atoms are ionized by the external electric field to yield the protons. These particles are injected into the Liniac2, the first linear accelerator in the chain, to boost its energy to the 50 MeV. After that, the beam is inserted into the Proton Synchrotron Booster followed by the Proton Synchrotron (PS), which pushes the beam to the energy of 25 GeV. The next step in the acceleration sequence is performed by the Super Proton Synchrotron (SPS). It accelerates the beam to the energy of 450 GeV. 
+The entire boosting process starts from the small red bottle full of hydrogen. It is shown in figure \ref{fig:Bottle}. This bottle is the only and sufficient proton source for entire, massive LHC acceleration system. This shows, how sophisticated and resource efficient LHC is. Then, the hydrogen atoms are ionized by the external electric field to yield the protons. These particles are injected into the Liniac2, the first linear accelerator in the chain, to boost its energy to the 50 MeV. After that, the beam is inserted into the Proton Synchrotron Booster followed by the Proton Synchrotron (PS), which pushes the beam to the energy of 25 GeV. The next step in the acceleration sequence is performed by the Super Proton Synchrotron (SPS). It accelerates the beam to the energy of 450 GeV. 
 
 The protons are finally injected into two beam pipes of the LHC. The beam in one pipe circulates clockwise while the beam in the second pipe circulates anticlockwise. It takes 4 minutes and 20 seconds to fill each LHC ring, and 20 minutes for the protons to reach their maximum energy of 6.5 TeV. The two beams interact inside four detectors – ALICE, ATLAS, CMS, and LHCb.
 
@@ -43,11 +43,35 @@ The protons are finally injected into two beam pipes of the LHC. The beam in one
 \label{fig:Bottle}}
 \end{figure}
 
+One of the key parameter that describe the particle accelerator, except of beam energy, is the quantity called integrated luminosity.  The luminosity is defined as  the ratio of the  number of events detected $N$ in a certain time $t$ to the interaction cross-section $\sigma$:  
+\begin{equation}
+    L = \frac{1}{\sigma} \frac{dN}{dt}
+\end{equation}
+In practice, the integrated luminosity $\mathcal{L}_{int}$ with respect to the time is used instead. Based on this quantity one can estimate the number of expected events for a given process. Figure present the integrated luminosity delivered to each of the LHC experiments. It is clearly visible that LHCb operates at significantly lower  
+
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.5]{figures/Luminosity.png}
+\caption[Luminosity]{The integrated luminosity delivered to LHC experiments
+\label{fig:Luminosity}}
+\end{figure}
 
 
 \section{LHCb detrctor}
 
-The heart of the LHCb experiment is its detector. It was built to produce proton-proton collision at center-of-mass energy of 14 TeV. It is located in the cavern that previously was used to host the LEP's experiment Delphi. The most unique feature of the LHCb detector is its shape. It is significantly different from the shape of other general purpose detectors like Atlas or CMS, which look like a multi-layer barrels around the collision point. For the comparison, the LHCb is a forward single-arm spectrometer. The choice of such layout was motivated by the LHCb physics program, in particular the angular distribution of the $\overline{b}b$ pairs production, which are concentrated around the forward and backward cones, see figure \ref{fig:bb}.
+The heart of the LHCb experiment is its detector. It was built to produce proton-proton collision at center-of-mass energy of 14 TeV. It is located in the cavern that previously was used to host the LEP's experiment Delphi. The most unique feature of the LHCb detector is its shape. It is significantly different from the shape of other general purpose detectors like Atlas or CMS, which look like a multi-layer barrels around the collision point. For the comparison, the LHCb is a forward single-arm spectrometer, that was designed to cover the pseudorapidity range $2< \eta < 5 $  \cite{LHCb_TDR}. The pseudirapidity is a spatial coordinate describing the angle of a particle relative to the beam axis. The  pseudorapidity can be calculated from the following formula: 
+
+\begin{equation}
+    \eta = - \ln\left[ \tan \left( \frac{\theta }{2}\right) \right]\nonumber = \frac{1}{2} \ln \left( \frac{|\vec{p}|+ p_t}{|\vec{p}|- p_t}  \right)
+    \label{eq:eta}
+\end{equation}
+
+where $\theta$  is the angle between the particle three-momentum $\vec{p}$ and the positive direction of the beam axis. The $p_t$ (transverse momentum) is a component of the $\vec{p}$ transverse to the beamline.
+Equation \ref{eq:eta} allows finding the relationship between the parameter $\eta$ and the angle $\vartheta$. When the angle $\theta$ is getting smaller, then the $\eta$ is rising.
+
+
+The choice of such layout was motivated by the LHCb physics program, in particular the angular distribution of the $\overline{b}b$ pairs production, which are concentrated around the forward and backward cones, see figure \ref{fig:bb}.
 
 LHCb geometrical coverage corresponds to only 4\% of whole solid angle, but it covers the region where probability of finding the  $\overline{b}b$ pairs is 24\% and 27\% for a single $b$ or $\overline{b}$ hadrons. 
 
@@ -329,7 +353,7 @@ The HCAL has a alternating structure of iron and scintillator tiles. The scintil
 \end{equation}
  
 \section{LHCb trigger}
-
+\label{sec:trigger}
 LHCb trigger system was designed to make a fast decision, the trigger is a real-time application, whether or not to keep the data readout by the detectors. Its goal is to select heavy flavor decays from other proton-proton interactions. The trigger was implemented to reduce the data rate from the initial bunch crossing rate of 40 MHz to about 5kHz of data recorded on tapes. The initial data rate is several orders of magnitude above the current abilities of data recording and storage, and the events that are interesting form the physics point of view and would be taken for further studies compose of a tiny fraction of the overall rate of proton-proton collisions.  The data rate reduction is achieved by making a fast decision based on approximate measurement of particle transverse momentum and energy, muon identification, track displacement, and topological properties which allows discriminating some specific decays. 
 
 The trigger system is composed of two sub-systems. The first one, called Level-0 trigger (L0), is completely implemented in hardware through the use of FPGA’s \footnote{FPGA stands from Field Programmable Gate Arrays, which are a semiconducting device based on a matrix of configurable logic blocks connected via programable interconnection. Their design has a benefit with respect to a CPU that allows massive parallelism since FPGA programable blocks can work independently and simultaneously. } L0 trigger usees the information from calorimeters and muon detector to reduce the bunch-crossing rate to below 1.1 MHz, which is the maximum input rate fo the front-end ASICs used in Velo and ST.  It is divided into three independend trigger decisions (L0 pileup, L0 muon,L0 calorimeters) each of them has its own specific selections and the final decision is a combination of each through a logic “or”. 
