@@ -4,7 +4,7 @@ The Artificial Intelligence is the New Electricity.
 \end{savequote}
 
 \chapter{Principles of Machine Learning}
-
+\label{chapter:ML}
 This chapter provides a formal introduction to Machine Learning. It begins by presenting the concept of supervised learning. The next section is dedicated to discussing each of the models, which were taken into consideration during the author's study. It contains a brief mathematical description of each model and the overall approach to training them. The next section introduces the methodology of how the performance of each model can be measured and discusses the problem of the model's prediction interpretation. In other words, it tries to answer the vital question, "why should I trust the model that I built?". 
 The final section covers the idea of bonsai Boosted Decision Trees, which are the binarizing version of the selected classifier. It explains the concept of discretization, its implementation, the reason this approach was chosen, and the issue it addresses. 
 
@@ -70,8 +70,8 @@ where $f^*(x)$ is an optimal, from the perspective of minimizing the loss functi
 \end{equation}
 where $f:X \rightarrow Y$, and the $S$ is a subset where the function $f$ is defined.  
 
-\paragraph{Information Theory}
-
+\paragraph{Information Theory} \mbox{}
+ 
 To get a better understanding of a common choice for the cost function, the remainder of this section provides a brief introduction to Information Theory.
 Back in 1964, Claude Shannon and Warren Weaver published the paper "The mathematical theory of communication" \cite{Shannon}, where they introduced the concept of information entropy. This quantity was used to determine the optimal, with respect to the expected length,  message encoding. The basic intuition behind the entropy is that more likely events are less informative than the rare ones. To be more precise, the entropy needs to fulfill the following requirements:
 \begin{enumerate}
