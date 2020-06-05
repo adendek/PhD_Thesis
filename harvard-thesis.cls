@@ -75,7 +75,7 @@
 \RequirePackage[width=5in, letterpaper]{geometry}
 
 \RequirePackage{fancyhdr} 
-\pagestyle{plain} % options: empty , plain , fancy
+\pagestyle{fancy} % options: empty , plain , fancy
 \RequirePackage[palatino]{quotchap}
 \definecolor{chaptergrey}{rgb}{0.6,0,0}
 \RequirePackage{titling}
@@ -83,6 +83,7 @@
 \RequirePackage{ragged2e}
 \RequirePackage{booktabs} % for much better looking tables
 \RequirePackage[labelfont={sf,bf,small},textfont={sf,small},justification=RaggedRight,margin=0pt, figurewithin=section, tablewithin=section]{caption}
+
 \onehalfspacing
 %\raggedright
 
@@ -141,21 +142,69 @@ BoldItalicFont=ArnoPro-BoldItalic
 \def\universitystate#1{\gdef\@universitystate{#1}}
 
 
-\renewcommand{\maketitle}{ 
-	\singlespacing
-	\thispagestyle{empty}
-	\vspace*{\fill} \vspace{150pt} \begin{center}
-	\Huge \textcolor{Crimson}{\textit{\thetitle}} \normalsize \\ \sc \vspace{100pt}
-	a dissertation presented \\ by\\
-	\theauthor\\ to\\ The \@department\\ 
-	\vspace{12pt}
-	in partial fulfillment of the requirements\\ 
-	for the degree of\\ \@degree\\ 
-	in the subject of\\ \@field\\
-	\vspace{12pt}
-	\@university\\ \@universitycity, \@universitystate\\ 
-	\@degreemonth\ \@degreeyear
-	\end{center} \vspace*{\fill}
+\renewcommand{\maketitle}{
+\newgeometry{hmargin={2cm, 2cm}, height=10.0in}     % use whatever margins you want for left, right, top and bottom.
+
+\thispagestyle{empty}
+%% ------------------------ NAGLOWEK STRONY ---------------------------------
+\includegraphics[height=37.5mm]{figures/agh_nzw_a_en_1w_wbr_rgb_150ppi.jpg}\\
+\rule{23.3mm}{0pt}
+{\large \bf \sf Faculty of Physics and Applied Computer Science}\\
+\rule{\textwidth}{3pt}\\
+\rule[2ex]
+{\textwidth}{1pt}\\
+\vspace{7ex}
+\begin{center}
+	{\LARGE \bf Doctoral thesis}\\
+	\vspace{13ex}
+	% --------------------------- IMIE I NAZWISKO -------------------------------
+	{\bf \Large Adam Dendek}\\
+	\vspace{3ex}
+	{\small \mbox{}}\\
+	\vspace{1.5ex}
+	{\small \mbox{}}\\
+	%\vspace{10ex}
+	%% ------------------------ TYTUL PRACY --------------------------------------
+	{\bf \LARGE Machine learning based long-lived particle reconstruction algorithm for Run 2 and upgrade LHCb trigger}\\
+	\vspace{6pt}
+	{\bf \LARGE and a flexible software platform for the UT detector read-out chip emulation}\\
+	\vspace{6pt}
+\end{center}
+\vspace{14ex}
+%% ------------------------ PROMOTOR PRACY ------------------------------------
+{\centering
+	\begin{tabbing}
+		{\large Supervisor: }{\large\bf dr hab. inż. Tomasz Szumlak}\\[2pt]
+	\end{tabbing}
+}
+
+\begin{center}
+	
+	\vspace*{12ex} {\sf \large \bf Cracow, July 2020}
+\end{center}
+%% =====  STRONA TYTULOWA PRACY doktorskiej====
+\afterpage{\blankpage}
+
+\newpage
+
+%% =====  TYL STRONY TYTULOWEJ PRACY DOKTORSKIEJ====
+\thispagestyle{empty}
+
+\vspace*{4ex}\noindent {\textbf{Declaration of the author of this dissertation:}}\\[2pt]
+Aware of legal responsibility for making untrue statements I
+hereby declare that I have written this dissertation myself and
+all the contents of the dissertation
+have been obtained by legal means.\\[8pt]
+
+\vspace*{4ex}
+
+
+
+\noindent {\textbf{Declaration of the  thesis
+		Supervisor:}}\\[2pt]
+This dissertation is ready to be reviewed.
+\\[8pt]
+\restoregeometry
 }
 
 % You might also consider licensing your work under Creative Commons). See: http://creativecommons.org/weblog/entry/12824 for other PhD students who have released their work under creative commons.
