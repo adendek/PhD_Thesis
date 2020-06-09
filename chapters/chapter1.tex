@@ -497,11 +497,23 @@ The SciFi detection mechanism is based on measuring the photons emitted when a p
  \section{Upstream Tacker}
  
  The Upstream Tracker (UT) is a detector that was designed to replace TT. Its structure is very similar to its predecessor. Thus it will be composed of four planes of silicon-strip detectors divided into two sets of two planes, as it is schematically shown in figure \ref{fig:UT_scheme}. Similarly to TT, the detector plates will be arranged in a $(X, U, V, X)$ orientation, with the second and third planes rotated at a stereo angle of $\pm5-5^{\circ}$ with respect to the $y$-axis. 
+The expected trigger efficiency enhancement with respect to the TT will originate from improved acceptance coverage at small polar angles and finer granularity.  This will be achieved by designing the innermost sensor to have a circular opening around the beampipe, as shown in figure \ref{fig:UT_scheme} (red sensors). The UT sensors will have improved radiation hardness, and they will be read-out by the new front-end chip, see section \ref{sec:salt}. 
  
- \subsection{SALT ASIC}
  
-The design of the new readout chip, operating at bunch crossing frequency of 40 MHz, was a critical part of the LHCb Upgrade. The primary goal of this ASIC was designed to overcome hardware trigger limitation, which significantly limits the amount of collected data, see section \ref{sec:trigger}. 
-The Silicon ASIC for LHCb Tracking (SALT) is an ASIC designed at AGH that is capable of reading 128-channels. It was manufactured in radiation-hard TSMC CMOS\footnote{CMOS stands from Complementary metal–oxide–semiconductor and it's a technology that uses complementary and symmetrical pairs of p-type and n-type  MOSFETs (Metal–Oxide–Semiconductor Field-Effect Transistor) for logic functions.} $130 nm$ \footnote{$130 nm$ refers to the minimum gate length that can be manufactured using a particular technology. } technology uses a novel architecture comprising an analog front-end and an ultra-low power (< 0.5 mW) fast (40 MSps\footnote{milion of samples per second}) sampling 6-bit ADC in each channel. 
+ \begin{figure}[!h]
+\centering
+\includegraphics{figures/UT.png}
+\caption{Layout of the four UT detector planes (looking downstream of the interaction point). Outermost, intermediate, and innermost sensors are shown in green, yellow, and red, respectively. Figure taken from \cite{upgrade_tracker_tdr}
+\label{fig:UT_scheme}}
+\end{figure}
+
+ 
+ 
+ 
+ \section{SALT ASIC}
+ \label{sec:salt}
+The design of the new readout chip, operating at bunch crossing frequency of 40 MHz, was a critical part of the LHCb Upgrade. The primary goal of this ASIC was to overcome hardware trigger limitation, which significantly limits the amount of collected data, see section \ref{sec:trigger}. 
+The Silicon ASIC for LHCb Tracking (SALT) is an ASIC designed at AGH-UST Krakow that is capable of reading 128-channels. It was manufactured in radiation-hard TSMC CMOS\footnote{CMOS stands from Complementary metal–oxide–semiconductor and it's a technology that uses complementary and symmetrical pairs of p-type and n-type  MOSFETs (Metal–Oxide–Semiconductor Field-Effect Transistor) for logic functions.} $130 nm$ \footnote{$130 nm$ refers to the minimum gate length that can be manufactured using a particular technology. } technology uses a novel architecture comprising an analog front-end and an ultra-low power (< 0.5 mW) fast (40 MSps\footnote{milion of samples per second}) sampling 6-bit ADC in each channel. 
 
 
 \begin{figure}[ht!]

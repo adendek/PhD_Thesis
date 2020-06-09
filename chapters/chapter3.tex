@@ -1316,12 +1316,40 @@ The models that were implemented to classify seeds and select tracks candidates 
 \subsection{Focal loss}
 \label{sec:focal_loss}
 
+The imbalanced classification problem occurs very often in the field of High Energy Physics. The distribution of the background examples significantly exceeds the number of interesting signal events. There are a number of methods on how to approach that kind of problem. Thus this section is dedicated to presenting the one based on a modification of a loss function. \footnote{The other method that is usually applied is dataset resampling.  The two main approaches to randomly resampling an imbalanced dataset are to delete examples from the majority class, called undersampling, and to duplicate examples from the minority class, called oversampling.}  The proposed loss function is called \textbf{focal loss} and given by \cite{focal_loss}: 
+
+\begin{equation}
+FL(p_t) = -(1-p_t)^{\gamma}log(p_t)
+\end{equation}
+
+where:
+
+\begin{equation}
+    p_t = \left\{ \begin{array}{ll}
+p & \textrm{when $y$ is true}\\
+1-p & \textrm{otherwise}\\
+\end{array} \right.
+\end{equation}
+and $y$ specify the grand-true class and $p$ is a model's predicted probability for class with label $y=1$, and $\gamma$ is a hyperparameter that define how much the well classified examples are diminished.  Figure \ref{fig:Focal loss} presents the plot of the Focal loss versus probability of a true example being classified as a true one.
+
+ \begin{figure}[!h]
+\centering
+\includegraphics{figures/Focal_loss.png}
+\caption{Visualization of the Focal loss (FL) versus the probability of true class, obtained for a different value of hyperparameter $\gamma$. $\gamma=0$ corresponds to the cross-entropy. Figure taken from \cite{focal_loss}. 
+\label{fig:Focal loss}}
+\end{figure}
+
+
+The idea of Focal loss was proposed to improve one stage image detection model. Image detection is a type of problem in which the model needs to find a location (bounding box) of particular objects, for instance, find a face on camera footage. In that kind of problem, the majority of regions are empty, and only a tiny number of them contain relevant objects. Thus this setup is very similar to the searching for an interesting physics signals. The Focal loss adds a factor $(1 - p_t)^\gamma$ to the standard cross-entropy criterion. Setting $\gamma > 0$ reduces the relative loss for well-classified examples ($p_t > 0.5$), putting more focus on hard, misclassified examples.
+ 
+In order to use Focal Loss as an xgboost objective function, one needs to implement its first and second derivative. Which can be done manually or using one of the automatic derivation packages like Scipy \cite{scipy}.   
+
 \subsection{Workflow Management System}
 
 One of the parts of the study that can be enhanced is a pattern recognition validation and performance check. 
 The current validation process requires a lot of manual intervention. The trained model needs to be extracted, then deployed within a Brunel application, after that Brunel output (DST file) is used as input to the DaVinci which produces Ntuple, which can be used by the custom root scripts to reconstruct the mass to measure its width. Each of the listed steps has to be executed manually. Those processing can be automated using software called Workflow Management System. 
 
-That kind of tool creates a Directed Acyclic Graph (DAG) \footnote{DAG is a graph that is directed and without cycles connecting the other edges. This means that it is impossible to traverse the entire graph starting at one edge. The edges of the directed graph only go one way. The graph is a topological sorting, where each node is in a certain order.} of tasks that one wants to execute, see exemplary graph in figure \ref{fig:DAG}. The scheduler, that is dedicated to executing tasks organized into the DAG, runs those tasks on an array of workers while following the specified dependencies. One of those programs, that can be easily used within the LHCb environment is an open-sourced Apache Airflow \cite{arflow} 
+That kind of tool creates a Directed Acyclic Graph (DAG) \footnote{DAG is a graph that is directed and without cycles connecting the other edges. This means that it is impossible to traverse the entire graph starting at one edge. The edges of the directed graph only go one way. The graph is a topological sorting, where each node is in a certain order.} of tasks that one wants to execute, see exemplary graph in figure \ref{fig:DAG}. The scheduler, that is dedicated to executing tasks organized into the DAG, runs those tasks on an array of workers while following the specified dependencies. One of those programs, that can be easily used within the LHCb environment is an open-sourced Apache Airflow \cite{airflow}.
 
 
 \begin{figure}[!h]
