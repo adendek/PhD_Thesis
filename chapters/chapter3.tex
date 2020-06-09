@@ -6,27 +6,27 @@ Live long and prosper
 \chapter{Machine learning based algorithm for long-lived particles reconstruction in LHCb}
 \label{chapter:PLLT}
 
-This chapter presents a Machine Learning based study related to the improvement of the Downstream Tracking algorithm. It starts by providing the general introduction to the LHCb track reconstruction methodology, then the Downstream Tracking algorithm is described including a section focused on a seed classifier. Then, the performance of the entire Downstream Tracking algorithm is discussed. The final section is dedicated to present ideas on how to approach similar types of problems by leveraging more sophisticated Deep Learning models. Those model will be tested as a part of development of the Downstream Tracking algorithm for the Upgraded LHCb experiment.   
+This chapter presents a Machine Learning based study related to the improvement of the Downstream Tracking algorithm. It starts by providing the general introduction to the LHCb track reconstruction methodology, and the Downstream Tracking algorithm is described, including a section focused on a seed classifier. Then, the performance of the entire Downstream Tracking algorithm is discussed. The final section is dedicated to present ideas on how to approach similar types of problems by leveraging more sophisticated Deep Learning models. Those models will be tested as a part of the development of the Downstream Tracking algorithm for the Upgraded LHCb experiment.   
 
 \section{Track reconstruction}
-Tracking is one of the most important steps in event reconstruction. This procedure is dedicated to reconstructing particle trajectories using a collection of hits that were created when a particle interacts with tracking stations. Tracks are used to provide precision vertexing and momentum estimation. Without that information, no physics analysis can be performed. Moreover, track information together is important is crucial for particle identifiidentification. Calorimeter cluster, muon station hits, and Cherenkov rings need associated tracks to be properly reconstructed.
+Tracking is one of the essential steps in event reconstruction. This procedure is dedicated to reconstructing particle trajectories using a collection of hits that were created when a particle interacts with tracking stations. Tracks are used to provide precision vertexing and momentum estimation. Without that information, no physics analysis can be performed. Moreover, track information together is important is crucial for particle identification. Calorimeter cluster, muon station hits, and Cherenkov rings need associated tracks to be properly reconstructed.
 
 The tracking procedure consists of three major subroutines listed below: 
 
 \begin{itemize}
     \item \textbf{Pattern Recognition}. Pattern recognition is the first step in the tracking reconstruction sequence, that is responsible for associating hits to a given particle. These algorithms have to deal with big combinatorics, which originates from the number of hits that are recorded by the tracking detectors. 
 
-    The pattern recognition efficiency has vital importance. In order to reconstruct $B$ meson decays one has to reconstruct several tracks. As an example let consider decay channel $B^0 \rightarrow K^{*0} (\rightarrow K^+\pi^â’)\mu^+  + \mu^â’$, which is one of the most promising channels to detect a New Physics phenomena \cite{k*mumu}. In this case, in order to properly reconstruct $B^0$, meson four charged particles have to be reconstructed. Thus the efficiency of $B$ meson reconstruction depends in the fourth-order on the track reconstruction efficiency. 
-    Pattern recognition algorithms have to be fast, thus there are executed as a part of software online trigger, for which timing is essential. 
+    The pattern recognition efficiency has vital importance. In order to reconstruct $B$ meson decays, one has to reconstruct several tracks. As an example, let consider decay channel $B^0 \rightarrow K^{*0} (\rightarrow K^+\pi^â')\mu^+  + \mu^â' $, which is one of the most promising channels to detect a New Physics phenomena \cite{k*mumu}. In this case, in order to accurately reconstruct $B^0$, meson four charged particles have to be reconstructed. Thus the efficiency of $B$ meson reconstruction depends on the fourth-order on the track reconstruction efficiency. 
+    Pattern recognition algorithms have to be fast. Thus there are executed as a part of software online trigger, for which timing is essential. 
 \item \textbf{Track Fitting}. The tracks that were found by the pattern reconstruction are then fitted using a Kalman filter approach \cite{kalman}\cite{kalman2}. This method is capable of accounting multiple scattering and energy loss in the detector. This tracking reconstruction subroutine is the most CPU time consuming because it has to perform the intense computation of material interaction and propagation through the magnetic field. The detailed description of how this method is utilized within the LHCb tracking can  be found in   
 
-\item \textbf{Clone killing}. The final step in the Track reconstruction is called Clone killing. In this stage tracks that have been reconstructed multiple times are eliminated. Those duplicated tracks originating from the redundant pattern recognition, when a pattern recognition algorithms create two tracks with similar hits content. The outcome of this step can be used for physics analysis.   
+\item \textbf{Clone killing}. The final step in the Track reconstruction is called Clone killing. In this stage, tracks that have been reconstructed multiple times are eliminated. Those duplicated tracks originate from the redundant pattern recognition when the algorithms create two tracks with similar hits content. The outcome of this step can be used for physics analysis.   
 \end{itemize}
 
 
 
 \section{The LHCb track types}
-The tracks reconstructed in the LHCb detector are split into 5 categories. The splitting criterion is based on subdetectors in which they were reconstructed, which is show in figure \ref{fig:track_types}. 
+The tracks reconstructed in the LHCb detector are split into five categories. The splitting criterion is based on subdetectors in which they were reconstructed, which is shown in figure \ref{fig:track_types}. 
 
 
 \begin{figure}
@@ -36,17 +36,17 @@ The tracks reconstructed in the LHCb detector are split into 5 categories. The s
 \label{fig:track_types}}
 \end{figure}
 
-The first category of the tracks are  \textbf{VELO tracks}. That tracks are reconstructed using only hits measured in the VELO detector. Therefore, for this track momentum measurement is impossible. Nevertheless, VELO tracks also play an important role in classifiers designed to select isolated particles for instance, when analysis focuses on searching for rare or forbidden decays. 
+The first category of the tracks is \textbf{VELO tracks}. That tracks are reconstructed using only hits measured in the VELO detector. Therefore, for this track, momentum measurement is impossible. Nevertheless, VELO tracks also play an essential role in classifiers designed to select isolated particles, for instance, when the analysis focuses on searching for rare or forbidden decays. 
 
-The second type of tracks are \textbf{Upstream tracks}. They consist of a VELO segments matched with hits in the TT detector. The reason, why this track are reconstructed is to expand the detector acceptance for low momentum particles which would otherwise be removed by the magnet. However, because of weak residual magnetic field in TT, estimated momentum resolution for this tracks is worst than 10\%.
+The second type of track is \textbf{Upstream tracks}. They consist of VELO segments matched with hits in the TT detector. This track is reconstructed to expand the detector's acceptance for low momentum particles, which would otherwise be removed by the magnet. However, because of the weak residual magnetic field in TT, the estimated momentum resolution for these tracks is worst than 10\%.
 
-\textbf{T tracks} are defined as those which has measurements only in T stations. Despite the worst momentum resolution, around 25\%, they play an important role in improving the purity of LHCB's photon reconstruction by identifying Electromagnetic Calorimeter clusters create by the electrons. 
+\textbf{T tracks} are defined as those which have measurements only in T stations. Despite the worst momentum resolution, around 25\%, they play a vital role in improving the purity of LHCB's photon reconstruction by identifying Electromagnetic Calorimeter clusters create by the electrons. 
 
 The most important category is \textbf{Long tracks}, which contains those tracks which originate
-in the vertex detector and traverse the full tracker acceptance including passing through T and TT stations. These tracks provide the best momentum resolution for particles which traverse the full tracking detector and are used in the majority of LHCb analyses.
+in the vertex detector and traverse the full tracker acceptance, including passing through T and TT stations. These tracks provide the best momentum resolution for particles that traverse the full tracking detector and are used in the majority of LHCb analyses.
 
-The final most important from this thesis perspective, group of tracks are \textbf{Downstream tracks}. The Downstream track contains T-segments matched to the hits in the TT. Those tracks are created by the daughters of the long-lived particles, which decays outside of the VELO detector. The reconstruction of the Downstream tracks allows to almost double the LHCb acceptance for long-lived particles. Those tracks are reconstructed by the PatLongLivedTracking algorithm. 
-The meticulous description of this algorithm is a topic of the section ??. Its source code can be found on the CERN's GitLab.
+The final most significant from this thesis perspective, a group of tracks, are \textbf{Downstream tracks}. The Downstream track contains T-segments matched to the hits in the TT. Those tracks are created by the daughters of the long-lived particles, which decays outside of the VELO detector. The reconstruction of the Downstream tracks allows almost double the LHCb acceptance for long-lived particles. Those tracks are reconstructed by the PatLongLivedTracking algorithm. 
+The accurate description of this algorithm is a topic of section \ref{Sec:Downstrean Overview}. 
 
 Within the framework of LHCb experiment, a track is modelled as a series of straight line segments, known as track states. A track state is defined as a 5 dimensional vector of the form:
 \begin{equation}
@@ -58,7 +58,7 @@ Within the framework of LHCb experiment, a track is modelled as a series of stra
 where: $t_x = \frac{\partial x}{\partial z}$ and $t_y = \frac{\partial y}{\partial z}$, $p$ is a track momentum and $q$ is a track's associated particle charge. It is worth to notice that LHCb uses the coordinate system, which is right-handed. The $x-z$ is bending plane and the $y-z$ is non-bending. 
 
 
-To visualize the complexity of tracking reconstruction problem figure \ref{fig:event display} presents a single event display, that were collected during Run II.   
+To visualize the complexity of tracking reconstruction problem figure \ref{fig:event display} presents a single event display, that was collected during Run II.   
 
 
 
@@ -71,16 +71,15 @@ To visualize the complexity of tracking reconstruction problem figure \ref{fig:e
 \end{figure}
 
 
-One of the analyses, which utilize long-lived particles is a study of time-dependent CP-violating asymmetries in $B_0 \rightarrow J/\psi K_S^0 $ decays. Measurement of time-dependent CP asymmetries provide a valuable test of the flavor sector of the Standard Model as well as an opportunity for discovery effects of physics beyond the Standard Model.  
- The study of this asymmetry in the $B_0 \rightarrow J/\psi K_S^0 $  decay mode provides a way to determinate the effective CP phase. The CP violation asymmetry in $b \rightarrow c\bar{c}s$decays of the B mesons is caused by the interference between mixed and unmixed decay amplitudes.
+One of the analyses, which utilizes long-lived particles, is a study of time-dependent CP-violating asymmetries in $B_0 \rightarrow J/\psi K_S^0 $ decays. Measurement of time-dependent $CP$ asymmetries provides a valuable test of the Standard Model's flavor sector as well as an opportunity for discovery effects of physics beyond the Standard Model.  
+ The study of this asymmetry in the $B_0 \rightarrow J/\psi K_S^0 $  decay mode provides a way to determine the effective $CP$ phase. The $CP$ violation asymmetry in $b \rightarrow c\bar{c}s$decays of the B mesons is caused by the interference between mixed and unmixed decay amplitudes.
  A state initially prepared as a $B^0$ can directly decay into $J/\psi K_S^0$ or can oscillate into a $\bar{B}$ and then decays into  $J/\psi K_S^0$. Taking the correction to the theoretical uncertainty, this amplitude is equal to twice the angle $\beta = arg [ -  \frac{V_{cd}V_{cb}^*}{V_{td}V_{tb}^*} ] $ of the Unitary Triangle. 
-
 
 
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.9]{figures/B0JPKs.png}
-\caption{The Feynman diagram presenting the decay topologies contributing to the $B_0 \rightarrow J/\psi K_S^0 $ channel:  (left) tree diagram and (right) penguin diagram, taken from [??]
+\caption{The Feynman diagram presenting the decay topologies contributing to the $B_0 \rightarrow J/\psi K_S^0 $ channel:  (left) tree diagram and (right) penguin diagram.
 \label{fig:BJPSi}}
 \end{figure}
 

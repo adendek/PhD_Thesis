@@ -569,14 +569,14 @@ One of the essential concepts regarding the hyperparameters is that its influenc
 Hyperparameter optimization is a procedure of searching for a set of hyperparameters to achieve high prediction accuracy. The wrong choice of the hyperparameters may lead to a significant decrement of the classification power of the model. There are several hyperparameter tuning techniques, but three are presented within the scope of this thesis. The difference among each of the method is a strategy to choose the set of $S$ trial points $\{\lambda^{(1)}, \ldots , \lambda^{(S)} \}$ to evaluate $f(x;\lambda)$ in order to find the $\lambda^{(i)}$ parameters that work the best. Within the scope of this thesis, three methods are explained; see section \ref{sec:GS and RS} and \ref{sec:BO}.  
 
 \subsubsection{Cross Validation}
-The optimal values of hyperparameters can be chosen using k-Fold cross-validation. The figure \ref{fig:CV} presents this idea. This method randomly split the data into k independent subsets. For instance, if $k = 5$, 80\% of data is used to train the model and 20\% to validate its performance.   
+The optimal values of hyperparameters can be chosen using k-Fold cross-validation \cite{Statistical_Methods}. Figure \ref{fig:CV} presents this idea. This method randomly split the data into k independent subsets. For instance, if $k = 5$, 80\% of data is used to train the model and 20\% to validate its performance.   
 
 Subsequently, one of the subsets is used to check the model's performance and the reaming data to train it. Each fold generates one prediction. That created set of scores can be used to estimate the statistical uncertainty of the classifier's performance. The cross-validation result is more robust and reliable than a single score calculated on a single test set.   
 
 \begin{figure}[h]
 \centering
 \includegraphics{figures/CV.PNG}
-\caption{ The visualization of k-Fold cross validation idea. Picture taken from [??].
+\caption{ The visualization of k-Fold cross validation idea. Figure taken from the internet.
 \label{fig:CV}}
 \end{figure}
 
@@ -744,7 +744,7 @@ The expected improvement can be evaluated analytically using the Gaussian Proces
 0 & \textrm{if  $\sigma=0$}\\
 \end{array} \right.
 \end{equation}
-where $Z= \frac{\mu_{x}-f(x^{\dagger})}{\sigma(x)}-\xi$, $\mu(x)$ and $\sigma(x)$ are the mean and standard deviation of the Gaussian Process posterior predicted at $x$, $\Phi$ and $\phi$ are cumulative distribution function (CDF) and probability density function (PDF) of standard distribution respectively, $\xi$ is the exploration-exploitation trade-off parameter, it is proportional to the amount of exploration during optmization. 
+where $Z= \frac{\mu_{x}-f(\widetilde{x})}{\sigma(x)}-\xi$, $\mu(x)$ and $\sigma(x)$ are the mean and standard deviation of the Gaussian Process posterior predicted at $x$, $\Phi$ and $\phi$ are cumulative distribution function (CDF) and probability density function (PDF) of standard distribution respectively, $\xi$ is the exploration-exploitation trade-off parameter, it is proportional to the amount of exploration during optmization. 
 
 \subsection{Model interpretation}
 
