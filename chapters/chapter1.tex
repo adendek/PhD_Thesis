@@ -48,6 +48,16 @@ One of the key parameters that describe the particle accelerator, except for bea
     L = \frac{1}{\sigma} \frac{dN}{dt}
 \end{equation}
 In practice, the integrated luminosity $\mathcal{L}_{int}$ with respect to the time is used instead. Based on this quantity, one can estimate the number of expected events for a given process.  
+
+The relationship between the luminosity and the beam parameters, assuming the beam is distributed according to the Gaussian distribution, is given by:
+
+\begin{equation}
+    L = \frac{N_{b}^2 \cdot n_b  \cdot f_{rev}  \cdot \gamma_{r}}{4 \pi \cdot \epsilon_n  \cdot \beta^* }  \cdot F
+\end{equation}
+
+where $N_b$ is the number of particles per bunch, $n_b$ the number of bunches per beam, $f_{rev}$ is the revolution frequency, $\gamma_{r}$ is the relativistic gamma factor, $\epsilon_n$ the normalized transverse beam emittance, $\beta^*$ the beta function at the  collision point, and $F$ the geometric luminosity reduction factor which originates from the crossing angle at the interaction point. 
+
+
 The LHC was built to deliver a peak luminosity of $10^{34} cm^2s^{-1}$ and is accomplished by colliding 2808 bunches of $1.1 \cdot 10^{11}$ protons per bunch at a bunch crossing rate of 40MHz.  For more details on the LHC machine, see \cite{LHC_machine}.
 
 Figure \ref{fig:Luminosity} presents the integrated luminosity delivered to each of the LHC experiments. It is clearly visible that LHCb operates at a significantly lower luminosity level that the remaining general-purpose experiments.  The LHCb detector was designed to operate at a luminosity of $2 \cdot 10^{32}cm^2s^{-1}$, which is two orders of magnitude less than the LHC delivered luminosity.  This limitation comes from two sources. Operating at a lower luminosity produces fewer interactions, or primary vertices (PVs), per bunch crossing. An increasing number of PVs produce complications in physics analysis, such as tracks being identified coming from the wrong PV.  Moreover, operating at lower luminosities produces less radiation damage in the detectors. To meet the occupancy requirement, the LHCb collaboration implemented the luminosity leveling technique, described in \cite{lumi_down}. 
@@ -97,7 +107,17 @@ The tracking system was designed to reconstruct the trajectory of charged partic
 \subsubsection{Velo}
 
 The Vertex Locator (Velo) \cite{VELO} is a silicon strip detector that is located close to the proton-proton collision point, and it is dedicated to providing precise measurements of the position of the primary and secondary vertices \footnote{The secondary vertex is a point of decay of short-lived particles, which was created in the primary interactions. }, which are essential to identify $b$ and $c$ hadrons, which typically traverse about 1 cm at LHCb.  
-In fact, the Velo active area is just about 8 mm away from the beamline, which is the world record. Additionally, the Velo allows measuring the Impact Parameter of charged particle's trajectories. Impact Parameter is a transverse distance of closest approach between a particle trajectory and a vertex, most commonly the primary proton-proton interaction vertex. The Impact Parameter is widely used in many LHCb data analysis to make a selection that significantly reduces the contamination from the light-quark backgrounds.  
+In fact, the Velo active area is just about 8 mm away from the beamline, which is the world record. Additionally, the Velo allows measuring the Impact Parameter of charged particle's trajectories. Impact Parameter is a transverse distance of closest approach between a particle trajectory and a vertex, most commonly the primary proton-proton interaction vertex, see figure \ref{fig:IP}. The Impact Parameter is widely used in many LHCb data analysis to make a selection that significantly reduces the contamination from the light-quark backgrounds.  
+
+
+\begin{figure}[h]
+\centering
+\includegraphics{figures/IP.PNG}
+\caption{The definition of the Impact Parameter (denoted in red). Figure presents a topology of the $K_S^0$ decaying to two pions.  
+\label{fig:IP}}
+\end{figure}
+
+
 
 
 The Velo is composed of twenty-one silicon tracking stations positioned along the beam axis ($z$). Each of the tracking stations is divided into two movable halves, called modules, consorting of two silicon microstrip sensors. Figure \ref{fig:veloLayout} presents the layout of the Velo detector. All Velo sensors operate in the vacuum to minimize the amount of the material with which particle traversing detector can interact. The Velo vacuum is separated from the beam vacuum by a thin aluminum layer called RF foil.   
@@ -496,18 +516,39 @@ The SciFi detection mechanism is based on measuring the photons emitted when a p
  
  \section{Upstream Tacker}
  
- The Upstream Tracker (UT) is a detector that was designed to replace TT. Its structure is very similar to its predecessor. Thus it will be composed of four planes of silicon-strip detectors divided into two sets of two planes, as it is schematically shown in figure \ref{fig:UT_scheme}. Similarly to TT, the detector plates will be arranged in a $(X, U, V, X)$ orientation, with the second and third planes rotated at a stereo angle of $\pm5-5^{\circ}$ with respect to the $y$-axis. 
-The expected trigger efficiency enhancement with respect to the TT will originate from improved acceptance coverage at small polar angles and finer granularity.  This will be achieved by designing the innermost sensor to have a circular opening around the beampipe, as shown in figure \ref{fig:UT_scheme} (red sensors). The UT sensors will have improved radiation hardness, and they will be read-out by the new front-end chip, see section \ref{sec:salt}. 
+The Upstream Tracker (UT) is a detector that was designed to replace TT. Its structure is very similar to its predecessor. Thus it will be composed of four planes of silicon-strip detectors divided into two sets of two planes, as it is schematically shown in figure \ref{fig:UT_scheme}. Similarly to TT, the detector plates will be arranged in a $(X, U, V, X)$ orientation, with the second and third planes rotated at a stereo angle of $\pm5^{\circ}$ with respect to the $y$-axis.   
+
+ \begin{figure}[!h]
+\centering
+\includegraphics{figures/UT.png}
+\caption{Layout of the four UT detector planes (looking downstream of the interaction point). Outermost, intermediate, and innermost sensors are shown in green, yellow, and reddish, respectively. Figure taken from \cite{upgrade_tracker_tdr}
+\label{fig:UT_scheme}}
+\end{figure}
+
+
+The expected trigger efficiency enhancement with respect to the TT will originate from improved acceptance coverage at small polar angles and finer granularity.  This will be achieved by designing the innermost sensor to have a circular opening around the beampipe, as shown in figure \ref{fig:UT_scheme} (reddish sensors). The UT sensors will have improved radiation hardness, which is critical since the UT sensors have to withstand an integrated luminosity of $50 fb^{-1}$, which is a factor of 5 more than TT.  Figure \ref{fig:UT_dose} presents  the expected irradiation dose, obtained by a FLUKA simulation \cite{fluka}, after $50 fb^{-1}$ as a function of $y$ coordinate, obtained for a detector station slice at $x=0$. Those expected irradiation doses drove the decision on the sensor's technologies. The sensors that are situated closer to the beam will be $n^{+}\text{-on-p}$ technology, which is more radiation hard than $p^{+}\text{-on-n}$.  
+ 
+ \begin{figure}[!h]
+\centering
+\includegraphics{figures/UT_dose.PNG}
+\caption{Expected fluence profile (left) and radiation dose profile (right) as a function of $y$-coordinate, for a slice of the detector that is positioned at $x=0$. This slice represent the highest fluence region throughout the UT system. Figure taken from \cite{upgrade_tracker_tdr}
+\label{fig:UT_dose}}
+\end{figure}
+
+ 
+ Four different sensors geometries, denoted type-A, B, C, and D, are used in the UT detector depending on proximity to the beam pipe, see figure \ref{fig:UT_sensors}. To mitigate the effects of irradiation and reduce leakage current, the cooling system is designed to provide a maximum operating temperature of the silicon detectors of $-5 \circ C$. 
+ 
  
  
  \begin{figure}[!h]
 \centering
-\includegraphics{figures/UT.png}
-\caption{Layout of the four UT detector planes (looking downstream of the interaction point). Outermost, intermediate, and innermost sensors are shown in green, yellow, and red, respectively. Figure taken from \cite{upgrade_tracker_tdr}
-\label{fig:UT_scheme}}
+\includegraphics{figures/UT_sensors.PNG}
+\caption{Sketch of the three mask designs for the UT upgrade. Sensors C and D are shorter and
+can be produced in a single 4 inch wafer, whereas sensors A and B require a full wafer.  Figure taken from \cite{upgrade_tracker_tdr}
+\label{fig:UT_sensors}}
 \end{figure}
 
- 
+
  
  
  \section{SALT ASIC}
@@ -524,7 +565,7 @@ The Silicon ASIC for LHCb Tracking (SALT) is an ASIC designed at AGH-UST Krakow 
 \end{figure}
 
 
-The Salt consists of two main blocks analog and digital, see diagram \ref{fig:SALT}. The analog block consists of a charge preamplifier and a fast shaper with a peaking time of about $25 ns$, and 25 ns after the peaking time of no more than $5\%$ of the peak value.  Those parameters are required to distinguish between consecutive LHC bunch crossings. The SALT was designed to operate with both types ($p^{+}-on-n$ and $n^{+}-on-p$) of strip sensors with capacitance in range $5-20~ pF$. 
+The Salt consists of two main blocks analog and digital, see diagram \ref{fig:SALT}. The analog block consists of a charge preamplifier and a fast shaper with a peaking time of about $25 ns$, and 25 ns after the peaking time of no more than $5\%$ of the peak value.  Those parameters are required to distinguish between consecutive LHC bunch crossings. The SALT was designed to operate with both types ($p^{+}\text{-on-n}$ and $n^{+}\text{-on-p}$) of strip sensors with capacitance in range $5-20~ pF$. 
 The shaper is followed by a single-to-differential block that converts a single-ended signal to a differential one \footnote{Single-ended signaling is a method of signal transmission where one wire carries a changing voltage (signal) and the second wire is connected to a reference voltage (ground), while differential signaling sends a signal via employing two complementary voltage signals to transmit one information signal \cite{signals}}. The last component of the analog block is a fully differential 6-bit SAR ADC, which converts the analog signal to the digital domain. 
 
 The digital ADC output is processed by a Digital Signal Processing (DSP) block, which performs the following algorithms: 
