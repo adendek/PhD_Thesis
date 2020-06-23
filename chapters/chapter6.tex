@@ -1,32 +1,31 @@
 \chapter{Emulation and Monitoring of the Upstream Tracker RAW data}
 
-This chapter is dedicated to present the TbUT, the tool that was designed to emulate all raw data processing algorithms. This software was implemented in order to process a raw data collected during the UT testbeams and it will play a crucial role in the future monitoring and calibration of the UT detector. 
-
-The crucial and first test to this software was UT testbeams, where TbUT was used as the main software to decode and process all collected data. The next sessions present a detailed description of each of the processing steps.
-
+This chapter is dedicated to present the emulation and monitoring for Upstream Tracker called TbUT. This tool was designed to emulate all raw data processing algorithms, as well as generate a number of performance plots. This software was implemented in order to process all raw data collected during the UT testbeams. The described software will play a crucial role in the future monitoring and calibration of the UT detector. The plots that it will generate will help to ensure the quality of the collected data. 
 
 \section{TbUT Emulation Software}
 \label{chapter:tbut}
-The TbUT package is a software developed entirely by the author and it is based on the Gaudi framework \cite{Gaudi}. Gaudi identifies components with specific purposes and well defined interfaces, interacting with each other to provide the whole functionality of an application. Gaudi provides to the application general purpose components, like messaging and configuration services, see figure \ref{fig:gaudi flow}. The configuration is performed via the customized python scripts. By design, the Gaudi framework decouples objects describing data from those describing algorithms.
+The TbUT package is a software developed entirely by the author, and similarly to all of the official LHCb software, it is based on the Gaudi framework \cite{gaudi}. Gaudi identifies components with specific purposes and well-defined interfaces, interacting with each other to provide the complete functionality of an application. Gaudi provides to the application general-purpose components, like messaging and configuration services, see figure \ref{fig:gaudi flow}. The configuration is performed via the customized python scripts. By design, the Gaudi framework decouples objects describing data from those describing algorithms.
 
 
 
 \begin{figure}[h]
 \centering
 \includegraphics{figures/TBUT.png}
-\caption{The diagram presenting the main component of the TbUT package and interactions between them. The light blue components are algorithms, dark blue are tools, and the violet ones represents serializable data. The direction of the arrows indicates whether the data is an input or output to the algorithm. }
+\caption{The diagram presenting the main component of the TbUT package and interactions between them. The light blue components are algorithms, dark blue is tools, and the violet ones represent serializable data. The direction of the arrows indicates whether the data is an input or output to the algorithm. }
 \label{fig:TbUT}
 \end{figure}
 
-It allows performing full UT DUT data processing.
-The software was designed based on the Objected Oriented Programming paradigm and each of the component inherit from one the following classes:  
+
+The software was designed based on the Object-oriented Programming paradigm.   This paradigm states that the software design is focused on data (also called \textbf{object}) rather than functions. An object can be defined as a data field that has unique attributes and behavior \cite{programming_paradigma}. 
+
+Each of the TbUT components inherits from one of the following classes:  
 
 \begin{itemize}
     \item \textbf{Algorithms}, these objects inherit from \textit{Gaudi::algorithm}, which is an essential part of the Gaudi application. They can read the input data, and via an appropriate tool process, they are able to generate the monitoring plots and store the data for the next processing steps. 
-    \item \textbf{Monitoring algorithm}, these object, similarly to the \textbf{Algorithms}, inherit from  \textit{Gaudi::algorithm}. Their job is to extract data from TES and generate a set of monitoring histograms, which suppose to give an  ultimate answer on the performance of the sensor. This component is a key to make a  proper calibration. 
-    \item \textbf{Tools} These objects inherit from the pure virtual interface \textit{IProcessingEngine} and they were designed to perform the processing actions, for instance, pedestal removal. Figure \ref{fig:gaudi flow} presents the main components of the Gaudi framework.   
+    \item \textbf{Monitoring algorithm}, these object, similarly to the \textbf{Algorithms}, inherit from  \textit{Gaudi::algorithm}. Their job is to extract data from TES and generate a set of monitoring histograms, which suppose to give an ultimate answer to the performance of the sensor. This component is key to make a  proper calibration. 
+    \item \textbf{Tools} These objects inherit from the pure virtual interface \textit{IProcessingEngine}, and they were designed to perform the processing actions, for instance, pedestal removal. Figure \ref{fig:gaudi flow} presents the main components of the Gaudi framework.   
     \item \textbf{Serializable data} this objects inherits from the \textit{GaudiKernel::DataObject} are the result of the processing via the \textbf{Tools} and can be stored inside the Transient Event Store (TES). 
-    \item \textbf{Tool's Factories} this types of objects were implemented to dynamically create tools. Its concept was introduced in the Design Pattern book \cite{DesignPatterns}. 
+    \item \textbf{ Tool's Factories} these types of objects were implemented to create tools dynamically. Its concept was introduced in the Design Pattern book \cite{DesignPatterns}. 
 \end{itemize}
 
 \begin{figure}[h]
@@ -42,10 +41,10 @@ During the lifetime of this project, the software has to able to process data ac
 
 \subsection{Pedestal Subtraction}
 
-Pedestals are the charge values measured by the read-out system in the absence of signal and noise. Each of the read-out channels can have a different ADC value of pedestal and the value of each pedestal depends on such environmental conditions as temperature and humidity as well as operating conditions, like applied bias voltage. 
-To ensure that proper pedestals are removed from the raw ADC data, prior to each data collection run the non-signal measurements (pedestal runs) ware taken. 
+Pedestals are the charge values measured by the read-out system in the absence of signal and noise. Each of the read-out channels can have a different ADC value of pedestal, and each pedestal's value depends on such environmental conditions as temperature, humidity, and operating conditions, like applied bias voltage. 
+To ensure proper pedestals are removed from the raw ADC data, prior to each data collection run, the non-signal measurements (pedestal runs) are taken. Usually, pedestal data are quick to collect since no trigger is required. 
 
-The pedestal subtraction algorithm has two phases. In first, the pedestal values are calculated. During the second one the determined pedestal values are subtracted from the raw ADC data. Figure \ref{fig:ped} presents Pedestal Subtraction algorithm sequence diagram. That kind of UML diagram \cite{UML} is dedicated to depicts interaction between objects in a sequential order. These diagrams are widely used by businessmen and software developers to document and understand requirements for new and existing systems. 
+The pedestal subtraction algorithm has two phases. In first, the pedestal values are calculated. During the second one, the determined pedestal values are subtracted from the raw ADC data. Figure \ref{fig:ped} presents Pedestal Subtraction algorithm sequence diagram. That kind of UML diagram \cite{UML} is dedicated to depicts an interaction between objects in sequential order. These diagrams are widely used by businessmen and software developers to document and understand requirements for new and existing systems. 
 
 \begin{figure}
 \centering
@@ -80,15 +79,15 @@ is not fulfilled the correction value is set to 15. To determinate the pedestal 
 p_{i}=\frac{P^{sum}_{i}}{N}
 \end{equation}
 
-The initial value of the pedestal sums is a mean value calculated for first 100 pedestal events. 
+The initial value of the pedestal sums is a mean value calculated for the first 100 pedestal events. 
 
 \subsubsection{Pedestal removing algorithm}
-The second phase of the pedestal subtraction algorithm is subtraction determined pedestal values from the raw data. This procedure can be expressed as fallows:
+The second phase of the pedestal subtraction algorithm is subtraction determined pedestal values from the raw data. This procedure can be expressed as follows:
 \begin{equation}
 ADC_{i}=ADC^{RAW}_{i}-p_{i}
 \end{equation} 
 where: $ADC_{i}$ is signal value after pedestal subtraction for event $i$, $ADC^{RAW}_{i}$ is a raw data and the $p_{i}$ is the pedestal value. Each of this quantities are in the unit of ADC counts. 
-The figure \ref{fig:raw vs ped} presents two performance monitoring plots, the first one shows the raw data collected by the DAQ system, which is an input to the TbUT, and the second one is the data after the pedestals was removed.  
+The figure \ref{fig:raw vs ped} presents two performance monitoring plots, the first one shows the raw data collected by the DAQ system, which is an input to the TbUT, and the second one is the data after the pedestals were removed.  
 
 \begin{figure}[h]
 \centering
@@ -100,13 +99,12 @@ The figure \ref{fig:raw vs ped} presents two performance monitoring plots, the f
 
 
 \section{Common mode subtraction}
-The next step within the TbUT processing chain is Common mode subtraction and the noise calculation. The determined noise, one floating-point number per channel,  is then used as a clustering threshold value for the clusterization algorithm described in the next section. 
+The next step within the TbUT processing chain is Common mode subtraction and the noise calculation. The noise, one floating-point number per channel,  is then used as a clustering threshold value for the clusterization algorithm described in the next section. 
 
 
-The total noise affecting the signal measurement consist of two main components,  the first one affects every readout channel independently and the second one is common to the group of consecutive channels.  This type of noise is called Common Mode and its origin can be grand loops in the power supplies or readout strips might pick some environmental noise. 
+The total noise affecting the signal measurement consists of two main components,  the first one affects every read-out channel independently, and the second one is common to the group of consecutive channels.  This type of noise is called Common Mode, and its origin can be grand loops in the power supplies, or read-out strips might pick some environmental noise. 
 
-The Common Mode suppression algorithm consists of two phases. The fist one was implemented to calculate the average pedestal-subtracted ADC value of the channels in
-32-channel groups. This value is calculated for each event independently. Using this mean value a search for particle hits is performed for each channel. All channels with hits are masked, and a new mean value is calculated for each 32-channel group. The channel is masked when its ADC value fulfills the following condition:
+The Common Mode suppression algorithm consists of two phases. The first one was implemented to calculate the average pedestal-subtracted ADC value of the channels in 32-channel groups. This value is calculated for each event independently. Using this mean value, a search for particle hits is performed for each channel. All channels with hits are masked, and a new mean value is calculated for each 32-channel group. The channel is masked when its ADC value fulfills the following condition:
 
 \begin{equation}
     |ADC_{i}(n)-CMS^{corr}_{i}| > \alpha \sigma^{RMS}_{i}
@@ -122,7 +120,7 @@ The second phase of the CMS algorithm is calculation of the noise per channel, a
 where $\mu_{i} = \sum_{n=1}^{N} ADC_{i}(n)$ is a mean ADC value per channel. 
 
 
-Figure \ref{fig:projections} presents the one-dimensional projection of the data after pedestal and Common Mode subtraction. It is clearly visible, based on the noise values, that the Common mode removal step is necessary to reduce the noise level and thrust increase the Signal-to-Noice (S/N) ratio. 
+Figure \ref{fig:projections} presents the one-dimensional projection of the data after pedestal and Common Mode subtraction. It is clearly visible, based on the noise values, that the Common mode removal step is necessary to reduce the noise level and thus increase the Signal-to-Noise (S/N) ratio. 
 
 A few typical events after all corrections applied are shown in figure \ref{fig:Noise}. Here, no requirement is made on the number of tracks. Strips with large ADC counts are indicative of the passage of a beam particle through the detector. The other channels show roughly Gaussian fluctuations about zero, typical of incoherent detector noise. Signals generally
 stand out significantly above the noise. These examples were selected to visualize a couple of cases that may occur, such as double strip clusters (event 14) and multiple clusters per event (event 83).  
@@ -179,9 +177,9 @@ stand out significantly above the noise. These examples were selected to visuali
 \section{Cluster finding algorithm}
 
 The final algorithm is executed to reconstruct a cluster using previously proceeded ADC values and noise per channel, which plays the role of the clusterization threshold.  
-The additional algorithm’s input parameters are the value of the low and high thresholds. 
-Clusters in the DUT are built up by searching for a seed strip that has a collected charge more than a high threshold value. The outcome of this subroutine is a list of cluster seeds. The next subroutine is dedicated to removing the seeds that belong to the same clusters. Such a situation occurs when the cluster has more than one strip and all of them have collected charges value higher than the high threshold. 
-Moving away from the seed strip, the adjacent side strips having at least ADC count as low threshold, are added to the cluster seed. The cluster is terminated when a side strip charge is below a low threshold. Thus, by definition, a cluster has between 1 and 5 strips included.
+The additional algorithm's input parameters are the value of the low and high thresholds. 
+Clusters in the DUT are built up by searching for a seed strip that has a collected charge more than a high threshold value. The outcome of this subroutine is a list of cluster seeds. The next subroutine is dedicated to removing the seeds that belong to the same clusters. Such a situation occurs when the cluster has more than one strip, and all of them have collected charges value higher than the high threshold. 
+Moving away from the seed strip, the adjacent side strips having at least ADC count as low threshold are added to the cluster seed. The cluster is terminated when a side strip charge is below a low threshold. Thus, by definition, a cluster has between 1 and 5 strips included.
 When there are multiple strips in the cluster, the position is computed using linear charge weighting:
 
 \begin{equation}
@@ -190,7 +188,7 @@ When there are multiple strips in the cluster, the position is computed using li
 where $x_i$ and $q_i$ are the positions and charges of
 the strips in the cluster, and $S$ is the number of strips that constitute the cluster. 
 \begin{algorithm}[caption={cluster creator algorithm}, label={al:cluster creator}]
-Data: ADC data after Common Mode Suppression ($1 \ldots N$ events), clusterization thresholds (one floating point number per channel)
+Data: ADC data after Common Mode Suppression ($1 \ldots N$ events), clusterization thresholds (one floating-point number per channel)
 Result: vector of reconstructed clusters
 
 for event in $1 \ldots N$ do :
@@ -202,18 +200,25 @@ end
 \end{algorithm}
 
 
-The outcome of the clusterization algorithm can be visualized in a couple of different ways. One of the most popular is the plot that presents the distribution of the cluster charge. To get an important physics quantities describing the performance of the sensor the data is fitted to the Landau Gauss convolution model, see section \ref{sec:Interaction}:
+The outcome of the clusterization algorithm can be used to visualize the quality of the collected data. One of the most important plots is a histogram presenting the distribution of the cluster charge. To get physics quantities describing the sensor's performance, the cluster charge data is fitted with the Landau Gauss convolution model. The parameter of this fit allows determining the Most Provable Value and the width of the signal.  Figure \ref{fig:clusters_with_landau} presents a collection of cluster charge distribution histograms. Those histograms were created on top of the data collected during the one of the testbeam. They were used to show the sensor performance versus the bias voltage applied to them.  Those studies were conducted to investigate the effect of a drop in the collected charge when sensor irradiation increases, which was seen previously \cite{irradiation}. The collected charge drop may lead to decreasing the Signal to Noise ratio.  
 
 
 \begin{figure}
-\begin{subfigure}
-\includegraphics{figures/single_strip.png}
-\end{subfigure}
-\hfill
-\begin{subfigure}
-\includegraphics{figures/two_strip_charge.png}
-\end{subfigure}%
-\caption{Cluster charge distributions. The upper plot presents charge distribution for 1-strip clusters and the bottom one for 2-strip clusters . The data are fit to a Landau
-convoluted with a Gaussian resolution function, and the fit is shown (red solid line).
-}\label{fig:limeResult}
+\centering
+\includegraphics{figures/landau.png}
+\caption{Cluster charge distributions. The data are fit to a Landau 
+convoluted with a Gaussian resolution function, and the fit is shown (solid blue line). Figures taken from \cite{tb1}. 
+}\label{fig:clusters_with_landau}
 \end{figure}
+
+The second type of monitoring plot is a distribution of cluster size. That plot allows better understanding of how the resolution of the sensors changes as a function of the angle between the incident particle and the normal to the sensor. Figure \ref{fig:clusters_size} presents a cluster size as a function of the sensor rotation angle obtained using data collected during the 2015 testbeam. 
+
+
+\begin{figure}
+\centering
+\includegraphics{figures/Cluster_size.PNG}
+\caption{Cluster size distributions. Figures taken from \cite{tb1}. 
+}\label{fig:clusters_size}
+\end{figure}
+
+ 

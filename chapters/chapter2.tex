@@ -242,7 +242,7 @@ If the training dataset contains $n=1000$ entries each of dimensionality $d=20$,
 Taking into consideration that dimensionality of the track classification problem, it is not expected to get promising results. Although training the $k$-NN is pretty fast, so seems to be a perfect choice for a baseline model. 
 
 \subsection{Logistic Regression}
-
+\label{sec:LogReg}
 The second type of models, that is usually trained in order to get a study baseline is Logistic Regression, which is one of the simplest parametric classification models. The name of this model may be confusing. Desire having term "regression" inside its name, it is a classification model. It is based on the assumption that the output is a linear function of the inputs: 
 \begin{equation}
 \label{eq:logreg}
@@ -332,7 +332,10 @@ Where: $\eta$ is a step size, also called learning rate, which has to be set bef
 \end{figure}
 
 
-The second parameter of the gradient descent algorithm \ref{eq:Gradient decent} is a number of examples $N$, that are taken to calculate the weight's update. There are three versions of this optimization method. The first one, also called Stochastic Gradient Descent, update weights on every single training example, which is equivalent to set $N=1$. On the other hand putting $N$ equals to all examples is called Batch Gradient Descent.  
+The second parameter of the gradient descent algorithm \ref{eq:Gradient decent} is a number of examples $N$, that are taken to calculate the weight's update. There are three versions of this optimization method. The first one, also called Stochastic Gradient Descent (SGD), update weights on every single training example, which is equivalent to set $N=1$. For $N>1$ it is called Batch Gradient Descent. The final method use $N$ equal to all examples and it is usually called Gradient Descent.    
+
+A number of enhanced version of SGD algorithm was proposed in the literature, the summary of the them can be found in \cite{GradientDescent}. 
+From the perspective of deep learning, which is a topic of section \ref{sec:DNN}, the ADAM is the most recommended one \cite{ADAM}. 
 
 \paragraph{Regularization} \mbox{}
 
@@ -412,6 +415,7 @@ Each of the additive functions is called a weak learner. The next section discus
 
 
 \subsubsection{Decision Tree Classifier}
+\label{sec:Decision_Trees}
 The Decision Tree Classifier is a parametric model implemented by recursively partitioning the input space, and defining a local model in each resulting region of input space. This can be represented by a so-called tree object, with one leaf per region. 
 Analytically, the model can be expressed in the following form: 
 
@@ -528,7 +532,7 @@ where $g_i$ and $h_i$ are gradient and hessian defined as follow:
     h_i = \left[\frac{\partial^2 \mathcal{L}(y_{i},\hat{y}^{(t-1)})}{\partial \hat{y}^{(t-1)}} \right]
 \end{equation}
 
-Learning objective written in the form of \ref{eq:xgboost_taylor} is very convenient from the perspective of the code implementation. To add customized loss function, one needs to provide the implementation of gradient and hessian. The procedure, that minimize \ref{eq:xgboost_taylor} is visualized in figure \ref{eq:xgboost_taylor}. 
+Learning objective written in the form of \ref{eq:xgboost_taylor} is very convenient from the perspective of the code implementation. To add customized loss function, one needs to provide the implementation of gradient and hessian. The procedure, that minimize \ref{eq:xgboost_taylor} is visualized in figure \ref{fig:GB_visualization}. 
 
 \begin{figure}
 \centering
@@ -550,26 +554,95 @@ XGBoost is a perfect combination of software and hardware optimization technique
     \begin{equation}
         \mathcal{L}_{xgboost}(\theta) = \mathcal{L}(\theta) + \Omega(\theta)
     \end{equation}
-    where $\Omega(\vartheta)$ is a  regularization term depends on the complexity of the model. Most of the implementation, including TMVA \cite{tmva}, miss this term and thus is more prone to overtraining. 
+    where $\Omega(\theta)$ is a  regularization term depends on the complexity of the model. Most of the implementations, including TMVA \cite{tmva}, miss this term and thus they are more prone to overtraining. 
 \end{itemize}
 
 
 \subsection{Deep Neural Network}
 \label{sec:DNN}
-The indispensable part of building the Neural Network is understanding the Deep Learning Framework. 
+This section provides a basic intuition on how the Deep Neural Network works. The one who wants to know more should refer to \cite{DLBook}.  
 
+The critical limitation of linear models described in section \ref{sec:LogReg} is a lack of ability to generate non-linear decision boundaries. To overcome this limitation, a mapping $\varphi(\vec{x})$ that transforms the input vectors into the representation that makes those vectors linearly separable has to be found. The most robust strategy of searching for such transformations is to construct a model that will be capable of learning $\varphi(\vec{x})$. One of such a model is a neural network, which parametrizes $\varphi(\vec{x};\theta)$ and uses the gradient-based optimization algorithm to find the optimal set of $\theta$ that corresponds to the desired representation. The idea of such a model comes from the brain's computation mechanism \cite{NN_brain}, which consists of computation units called neurons. The schematic view of such a model is presented in figure \ref{fig:NN}. 
+
+ A neuron is an entity that multiplies each input by its weight and sums them, afterward applies a non-linear function to the result. The non-linear function is a crucial feature of the whole neural network idea, which is indicated in figure \ref{fig:NN} by the sigmoid shaped symbol. Its absence would not allow creating a more complex model that the logistic regression \footnote{}.  The neurons are connected, forming a network, in which the output of a neuron is feed into the inputs following neurons. Neural network models arrange the neurons into layers, which reflect the flow of information. Within the scope of this thesis, only models built on top of fully-connected layers were investigated. Such a layer applies an affine transformation to the input vector \footnote{Typically, that kind of layer is called linear, which can be misled since it applies affine transformation, not a linear one}. Therefore, the output of the first layer can be written as: 
+
+\begin{equation}
+h^{(1)} = \sigma^{(1)}(w^{(1)T}\vec{x}+b^{(1)})
+\end{equation}
+and the output of the  second layer is given by: 
+\begin{equation}
+h^{(2)} = \sigma^{(2)}(w^{(2)T}h^{(1)}+b^{(2)})
+\end{equation}
+where $  \sigma^{(i)}$ is an $i$-th activation function, $\vec{x} \in \mathcal{R}^{in}$, $w^{(i)} \in \mathcal{R}^{d_{i-1}\times d_{i}}$ are weights matrix, $b^{(i)} \in \mathcal{R}^{d_{i}}$ is a bias term and $d_{i}$ is the number of neurons in the $i$-th layer.  
+
+Propagation of the input vector $\vec{x}$ through the network by iteratively calculating the output of each hidden layer to produce the prediction $\hat{y}$ is called \textbf{forward propagation}.
+
+As indicated in figure \ref{fig:NN}, the bottom layer, which has no incoming arrows, is the input to the model, where each neuron represents one component of the input vector $\vec{x}$. 
+ The top-most layer has no outgoing arrows. Thus, it is the output of the network.  The layers situated between the input and the output are called \textbf{hidden}. 
+
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[scale=0.7]{figures/NN.png}
+\caption{ Feed-forward neural network with two hidden layers.  Each circle represents a neuron, with incoming arrows being the neuron’s inputs and outgoing arrows being the neuron’s outputs. Each arrow carries a weight, reflecting its importance (not shown). Figure taken from \cite{text_processing}.
+}
+\label{fig:NN}
+\end{figure} 
+ 
+ 
+The non-linear function $\sigma$ can be implemented in various ways. The design of it is an extremely active research area. The two most popular types of activation functions are sigmoid, described in section \ref{sec:LogReg}, and rectified linear unit (ReLU)  were used to train the model within the presented studies.  
+
+ReLU \cite{relu} it defined as follow: 
+
+\begin{equation}
+ReLU(x) = max(0,x)= \left\{ \begin{array}{ll}
+x & x>0\\
+0 & \textrm{otherwise}\\
+\end{array} \right.
+\end{equation}
+
+This activation function is the default activation function recommended for use inside hidden layer for most feed-forward neural networks \cite{DLBook}. Applying this function to the output of a linear transformation yields a non-linear transformation, which remains very close to linear. The only diﬀerence between a linear unit and a rectiﬁed linear unit is that a ReLU unit outputs zero across half its domain. 
+
+One of the essential feature of this activation function is the fact that its derivative is not computationally expensive and remains large whenever the unit is active. On the other hand the drawback of the ReLU units is that they cannot learn via gradient-based methods on examples for which their activation is zero.
+This issue was addressed by Leaky ReLU \cite{LeakyReLU} and PReLU \cite{PReLU}. 
+
+\subsection{Universal Approximation Theorem}
+
+One of the most important concepts of the neural networks with at least one hidden layer is the capability of approximating any Borel measurable function \footnote{Within the scope of this thesis, a function is Borel measurable when it is continuous on a closed and bounded subset of $\mathcal{R}^{n}$}. This observation is called the universal approximation theorem. The proof of this theorem is beyond the scope of this thesis and can be find in  \cite{Universal_approx_1} and \cite{Universal_approx_2}. The intuition behind this theorem is shown in figure \ref{fig:Universal_approx}.
+The theorem does say how to construct the network, therfore the layer may be infeasibly large and may fail to learn and generalize correctly. From practical perspective it is recommended to use deeper (having more layers) rather than wider networks \cite{Relu_regions}. 
+
+\begin{figure}[!htb]
+ \begin{center}
+   \includegraphics[width=0.49\linewidth]{figures/UAT_2.PNG}
+    \includegraphics[width=0.49\linewidth]{figures/UAT.PNG}
+   \caption[Visualization of the Universal Approximation Theorem]{Visualization of the Universal Approximation Theorem. The objective was to build a network with one hidden layer that is able to represent $f(x)= x^{3}+x^{2}-x-1$. This network is presented in the left plot. The right plot resent the $f(x)$ and weighted sum of six ReLU functions. To reduce the approximation error more ReLU functions has to be added. Figure adapted from \cite{UAT_blog}
+     \label{fig:Universal_approx}}
+ \end{center}
+\end{figure}
+
+\subsubsection{Back-propagation and computational graphs}
+This subsection briefly discuss the algorithm 
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[scale=0.7]{figures/Comput_graph.PNG}
+\caption{ Feed-forward neural network with two hidden layers.  Each circle represents a neuron, with incoming arrows being the neuron’s inputs and outgoing arrows being the neuron’s outputs. Each arrow carries a weight, reflecting its importance (not shown). Figure taken from \cite{DLBook}.
+}
+\label{fig:Comput_graph}
+\end{figure} 
 
 \subsection{Hyperparameter optimization}
 \label{sec:hyperparameters}
 
-The model's hyperparameter is a non-learnable parameter that has to be set priory to the whole training process. Each of the models has its own set of hyperparameters, which depends on the model's architecture. For instance, the Decision Tree, described in section \ref{sec:Decision Tree} has such hyperparameters as maximum depth, which indicates how many levels can be produced. 
+The model's hyperparameter is a non-learnable parameter that has to be set priory to the whole training process. Each of the models has its own set of hyperparameters, which depends on the model's architecture. For instance, the Decision Tree, described in section \ref{sec:Decision_Trees} has such hyperparameters as maximum depth, which indicates what is the maximum number of splits used to construct the tree. 
 
 One of the essential concepts regarding the hyperparameters is that its influence on the model's performance is not equal. Some of the hyperparameters are more important than the others. Additionally, the interaction between each of the hyperparameters is usually unknown and complex. 
 
-Hyperparameter optimization is a procedure of searching for a set of hyperparameters to achieve high prediction accuracy. The wrong choice of the hyperparameters may lead to a significant decrement of the classification power of the model. There are several hyperparameter tuning techniques, but three are presented within the scope of this thesis. The difference among each of the method is a strategy to choose the set of $S$ trial points $\{\lambda^{(1)}, \ldots , \lambda^{(S)} \}$ to evaluate $f(x;\lambda)$ in order to find the $\lambda^{(i)}$ parameters that work the best. Within the scope of this thesis, three methods are explained; see section \ref{sec:GS and RS} and \ref{sec:BO}.  
+Hyperparameter optimization is a procedure of searching for a set of hyperparameters to achieve high prediction accuracy. The wrong choice of the hyperparameters may lead to a significant decrement of the classification power of the model. There are several hyperparameter tuning techniques, but three are presented within the scope of this thesis. The difference among each of the method is a strategy to choose the set of $S$ trial points $\{\lambda^{(1)}, \ldots , \lambda^{(S)} \}$ to evaluate $f(x;\lambda)$ in order to find the $\lambda^{(i)}$ parameters that work the best. Within the scope of this thesis, three methods are explained; see section \ref{sec:GS and RS} and \ref{sec:BayesOpt}.  
 
 \subsubsection{Cross Validation}
-The optimal values of hyperparameters can be chosen using k-Fold cross-validation \cite{Statistical_Methods}. Figure \ref{fig:CV} presents this idea. This method randomly split the data into k independent subsets. For instance, if $k = 5$, 80\% of data is used to train the model and 20\% to validate its performance.   
+One of the method to get more reliable measurement of the classifier performance is k-Fold cross-validation \cite{Statistical_Methods}, which is schematically shown in figure \ref{fig:CV}. 
+This method randomly split the data into k independent subsets. For instance, if $k = 5$, 80\% of data is used to train the model while 20\% of the data sample constitutes the validation set.   
 
 Subsequently, one of the subsets is used to check the model's performance and the reaming data to train it. Each fold generates one prediction. That created set of scores can be used to estimate the statistical uncertainty of the classifier's performance. The cross-validation result is more robust and reliable than a single score calculated on a single test set.   
 
@@ -579,6 +652,8 @@ Subsequently, one of the subsets is used to check the model's performance and th
 \caption{ The visualization of k-Fold cross validation idea. Figure taken from the internet.
 \label{fig:CV}}
 \end{figure}
+
+This technique is advantageous when deciding which set of hyperparameters works best since cross-validation provides a metric performance distribution rather than a single measurement. The drawback of this method is that for more complicated models, which training takes a lot of time it becomes infeasible.
 
 \subsubsection{Grid and Random Search}
 \label{sec:GS and RS}
@@ -629,8 +704,8 @@ This may be interpreted as a single step of the Bayesian optimization procedure,
 
 To sample efficiently trails $x$ \footnote{In the case of hyperparameters optimization $x$ corresponds to the vector of hyperparameters $x= (\lambda_1, \lambda_2, \cdots)^{T}$}, Bayesian optimization has the second component - acquisition function $u(x|D_{1:t})$. This function is used to determine the next trial location $x_{t+1}$. The acquisition function should be able to find a trade-off between exploration (searching for a region where the surrogate function is very uncertain) and exploitation (searching for values of $x$ where $f(x)$ is expected to be high), which is shown in figure \ref{fig:BO}. 
 
-\begin{algorithm}[caption={Bayesian Optimization}, label={alg:Bayesian Optimization}]
-\label{alg:BO}
+\begin{algorithm}[caption={Bayesian Optimization}, 
+\label={alg:Bayesian Optimization}]
 for t = 1,2, .., do:
    Find the next sampling point $x_{t+1}$ by optimizing the acquisition function: $x_t = argmax_x u(x| D_{1:t}) $
    Sample a possibly noisy objective function $y_{t+1} = f(x_{t+1}) + \epsilon_{t+1}$ 
@@ -756,7 +831,7 @@ The discussion of the LIME should start from choosing models, that are human int
 
 To get a better intuition of what is the purpose of the LIME explanation, let consider a toy example where the Machine Learning model has to predict whether the patient has the flu or not. The input to this model is the patient's symptoms and other features such as weight or age. LIME selects the symptoms in the patient's history that are most relevant and led to the prediction. With these approximations and the domain knowledge, the doctor can make an informative decision about whether to trust the model's prediction or not. The visualization of this toy experiment is presented in figure \ref{fig:LIME_doctor}.
 
-\begin{figure}[h]
+\begin{figure}[!htb]
 \centering
 \includegraphics{figures/lime_doctor.PNG}
 \caption{A toy example that visualizes the concept of LIME individual prediction explanation. A model predicts that a patient has the flu, and LIME highlights the symptoms in the patient's history that led to the prediction. Sneeze and headache are portrayed as contributing to the "flu" prediction, while "no fatigue" is evidence against it. Figure taken from \cite{lime}.
