@@ -491,7 +491,7 @@ To learn parameters of each function that constitutes the xgboost model the foll
 where $\mathcal{L}$ is a is a differentiable convex loss function \footnote{Within the scope of this thesis only Cross Entropy was tested, although section \ref{sec:focal_loss} provides description of an alternative.} that measures the difference between the prediction $f(\vec{x_i})$ and the target $y_i$. 
 The term $\Omega$ penalizes the complexity of the model and depends on two hyperparameters. The first one $\gamma$ is dedicated to reducing the number of leaves, and $\lambda$ is $L2$ regularization parameter. 
 
-The optimization of the formula \ref{eq:xgboost_loss} is infeasible because it introduces functions as parameters, and that why using numerical methods such as Stochastic Gradient Descent is not an option since they operate on numerical vectors, not trees.  Instead, the model is trained in an additive manner, each time a single decision tree is added to the model. Let $\hat{y}_{i}^{(t)}$ be the model's prediction of the $i$-th training instance at the $t$-th interaction, then this procedure can unfold: 
+The optimization of the formula \ref{eq:xgboost_loss} is infeasible because it introduces functions as parameters, and that why using numerical methods such as Stochastic Gradient Descent is not an option since they operate on numerical vectors, not trees.  Instead, the model is trained in an additive manner, each time a single decision tree is added to the model. Let $\hat{y}_{i}^{(t)}$ be the model's prediction of the $i$-th training instance at the $t$-th interaction, then this procedure can unfold:        
 
 \begin{equation}
 \begin{split}
@@ -552,9 +552,9 @@ XGBoost is a perfect combination of software and hardware optimization technique
     Data that do not fit into main memory divide the data into multiple blocks, and store each block on the disk. Compress each block by columns and decompress on the fly by an independent thread while disk reading.
     \item \textbf{Regularized Learning Objective} The default loss function is composed of two components 
     \begin{equation}
-        \mathcal{L}_{xgboost}(\theta) = \mathcal{L}(\theta) + \Omega(\theta)
+        \mathcal{L}_{xgboost}(w) = \mathcal{L}(w) + \Omega(w)
     \end{equation}
-    where $\Omega(\theta)$ is a  regularization term depends on the complexity of the model. Most of the implementations, including TMVA \cite{tmva}, miss this term and thus they are more prone to overtraining. 
+    where $\Omega(w)$ is a  regularization term depends on the complexity of the model. Most of the implementations, including TMVA \cite{tmva}, miss this term and thus they are more prone to overtraining. 
 \end{itemize}
 
 
@@ -564,7 +564,7 @@ This section provides a basic intuition on how the Deep Neural Network works. Th
 
 The critical limitation of linear models described in section \ref{sec:LogReg} is a lack of ability to generate non-linear decision boundaries. To overcome this limitation, a mapping $\varphi(\vec{x})$ that transforms the input vectors into the representation that makes those vectors linearly separable has to be found. The most robust strategy of searching for such transformations is to construct a model that will be capable of learning $\varphi(\vec{x})$. One of such a model is a neural network, which parametrizes $\varphi(\vec{x};\theta)$ and uses the gradient-based optimization algorithm to find the optimal set of $\theta$ that corresponds to the desired representation. The idea of such a model comes from the brain's computation mechanism \cite{NN_brain}, which consists of computation units called neurons. The schematic view of such a model is presented in figure \ref{fig:NN}. 
 
- A neuron is an entity that multiplies each input by its weight and sums them, afterward applies a non-linear function to the result. The non-linear function is a crucial feature of the whole neural network idea, which is indicated in figure \ref{fig:NN} by the sigmoid shaped symbol. Its absence would not allow creating a more complex model that the logistic regression \footnote{}.  The neurons are connected, forming a network, in which the output of a neuron is feed into the inputs following neurons. Neural network models arrange the neurons into layers, which reflect the flow of information. Within the scope of this thesis, only models built on top of fully-connected layers were investigated. Such a layer applies an affine transformation to the input vector \footnote{Typically, that kind of layer is called linear, which can be misled since it applies affine transformation, not a linear one}. Therefore, the output of the first layer can be written as: 
+ A neuron is an entity that multiplies each input by its weight and sums them, afterward applies a non-linear function to the result. The non-linear function is a crucial feature of the whole neural network idea, which is indicated in figure \ref{fig:NN} by the sigmoid shaped symbol. Its absence would not allow creating a more complex model that the logistic regression.  The neurons are connected, forming a network, in which the output of a neuron is feed into the inputs following neurons. Neural network models arrange the neurons into layers, which reflect the flow of information. Within the scope of this thesis, only models built on top of fully-connected layers were investigated. Such a layer applies an affine transformation to the input vector \footnote{Typically, that kind of layer is called linear, which can be misled since it applies affine transformation, not a linear one}. Therefore, the output of the first layer can be written as: 
 
 \begin{equation}
 h^{(1)} = \sigma^{(1)}(w^{(1)T}\vec{x}+b^{(1)})
@@ -575,10 +575,26 @@ h^{(2)} = \sigma^{(2)}(w^{(2)T}h^{(1)}+b^{(2)})
 \end{equation}
 where $  \sigma^{(i)}$ is an $i$-th activation function, $\vec{x} \in \mathcal{R}^{in}$, $w^{(i)} \in \mathcal{R}^{d_{i-1}\times d_{i}}$ are weights matrix, $b^{(i)} \in \mathcal{R}^{d_{i}}$ is a bias term and $d_{i}$ is the number of neurons in the $i$-th layer.  
 
-Propagation of the input vector $\vec{x}$ through the network by iteratively calculating the output of each hidden layer to produce the prediction $\hat{y}$ is called \textbf{forward propagation}.
+Propagation of the input vector $\vec{x}$ through the network by iteratively calculating the output of each hidden layer to produce the prediction $\hat{y}$ is called \textbf{forward propagation}, see algorithm \ref{alg:forward_prop} for implementation details. Beside of providing the prediction  the full version of the forward propagation contains loss calculation step.  
 
 As indicated in figure \ref{fig:NN}, the bottom layer, which has no incoming arrows, is the input to the model, where each neuron represents one component of the input vector $\vec{x}$. 
  The top-most layer has no outgoing arrows. Thus, it is the output of the network.  The layers situated between the input and the output are called \textbf{hidden}. 
+
+\begin{algorithm}[caption={Forward propagation of feed-forward neural network }, label={alg:forward_prop}]
+Require: Training data ${x^{train}_{i} , y_{i}}$;
+Require: Network of depth $l$;
+Require: $W^{(i)} \textrm{and}  b^{(i)}, i \in \{ 1, \ldots l \}$ the weight matrices and bias vectors of the model
+$h^{0} =x^{train}_{i}$ 
+for $k = 1, \ldots, l$ do
+   $z^{(k)} = W^{(k)}h^{k-1} +b^{(k)}$ 
+   $h^{(k)} = \sigma^{(k)}(z^{(k)})$
+end for
+$\hat{y} = h^{l}$
+$\mathcal{L} = L(y_{i}, \hat{y}) + \lambda \omega(w, b)$
+\end{algorithm}
+
+
+
 
 
 \begin{figure}[!ht]
@@ -590,7 +606,7 @@ As indicated in figure \ref{fig:NN}, the bottom layer, which has no incoming arr
 \end{figure} 
  
  
-The non-linear function $\sigma$ can be implemented in various ways. The design of it is an extremely active research area. The two most popular types of activation functions are sigmoid, described in section \ref{sec:LogReg}, and rectified linear unit (ReLU)  were used to train the model within the presented studies.  
+The non-linear function $\sigma$ can be implemented in a various ways. The design of it is an extremely active research area. The two most popular types of activation functions are sigmoid, described in section \ref{sec:LogReg}, and rectified linear unit (ReLU)  were used to train the model within the presented studies.  
 
 ReLU \cite{relu} it defined as follow: 
 
@@ -621,12 +637,55 @@ The theorem does say how to construct the network, therfore the layer may be inf
 \end{figure}
 
 \subsubsection{Back-propagation and computational graphs}
-This subsection briefly discuss the algorithm 
+The remainder of this section is dedicated to present the algorithm that is widely used to train the neural network model. It contains three steps: 
+
+\begin{itemize}
+    \item Forward propagation with loss calculation;
+    \item Calculation of the loss function with respect to the model's weights;
+    \item Weight update via Gradient Descent-like algorithm using the previously calculated gradient.
+\end{itemize}
+
+This procedure was designed to iteratively adjust the weights of connected neurons to minimalize a measure of difference, which is typically understood as a cross-entropy between the network's output vector and the desired one. As a result of this procedure, the hidden units produce a new feature's representations, which are more convenient from the downstream task perspective.  In order to obtain the amount of how much each layer needs to change to produce the correct prediction, the gradient has to be calculated. This algorithm is called \textbf{backpropagation} or backprop and was proposed in 1986 by G. Hinton \cite{backprop}. 
+The final round of evaluating a single step in training deep neural networks is to use the previously calculated gradients to update the model's weights using Gradient Descent-like algorithm. 
+
+
+
+\begin{algorithm}[caption={Backward propagation of feed-forward neural network }, label={alg:backward_prop}]
+Require: Training data ${x^{train}_{i} , y_{i}}$;
+Require: Network of depth $l$;
+Require: $W^{(i)} \textrm{and}  b^{(i)}, i \in \{ 1, \ldots l \}$ the weight matrices and bias vectors of the model
+
+run forward propagation for a given example $x^{train}_{i}$
+compute the gradient on the output layer: 
+$g \leftarrow \nabla_{\hat{y}} \mathcal{L} =  \nabla_{\hat{y}} \mathcal{L}(y, \hat{y})$ 
+for $k = l-1, \ldots, 1$ do
+   convert the gradient on the $k$-th layer output into a gradient on the pre-$\sigma$ activation: 
+   $g \leftarrow_{z^{(k)}} \mathcal{L} = g \odot \sigma'(z^{(k)})$
+   compute gradients on a weight and biases:
+   $\nabla_{b^{k}} \mathcal{L}  = g + \lambda \nabla_{b^{k}} \Omega(W, b) $ 
+   $\nabla_{W^{k}} \mathcal{L}  = g z^{(k-1)T} + \lambda \nabla_{W^{k}} \Omega(W, b) $ 
+   propagate the gradients w.r.t the next lower-level hidden layer activation:
+   $g \leftarrow_{z^{(k-1)}} \mathcal{L} = W^{(k)T}g$
+end for
+\end{algorithm}
+
+where $\odot$ is a Hadamard Product also known as element-wise product defined as:
+
+\begin{equation}
+    (A \odot B)_{ij} = (A \odot B)_{ij} = (A)_{ij} (B)_{ij}
+\end{equation}
+
+The backprop, which is demonstrated by the algorithm \ref{alg:backward_prop} is specified to the feed-forward neural network only. However, the modern deep learning framework, such as TensorFlow \cite{tensrflow} or PyTorch \cite{pytorch}, is based on a general form of backpropagation, which is implemented using computational graphs. 
+A computational graph is a graph in which each node represents a variable. The variable may be a scalar, matrix,  tensor \footnote{In the field of deep learning, a tensor is an object that has more than two dimensions and, in contrary to the tensor in physics, does not need to follow any transformation rules.} or variable of another type which is useful when calculating higher-order derivations.    
+The edges of the graph represent the operations that are applied to particular nodes. The direction of the edge indicates whether some node is a parent of a given child node. 
+One of the approaches to calculating the gradient is to extend the graph by adding additional nodes to the graph that provide a symbolic description of the desired derivatives. A detailed explanation of how the PyTorch implements gradient calculation can be found in \cite{autograd}. 
+
+From the practical perspective, the one who wants to build a model using the PyTorch framework has to define only how the forward propagation is calculated. The framework will take care of backward propagation.
 
 \begin{figure}[!ht]
 \centering
 \includegraphics[scale=0.7]{figures/Comput_graph.PNG}
-\caption{ Feed-forward neural network with two hidden layers.  Each circle represents a neuron, with incoming arrows being the neuron’s inputs and outgoing arrows being the neuron’s outputs. Each arrow carries a weight, reflecting its importance (not shown). Figure taken from \cite{DLBook}.
+\caption{Computational graph used to perform forward propagation and compute cross-entropy loss for a single layer feed-forward neural network. Figure taken from \cite{DLBook}.
 }
 \label{fig:Comput_graph}
 \end{figure} 
