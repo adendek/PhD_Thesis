@@ -85,7 +85,24 @@ One of the analyses, which utilizes long-lived particles, is a study of time-dep
 
 \section{Downstream Tracking Algorithm overview}
 \label{Sec:Downstrean Overview}
-Downstream tracks at LHCb are reconstructed in the following way. First a standalone track reconstruction in the T stations with an algorithm called PatSeeding is performed, creating T tracks. After filtering with a Machine Learning classifier to discard bad candidates i.e. tracks that don’t represent the trajectory of a real particle, these tracks are propagated back through the magnet to the TT station, assuming they are coming from the point of origin of the coordinate system. The TT consists of four layers of silicon microstrip sensors: the first and last layer have strips running vertically (so-called x1 and x2 layers) and probe the x coordinate. The layers in between, called stereo layers, have the strips tilted by 5◦ (u layer) and $-5\degree$ (v layer), respectively. This allows for the determination of  the y coordinate. The TT is separated into two sections: TTa comprises the x1 and u layer, TTb comprises the v and x2 layers. One cluster is searched for in the two x layers of the TT. This already allows to constrain the flight path of the particle with a good precision. Then a cluster in the other x layer is searched for. Lastly, clusters are searched in the u and v layers. The clusters are then fitted with a $\chi^2$ fit using a parabola as a model. As with a bunch-crossing frequency of 25 MHz spillover can occur, a flag is set for each cluster if it is likely to have been created in a different collision than the one in question (so-called «high-threshold bit»); tracks with a large number of high-threshold clusters are rejected. Finally, the best track is chosen according to the output of another multivariate classifier. 
+The description of the downstream tracking pattern recognition algorithm is based on \cite{patllt}. 
+
+Downstream tracks at LHCb are reconstructed in the following way. First, a standalone track reconstruction in the T stations with an algorithm called PatSeeding is performed, creating T tracks, also called T-Seeds. 
+Roughly speaking, the downstream tracking algorithm's goal is to add TT hits that are likely to match those T-seeds. 
+
+After filtering with a machine learning classifier to discard bad candidates that are tracks that do not represent the trajectory of a real particle, these tracks are propagated back through the magnet to the TT station, described in great details in section \ref{sec:TT}, assuming they are coming from the point of origin of the coordinate system. 
+Firstly, the pattern recognition algorithm searches for clusters in the two $x $-layers of the TT.  Those clusters already allow constraining the flight path of the particle with good precision. Then a cluster in the other $x$ layer is searched for. Finally, clusters in $U$ and $v$ layers are added. 
+ Those selected clusters are then fitted to a parabola model using a $\chi^{2} $ minimization technique \footnote{Fitting a model to data involves the construction of a test statistic from the model and the data and minimizing that test statistics with respect to all parameters that are not considered fixed }. 
+ The   $\chi^{2} $ is defined as :
+
+\begin{equation}
+\chi^{2}(\alpha) = \sum_{i=1}^{n} \frac{(f(x_i, \alpha)-x_i)^{2}}{\sigma_{i}^{2}}
+\end{equation}
+where  $\alpha$ us a vector of free parameters being fitted, $f(x_i;\alpha)$  is a model, and $\sigma_i$ are the uncertainties in the individual measurement $x_i$.  
+
+To reduce spilover influence on a tracking reconstruction, a flag is set for each cluster if it is likely to have been created in a different collision than the current one.  This flag is called a high-threshold bit.  Tracks with a large number of high-threshold clusters are rejected. 
+Finally, the best track is chosen according to the output of another multivariate classifier. 
+
 
 
 \section{Downstream Track model}
@@ -94,26 +111,20 @@ Downstream tracks at LHCb are reconstructed in the following way. First a standa
 
 \subsection{Propagation through the magnetic field}
 \label{sec:magPoint}
-Neglecting multiple scattering, particles propagating through the tracking
-stations, which all lie outside the magnetic field of \lhcb, will follow a straight
-line path, and the bending of the trajectory inside the field can be
-approximated by a sharp kink in the flight path at a given $z$ position of a magnet point, called $z_{\text{mag}}$ (see Fig.~\ref{fig:magnetPointSketch} for an illustration). The $z$ position of this point depends on the parameters of the track itself, and is also affected by inhomogenities in the field. The idea is to parametrize this point as precisely as possible from the properties
-of the T track. The following empirical formula is used:
 
+Charged particles traversing through the tracking
+stations, which are located outside of the magnetic field, follow a straight-line path. The bending of their trajectory inside the magnetic field can be approximated by a sharp kink in the flight path at a given $z$ position of a magnet point, called $z_{\text{mag}}$. The kink method is visualized in figure \ref{fig:magnetPointSketch}.
+This $z$ position depends on the parameters of the track and is also affected by inhomogeneities in the field. The numerical value of this position can be obtained for the parametrized empirical formula: 
 \begin{eqnarray}
 \label{eq:zMag}
 z_{\text{mag}} & = &\alpha_{0} + \alpha_{1} \cdot t_{y}^{2} + \alpha_{2} \cdot t_{x}^{2} + \alpha_{3} \cdot 1/p \\
 & & +\, \alpha_{4} \cdot | x_{T} | + \alpha_{5} \cdot | y_{T} | + \alpha_{6} \cdot | t_{y} |. \nonumber
 \end{eqnarray}
-Here, $t_{x}$ and $t_{y}$ are the slopes of the last track state in the
+where , $t_{x}$ and $t_{y}$ are the slopes of the last track state in the
 T stations. The absolute momentum, $p$, is
-estimated from the T track, using a parametrisation that assumes a kink of the trajectory 
-at the center of the magnet and the track to come from the point of origin.
+estimated from the T track, using a simplified parametrisation that assumes a kink of the trajectory at the center of the magnet and the track to come from the point of origin.
 The observables $x_{T}$ and $y_{T}$ are the
-$x$ and $y$ positions of the last state in the T stations, respectively. The
-variable $z_{\text{mag}}$ depends most strongly on the values in the first line of
-Eq.~\ref{eq:zMag}, while the dependence on the ones from the second row is
-smaller.
+$x$ and $y$ positions of the last state in the T stations, respectively. Analyzing equation \ref{eq:zMag}, one can find that the variable $z_{\text{mag}}$ depends mostly on the values in the first line, while the dependence on the ones from the second row is smaller.
 
 \begin{figure}[!htbp]
  \begin{center}
@@ -123,12 +134,12 @@ smaller.
  \end{center}
 \end{figure}
 
-The $\alpha$ parameters are determined in simulation, by fitting a straight line to the
-true position of the hits in TT, and a third order polynomial to the true
+
+The $\alpha$ parameters are determined in using Monte Carlo simulations. Those numbers are obtained by fitting a straight line to the true position of the hits in TT, and a third-order polynomial to the true
 position of the hits in the T stations. The crossing point of both curves in the $x$-$z$ projection
-determines the <<true>> value of $z_{\text{mag}}$. An illustration of $z_{\text{mag}}$ determined in this way, and
-the difference between the values obtained with Eq.~\ref{eq:zMag} when using measured 
-instead of simulated quantities are shown in Fig.~\ref{fig:zMag}.
+determines the \textbf{true} value of $z_{\text{mag}}$. An illustration of $z_{\text{mag}}$ determined in described way, and
+the difference between the values obtained with equation \ref{eq:zMag} when using measured 
+instead of simulated quantities are shown in figure \ref{fig:zMag}.
 
 \begin{figure}
  \begin{center}
@@ -140,23 +151,25 @@ instead of simulated quantities are shown in Fig.~\ref{fig:zMag}.
  \end{center}
 \end{figure}
 
-The $x$ position of the magnet point is then determined by extrapolating the
-state in the T stations linearly to $z_{\text{mag}}$.
+The $x$ position of the magnet point is then determined by using a linear extrapoltion of the
+state in the T stations to $z_{\text{mag}}$.
 \begin{equation}
 x_{\text{mag}} = x_{T} + t_{x} \cdot (z_{\text{mag}} - z_{T})
 \end{equation}
-For the $y$ position, an additional correction is applied:
+
+ 
+To correct the effect of magnetic filed on estimation of the $y$ position, an additional correction is applied:
 
 \begin{equation}
 \label{eq:ymag}
 y_{\text{mag}} = y_{T} + t_{y} \cdot (z_{\text{mag}} - z_{T}) - \beta_{1} \cdot t_{y} \cdot \Delta_{\text{slope}}^{2}
 \end{equation}
-with $\Delta_{\text{slope}}$ the difference of the slopes in $x$ before and after the magnet, determined as
+where $\Delta_{\text{slope}}$ is the difference of the slopes in $x$ before and after the magnet, defined as: 
 \begin{equation}
 \Delta_{\text{slope}} = \left| x_{\text{mag}}/z_{\text{mag}} - t_{x} \right|,
 \end{equation}
-and $\beta_{1}$ an empirical parameter, determined on simulation, to correct
-for the effect of the magnetic field on the $y$ position.
+and $\beta_{1}$ an empirical parameter.
+
 The predicted slope in $y$ in the TT is calculated as:
 
 \begin{equation}
@@ -166,28 +179,23 @@ with  $\beta_{0}$ an empirical parameter, determined on simulation,
 using regression with true observables, to correct
 for the effect of the bending in the magnetic field on the slope in $y$.
 
-A special treatment is needed for tracks with hits in the OT only: As the
-$y$ resolution and the resolution of the slope in $y$ is rather poor, the track
-is constrained to come from $y(z=0) = 0$. The following parametrisation is used:
+
+The track that constitutes of OT hits only requires a dedicated procedure since $y$ resolution, and the resolution of the slope in $y$ is rather poor. 
+Thus, the following parametrization is used instead:
 \begin{eqnarray}
 y_{TT} & = & y_{T} + t_{y} \cdot (z_{\text{mag}} - z_{T}) + t_{y,TT} \cdot (z_{TT} - z_{\text{mag}}) - \beta_{1} \cdot t_{y} \cdot \Delta_{\text{slope}}^{2},
 \end{eqnarray}
-with $\beta_{1}$ again determined on simulation using regression with true observables. 
-Assuming that no further correction is needed between the point of origin of the
-track and TT, the slope in the T stations can be calculated as:
+where $\beta_{1}$ is determined on simulated data using regression with true observables. 
+The current implementation of the algorithm does not apply any further track correction logic, therefore the slope in the T stations can be calculated as:
 \begin{equation}
 t_{y, \text{constr}} = y_{T} / ( z_{T} + (\beta_{0} |t_{y}| z_{\text{mag}} + \beta_{1} ) \Delta_{\text{slope}}^{2})
 \end{equation}
 
-For tracks with hits in the OT only, $t_{y, \text{constr}}$ is used in
-Eq.~\ref{eq:ymag} instead of the measured value $t_{y}$.
+For tracks with hits in the OT only, corrected $t_{y, \text{constr}}$ is used in equation \ref{eq:ymag} instead of the measured value $t_{y}$.
 
-As the magnet point will be used as an additional constraint in the \chisq fit
-(see Sect.~\ref{sec:chi2}), an uncertainty has to be assigned to it. This is
-calculated by determining the difference between the values of $x_{\text{mag}}$ and
-$y_{\text{mag}}$ obtained using simulated quantities and reconstructed quantities for
-the extrapolation. The uncertainty depends on $\Delta_{\text{slope}}$ and whether the track
-mainly has IT or OT hits. The following parametrisations of the uncertainty
+Determination of the magnet point is crucial since it is used as an additional constraint in the downstream track $\chi^{2}$ fit, see section \ref{sec:chi2}. Therefore, its uncertainty has to be determined and those are calculated by estimating the difference between the values of $x_{\text{mag}}$ and
+$y_{\text{mag}}$ obtained using simulated quantities and reconstructed quantities for the extrapolation. This uncertainty depends on $\Delta_{\text{slope}}$ and the types of hits that constitute the track. 
+The following empirical parametrisations of the uncertainty
 were used:
 \begin{eqnarray}
 \sigma_{x, OT} & = & (2.0 + 18.0\cdot \Delta_{\text{slope}})\mm \nonumber \\
@@ -195,7 +203,7 @@ were used:
 \sigma_{x, IT} & = & (1.0 + 16.0\cdot \Delta_{\text{slope}})\mm  \nonumber \\
 \sigma_{y, IT} & = & (2.0 + 15\cdot \Delta_{\text{slope}})\mm  \nonumber
 \end{eqnarray}
-These parameters were obtained by fitting residual distributions.
+The numerical values of those parameters were obtained by fitting residual distributions.
 
 \subsection{Determination of the momentum}
 The momentum of a downstream track mainly depends on the kink it undergoes in
@@ -209,7 +217,7 @@ p & = & \frac{ \gamma_{0} + \gamma_{1} \cdot t_{x}^{2} + \gamma_{2} \cdot t_{y}^
 where again the parameters $\gamma_{i}$ were determined using the true position
 of the hits in simulation. This resolution contains both the effect from the detector 
 resolution and from dependencies which are not accounted for in the parametrization. 
-The resolution is illustrated in Fig.~\ref{fig:momReso}.
+The momentum resolution is presented in figure ~\ref{fig:momReso}.
 \begin{figure}[!htbp]
  \begin{center}
    \includegraphics[width=0.8\linewidth]{figures/momReso.png}
@@ -221,42 +229,24 @@ The resolution is illustrated in Fig.~\ref{fig:momReso}.
 
 \subsection{Track model in the TT}
 \label{sec:trackModelTT}
-Despite the fact that the strength of the magnetic field is greatest in the region between TT and the T stations,
-there is a strong enough residual field in and before the TT such that low-momentum particles undergo deflection from a
-straight line. A downstream track therefore is represented by a
-parabola in the TT. However, as a parabola has three degrees of freedom, but one
-has to be able to fit a track with three clusters in the TT only, the
-curve-parameter is fixed from the kink of the track through the magnetic field in order for the $\chi^2/\ndf$ value from the fit to provide a meaningful goodness-of-fit statement.
-The track model therefore is:
+The downstream track is modeled as a parabola in the TT. This representation comes from the presence of a strong residual magnetic field in and before the TT, which deflects low-momentum particles from a straight-line trajectory. 
+The track is modeled by the following function:
 
 \begin{equation}
+\label{eq:track_in_tt}
 x(z) = x_{0} + t_{x} \cdot (z - z_{\text{mag}}) +c \cdot (z - z_{TT})^{2},
 \end{equation}
 with $z_{TT}$ the $z$ position in the middle of the TT, $z_{mag}$ the $z$
 position of the magnet point, $t_{x} $ the slope in $x$ in TT, and
-$c= 1.48\cdot 10^{-5} \cdot \Delta_{\text{slope}}$. The initial value for $x_{0}$ is $x_{\text{mag}}$. 
-The parameter $c$ is determined on
-simulation by fitting the true position of the hits in TT with a parabola
-and determining it as a function of $\Delta_{\text{slope}}$. The deflection from a
-straight line is very small: for a track with a momentum of 3\gevc it is about
-200\mum, which is about the strip pitch of a TT sensor.
+$c= 1.48\cdot 10^{-5} \cdot \Delta_{\text{slope}}$. The initial value for $x_{0}$ is $x_{\text{mag}}$.
+ 
+The parameter $c$ is determined on simulation by fitting the true position of the hits in TT with a parabola and determining it as a function of $\Delta_{\text{slope}}$. The deflection from a straight line is tiny. For instance, a track with a momentum of $3 GeV/c^{2}$, is deflected of about $200\mu m$, which is roughly the strip pitch of a TT sensor.
 
-The initial slope in $x$ of the track in TT is given by:
-\begin{equation}
-t_{x,TT} = x_{\text{mag}}/z_{\text{mag}}.
-\end{equation}
-As explained in Sect.~\ref{sec:magPoint} the slope in $y$ is given by:
-\begin{equation}
-t_{y,TT} = t_{y} \cdot (1 + \beta_{0} |t_{y}| \Delta_{\text{slope}}^{2})
-\end{equation}
-with $t_{y}$ being replaced by $t_{y, \text{constr}}$ in the case of a track with OT
-hits only. Note that $t_{y}$ is not updated in the fit (see Sect.~\ref{sec:chi2}). 
-The function for the $y$ position therefore is:
-
+The $y$ position of the track is modeled as a straight line: 
 \begin{equation}
 y(z) = y_{0} + t_{y,TT} \cdot (z - z_{\text{mag}}),
 \end{equation}
-where the initial value for $y_{0}$ is $y_{\text{mag}}$. 
+where $t_{y,TT} $ is the track's slope in $y$ given by equation \ref{eq:track_in_tt}, and  the initial value for $y_{0}$ is $y_{\text{mag}}$. 
 
 \section{Pattern Recognition}
 
@@ -270,8 +260,8 @@ This section provide an overview of the stages of the pattern recognition in Lin
 \end{figure}
 
 
-\subsection{PatSeeding}
-The algorithm, that performs pattern recognition for the T-seeds is called PatSeeding. It consists of five distinct steps: 
+\subsection{T-seeds reconstruction}
+The algorithm, that performs pattern recognition for the T-seeds is called PatSeeding \cite{PatSeeding}. It consists of five distinct steps: 
 
 \begin{itemize}
 \item hit preparation;
@@ -281,9 +271,7 @@ The algorithm, that performs pattern recognition for the T-seeds is called PatSe
 \item validation of low-quality tracks left over from the per region search;
 \end{itemize}
 
-
-Each layer of the main tracking stations is divided into six different regions. Because there
-are few tracks migrating between regions, the second step is executed per detector region, thus reducing combinatorics. Within this algorithm, the track is described as a straight line particle trajectory in $x-y$ plane.  For $x-z$ projection, a cubic model with three parameters is used:
+Within this algorithm, the track is described as a straight line in $x-y$ plane.  For $x-z$ projection, a cubic model with three parameters is used:
 \begin{eqnarray}
 x(z)&=&c(z-z_{reference})^2(1+d_{ratio}(z-z_{reference})) + b(z-z_{reference})+a \\
 y(z)&=&b_{y}z+a_y
@@ -293,23 +281,16 @@ $d_{ratio}$ describes the correlation between the quadratic and cubic terms and 
 Monte Carlo studies. The shift by $z_{reference}$ makes the fit more numerically stable ($z_{reference}$ is
 in the middle of the T stations, by default).
 
-\subsection{First search for compatible hits}
-Track candidates at this stage have the magnet point  (see Sect.~\ref{sec:magPoint}) as the only constrain,
- and the track model at this point is a straight line from (0,0,0) to the magnet point.
-To correct for the fact that most particles of interest do not originate from
-the global \lhcb origin (0,0,0), a correction to the $x$ position of the search
-window is applied, which is also derived from simulation. The value is given by:
-
+\subsection{Search for compatible hits}
+In this initial reconstruction stage, the downstream track candidates are modeled by the straight line from the LHCb origin point (0,0,0) to the magnet point, which is the only constrain. 
+This model is not always accurate since most particles of interest do not originate from the global LHCb origin (0,0,0), thus a correction to the $x$ position of the search window is applied.  The value of the search window is given by: 
 \begin{equation}
 \delta x = \text{sign}(p\cdot \text{magPol}) \cdot \left( \texttt{XCorrectionConst} / p + \texttt{XCorrectionOffset} \right),
 \end{equation}
-with magPol the magnet polarity. An illustration can be seen in
-Fig.~\ref{fig:preselWindow}, left. 
+with magPol the magnet polarity. This correction is  shown in figure ~\ref{fig:preselWindow}, left. 
  
-To search for hits compatible with this first track estimate, momentum-dependent
-search windows in the TT are opened.
-An illustration can be seen in Fig.~\ref{fig:preselWindow}. The
-dependence of the window size on the momentum is:
+Furthermore, a similar search window technique was applied to momentum-dependent search, which can be seen in figure  \ref{fig:preselWindow}. The
+dependence of the window size on the momentum is given by:
 
 \begin{equation}
 \Delta x = \texttt{XPredTolConst} / p + \texttt{XPredTolOffset},
@@ -317,13 +298,13 @@ dependence of the window size on the momentum is:
 where $p$ is the absolute value of the momentum. The parameters determining the
 size of the search window, \texttt{XPredTolConst} and
 \texttt{XPredTolOffset}, were derived on simulation, illustrated on the right of
-Fig.~\ref{fig:preselWindow}.
+figure \ref{fig:preselWindow}.
 
 \begin{figure}[!htbp]
  \begin{center}
   \includegraphics[width=0.49\linewidth]{figures/xPosCorrection1.png}
    \includegraphics[width=0.49\linewidth]{figures/preselWindow1.png}
-   \caption{Left: Distance between extrapolated track (constrained to come from the \lhcb origin (0,0,0)) and (truth-matched) hits
+   \caption{Left: Distance between extrapolated track (constrained to come from the LHCb origin (0,0,0)) and (truth-matched) hits
    before correction. The red line represents the correction function which is
    applied. Right: Distance between extrapolated track and (truth-matched) hits
    as a function of the momentum of the track for the preselection step, after
@@ -333,31 +314,26 @@ Fig.~\ref{fig:preselWindow}.
 \end{figure}
 
 
-
-Furthermore, it is checked if the hit is compatible with the expected $y$
-position in the TT with a tolerance \texttt{YTol}. As the position of a hit in the TT can only be determined up to
+Finally, the pattern reconstruction algorithm checks whether the hit is compatible with the expected $y$-position in the TT with a tolerance \texttt{YTol}. As the position of a hit in the TT can only be determined up to
 the length of a sensor module, this provides only a weak constraint. The $x$
-positions of the hits in the stereo layers are then updated, assuming the $y$
-position from the T track extrapolation.
+positions of the hits in the stereo layers are then updated, assuming the $y$ position from the T track extrapolation.
 
 All hits in all four layers which lie inside these tolerances are then stored in a container, and
-sorted according to the projection distance, \ie the absolute distance of
-the hit to the predicted position.
+sorted according to the projection distance, this is the absolute distance of the hit to the predicted position.
 
-The T track is not considered if less than 3 hits in the TT are found in
+The T track is not considered if less than three hits in the TT are found in
 total, or the $x$ or the stereo layers do not contain any hit.
 
-\subsection[Search for hits in $x$ layers]{Search for hits in {\boldmath $x$} layers}
-In this step, the algorithm iterates over all hits in the $x$ layers.
-The first hit is chosen in one of the two $x$ layers, if a hit is present. This allows for a more precise
-determination of the slope of the track and the curvature, and therefore also of the momentum of
-the track -- these quantities of the track candidate
-are therefore updated. Next, corresponding hits in the other $x$ layer are
-searched for. This essentially means that, if several hits are present in both $x$ layers, 
-all possible combinations between the hits are iterated over. This leads to the duplication of hit combinations,
-which however given the good timing performance of the algorithm (see Sect.~\ref{sec:timing}) is negligible.
 
-The search window in the other $x$ layer is defined as follows:
+\subsection[Search for hits in $x$ layers]{Search for hits in {\boldmath $x$} layers}
+In this step, the algorithm iterates over all hits preselected by the previous step hits in the $x$ layers to form preliminary track candidates.  
+
+The first hit that is added to the track candidate is chosen in one of the two $x$ layers. This allows for a more precise
+determination of the slope of the track and the curvature, and therefore also of the momentum of
+the partially reconstructed downstream track.
+
+ Next, corresponding hits in the other $x$ layer are
+searched for. The search window in the other $x$ layer is defined as follows:
 
 \begin{equation}
 \Delta x =  \texttt{TolMatchConst} / p + \texttt{TolMatchOffset} ,
@@ -366,7 +342,7 @@ if $\Delta x$ is smaller than a given value \texttt{MaxWindowSize}, otherwise
 \texttt{MaxWindowSize} is taken as the tolerance. This serves as a sanity check
 to exclude unphysically large values of the window size for low momentum
 particles. All hits within this window are then considered for further
-processing. As illustrated in the left hand plot of Fig.~\ref{fig:matchingDist}, 
+processing. As illustrated in the left hand plot of figure ~\ref{fig:matchingDist}, 
 essentially all hits from true particles
 in simulation are enclosed within this region.
 
@@ -383,11 +359,10 @@ in simulation are enclosed within this region.
 \end{figure}
 
 
-A \chisqndf fit to the $x$ coordinate is then performed for each possible candidate, consisting
+A $\chi^{2}/ndf$ fit to the $x$ coordinate is then performed for each possible candidate, consisting
 of the first hit in the $x$ layer, and one of the matching hits in the other $x$
-layer. The magnet point is used as a further point to add enough degrees of
-freedom for the fit. All track candidates are then sorted according to their
-\chisqndf value, and track candidates are discarded if the \chisqndf value is
+layer. The magnet point is used as a further point to add enough degrees of freedom for the fit. All track candidates are then sorted according to their
+$\chi^{2}/ndf$  value, and track candidates are discarded if the $\chi^{2}/ndf$  value is
 above:
 
 \begin{equation}
@@ -397,16 +372,17 @@ If no hit could be found in the other $x$ layer, the track candidate is not reje
 It is kept without fit to search for hits in the $u$ layer. This allows for hit inefficiencies in the TT.
 
 Due to the large combinatorial background, there can be many ghosts in this selection.
-Tracklets with only two $x$ hits are prone to be ghost tracks, and it is
-possible that the true combination of hits does not have the smallest \chisqndf.
-Therefore, in the next steps, the first \texttt{MaxXTracks} tracklets are
-considered whose \chisqndf value is within the range
-(\texttt{MaxChi2DistXTracks}) to the lowest \chisqndf value.
+Track candidates with only two $x$ hits are prone to be ghost tracks, and it is possible that the true combination of hits does not have the smallest $\chi^{2}/ndf$ .
+Therefore, in the next steps, the first \texttt{MaxXTracks} candidate has considered whose $\chi^{2}/ndf$  value is within the range
+(\texttt{MaxChi2DistXTracks}) to the lowest $\chi^{2}/ndf$  value.
+
+In future studies, this section can be enhanced by training a machine learning model to select the best matching hits. 
 
 \subsection[Search for hits in the $u$ layer]{Search for hits in the {\boldmath$u$} layer}
-As the parameters of a track with (mostly) two hits are reasonably well
-constrained, the search window in the $u$ layer can be smaller than 
-those in the $x$ layers. Hits are searched around the track extrapolated to the
+
+The search window in the $u$ layer can be smaller than 
+those in the $x$ layers, since the parameters of a track with two hits are reasonably well constrained. 
+ Hits are searched around the track extrapolated to the
 $u$ layer, where the $x$ position of the hit is updated by using the
 extrapolated $y$ position. All hits within a search window are
 considered, where the window size is defined as
@@ -416,25 +392,20 @@ considered, where the window size is defined as
 \Delta x =  \texttt{TolUConst} / p + \texttt{TolUOffset}.
 \end{equation}
 The parameters \texttt{TolUConst} and \texttt{TolUOffset} are determined
-from simulation, illustrated in the left hand plot of Fig.~\ref{fig:uvLayerDist}.
-The hits inside the window are then sorted according to their distance between the
-extrapolation of the track and their actual position. For each hit which passes
-this tolerance, a new tracklet is formed, until the maximum number of $xu$
-tracks (\texttt{MaxXUTracks}) is reached. Each of these tracklets is then fitted
-with a $\chi^{2}$ fit to obtain the best parameters for the following search in
-the $v$ layer.
+from simulation, visualized in the left hand plot of figure \ref{fig:uvLayerDist}.
+The hits inside the window are then sorted according to their distance between the extrapolation of the track and their actual position. For each hit which passes this tolerance, a new track candidate is formed, until the maximum number of $xu$
+tracks (\texttt{MaxXUTracks}) is reached. Each of these candidate is then fitted
+with a $\chi^{2}$ fit to obtain the best parameters for the final search in the $v$ layer.
 
 
 \subsection[Search for hits in the $v$ layer]{Search for hits in the {\boldmath$v$} layer}
-As a last step in the hit search, hits in the $v$ layer are searched for. If the
-track candidate already has 3 hits, a momentum dependent window is created
-according to
+The last step in the hit search subroutine is searching for the hits in the $v$.  If the track's candidate already has three hits, a momentum dependent window is created according to the following formula: 
 
 \begin{equation}
 \Delta x =  \texttt{TolVConst} / p + \texttt{TolVOffset}.
 \end{equation}
-See Fig.~\ref{fig:uvLayerDist} (right) for an illustration. In case the track only contains 2 hits,
-Eq.~\ref{eq:uTol} is used to determine the size of the search window.
+Figure \ref{fig:uvLayerDist} (right) ilustrate this this search window. In case the track only contains two hits,
+formula \ref{eq:uTol} is used to determine the size of the search window.
 The hit that is closest to the extrapolation is added.
 
 
@@ -450,30 +421,23 @@ The hit that is closest to the extrapolation is added.
  \end{center}
 \end{figure}
 
+
+
 \subsection[Calculation of $\chi^{2}$ and outlier removal]{Calculation of {\boldmath$\chi^{2}$} and outlier removal}
 \label{sec:chi2}
-At this stage, all possible hits in TT were added to the track candidates
-(see Sect.~\ref{sec:addOverlap} for adding hits in the overlap region of TT), 
-and a $\chi^{2}$ fit is performed. If the fit \chisqndf is smaller than a given value (\texttt{MaxChi2} and \texttt{MaxChi2ThreeHits} for candidates with 4 and 3 hits, respectively), 
-the candidate is accepted and passed on to the next stage, otherwise the hit 
-that contributes most to the $\chi^{2}$ is removed and the fit is repeated. 
-The procedure is repeated until either the \chisqndf  is small enough, 
-or there are hits in less than 3 planes left.
-Furthermore, for each iteration of the fit, an explicit check is made
+At this stage, all possible hits in TT were added to the track candidates. It is the time to perform a $\chi^{2}$ fit. If the fit $\chi^{2}/ndf$ is smaller than a given value (\texttt{MaxChi2} and \texttt{MaxChi2ThreeHits} for candidates with four and three hits, respectively, 
+the candidate is accepted and passed on to the next stage. Otherwise, the hit that contributes most to the $\chi^{2}$ is removed, and the fit is repeated. 
+The procedure is repeated until either the $\chi^{2}/ndf$  is small enough, 
+or alternatively, there are hits in less than three planes left.
+Furthermore, for each iteration of the fit, an explicit sanity check is made
 that each hit is still compatible with the estimated $y$ position of the track.
-
-The $\chi^{2}$ fit only fits in 1 dimension by converting the displacement in
-$y$ in a displacement in $x$.
-The $\chi^{2}$ is therefore defined as:
+The $\chi^{2}$ is defined as:
 
 \begin{equation}
 \chi^{2} = \sum_{i \in hits} \frac{ \left(x_{i} - (x_{0} + t_{x}\cdot(z-z_{mag}) + c \cdot (z - z_{TT})(z - z_{TT}) + \left( \frac{dx}{dy} \right)_{i} y_{0}) \right)^{2}  }{\sigma_{i}^{2}}
 \end{equation}
 with $\left( \frac{dx}{dy} \right)_{i}$ the slope of the stereo plane and
-$y_{0}$ the displacement in $y$. Note that $c$ is fixed, see Sect.~\ref{sec:trackModelTT}.
-Forming partial derivates with respect to $x_{0}, t_{x}$ and $y_{0}$, a set of
-linear equations can be solved to obtain the three free parameters. For details
-of this calculation, see for example Ref.~\cite{Stahl:DiplomaThesis}.
+$y_{0}$ the displacement in $y$. Note that $c$ is fixed, see section \ref{sec:trackModelTT}.
 
 \begin{figure}[!htbp]
  \begin{center}
@@ -486,21 +450,25 @@ of this calculation, see for example Ref.~\cite{Stahl:DiplomaThesis}.
  \end{center}
 \end{figure}
 
+
+
+
+
 \subsection{Accepting the candidates}
 \label{sec:acceptCandidate}
 The track candidate is accepted in the final selection of track candidates,
-if it fulfills the following criteria. All cut values were trained on simulated data, 
-with the goal to keep a balance between signal retention and background rejection. 
+if it fulfills the following criteria. All cut values were obtained using simulated data, 
+with the goal of keeping a balance between signal retention and background rejection. 
 
 \begin{itemize}
 \item It has at least three hits in at least three different layers of the TT.
-\item The \chisqndf is below a given threshold. This value is different for
+\item The $\chi^{2}/ndf$is below a given threshold. This value is different for
 three-hit tracks (\texttt{MaxChi2ThreeHits}) and tracks with four or more hits (\texttt{MaxChi2}),
-see Fig.~\ref{fig:chi2Cuts}. 
+see figure \ref{fig:chi2Cuts}. 
 \item It contains at least as many hits as any other candidate for a given T track.
 \item The track has a pseudorapidity larger than 1.8 and smaller than 5.2.
 \item At least \texttt{NMinHighThresHits} of the hits have the high-threshold
-bit set.
+bitset.
 \end{itemize}
 
 The following checks are repeated, this time using the fit result instead of the initial estimates.
@@ -514,16 +482,15 @@ T track.
 
 \subsection{Addition of overlap hits}
 \label{sec:addOverlap}
-For all track candidates which are retained at this stage, hits in the overlap
+For all track candidates whose are retained at this stage, hits in the overlap
 regions of the TT detector are searched for. 
-TT modules are staggered in the $z$ direction with an overlap, in order to cover the insensitive region of the modules and to not lose efficiency. A hit qualifies as an overlap hit if it
+TT modules are staggered in the $z$ direction with an overlap, in order to cover the insensitive region of the modules and not to lose efficiency. A hit qualifies as an overlap hit if it
 is within a certain distance to the extrapolated track (\texttt{OverlapTol}), in the same
 layer as an already existing hit, but at a
 different $z$ position.
 
-As adding an additional hit will change the properties of the track, the track
-is again fitted with the potential removal of outliers. It is then again checked
-that it fulfills the criteria in Sect.~\ref{sec:acceptCandidate}.
+As adding an extra hit will change the track's properties, the track
+is again fitted with the potential removal of outliers. 
 
 
 \section{Selection of T tracks }
@@ -763,15 +730,51 @@ The response of the binned BDT and its ROC curve are presented in figures  \ref{
 \end{figure}
 
 
-
-
-
 \begin{figure}
 \centering
 \hspace*{-1cm}\includegraphics[scale=0.6]{figures/bBDT_normalized_cm.png}
 \caption{Normalised confusion matrix determined for the trained bonsai BDT (binned) model.}
 \label{fig:CM normalized}
 \end{figure}
+
+\section{T-Seed classifier: studies based on the deep neural networks}
+
+The final model that was taken into consideration when working on a T-Seed selection model was deep neural network, described in \ref{sec:DNN}. 
+All described studies were conducted using PyTorch framework \cite{pytorch}, which allows performing tensor computation acceleration via graphics processing units (GPU) and supports automatic differentiation. Moreover, Pytorch supports the C++ interface, which makes the model's deployment within the LHCb trigger convenient. 
+However, studies discussed in this section were never deployed within the LHCb trigger system due to the algorithm's submission deadline \footnote{I am not sure if I should mention this.}, and the model based on bonsai Boosted Decision Trees was selected instead.  Nevertheless, the author decided to include this section since it may be useful for future studies. 
+ 
+Pytorch provides a number of utility classes that abstract a lot of complexity, such as data parallelization and batching. From a practical perspective, the developer needs to ensure a customized implementation of the following classes: 
+
+\begin{itemize}
+\item \textbf{Dataset}. This class is dedicated to retrieving the input data,  applying data transformations and data argumentation logic, and converting processed data into the PyTorch tensor.  Within the scope of the presented study, the transformations were limited to adding such features as pseudorapidity and the data normalization. 
+ \item \textbf{DataLoader}. The DataLoader combines a Datasets object with different samplers producing data batches. Samplers are an implementation of a different strategy for providing data to models. 
+\item \textbf{Criterion}. The criterion is an abstraction of the loss function. Within this study's scope, only the Cross-entropy were used, although other options may be worth trying, see section \ref{sec:Focal_loss}. 
+\item \textbf{Optimizer}. An optimizer is an object that holds the current state of the model and update parameters based on the computed gradients. The choice of the optimizer is considered as a model hyperparameter. However, the recommended and used in the presented studies choice is Adam. 
+\item \textbf{Model}. It is an abstraction that defines the forward propagation, and it contains all components (layers) of the model.
+Thus, the researcher has to implement two methods. The first one is the \textit{init} method, which initializes the network's layers. It is recommended to initialize the layers using the so-called Xavier initialization \cite{xavier}.  The second method that has to be implemented is the \textit{forward} method. It defines how the input tensor is processed in order to get a vector of output probabilities. The framework takes care of the backward propagation, so the researcher does not need to manually calculate the gradients of the loss function. 
+\item \textbf{Training loop}. This utility function defines the way how the model is trained and allows customizing training progress measurement. 
+Roughly speaking, the training loop consists of two nested loops (one over epochs and the second one over batches of data). 
+Within the presented studies' scope, the training progress was measured as loss function versus epoch and batch. To ensure model implementation correctness, quantities such as information flow and the changes in the model's weight distributions over time were monitored. 
+\end{itemize}
+
+When all of the mentioned components are implemented, the next step is to check whether the model can overfit a small sample of the data, this method was recommended in \cite{karpathy}. If the model is not able to reach a low error rate that may indicate some issues, bugs, or misconfiguration.
+
+
+
+\begin{figure}[!htb]
+  \centering
+\begin{tabular}{c c}
+\subfloat{{\includegraphics[width=0.4\textwidth]{figures/NN/learning_curve2nn.png} }}%
+    \subfloat{{\includegraphics[width=0.4\textwidth]{figures/NN/learning_curve2nn.png} }}%
+\\
+\subfloat{{\includegraphics[width=0.4\textwidth]{figures/NN/learning_curve10nn.png}}}%
+    \subfloat{{\includegraphics[width=0.4\textwidth]{figures/NN/learning_curve15nn.png} }}%
+\end{tabular}
+   \caption{Fully-connected neural network learning rates.  Each of the plot was obtained for model having different number of hidden layer. Upper left for two, upper right three, bottom left ten and  bottom right fifteen.  
+\label{fig:DNN_learning_rates}}  
+\end{figure}
+
+
 
 
 

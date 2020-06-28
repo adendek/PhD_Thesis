@@ -105,7 +105,7 @@ The LHCb, like all of the currently operating High Energy Physics experiments, c
 The tracking system was designed to reconstruct the trajectory of charged particles by combining information from a set of tracking stations. The reconstructed track information is used to estimate the momentum of the charged particles. This estimation is possible due to the magnet's installation, which creates a magnetic field used to bend a particle trajectory. The LHCb tracking system is composed of the Vertex Locator (VELO), the Tracker Turicensis (TT), and the three tracking stations T1, T2, and T3; see \ref{fig:LHCBlayout}.  The brief description of each tracking sub-detectors is a topic of this subsection. 
 
 \subsubsection{Velo}
-
+\label{sec:velo}
 The Vertex Locator (Velo) \cite{VELO} is a silicon strip detector that is located close to the proton-proton collision point, and it is dedicated to providing precise measurements of the position of the primary and secondary vertices \footnote{The secondary vertex is a point of decay of short-lived particles, which was created in the primary interactions. }, which are essential to identify $b$ and $c$ hadrons, which typically traverse about 1 cm at LHCb.  
 In fact, the Velo active area is just about 8 mm away from the beamline, which is the world record. Additionally, the Velo allows measuring the Impact Parameter of charged particle's trajectories. Impact Parameter is a transverse distance of closest approach between a particle trajectory and a vertex, most commonly the primary proton-proton interaction vertex, see figure \ref{fig:IP}. The Impact Parameter is widely used in many LHCb data analysis to make a selection that significantly reduces the contamination from the light-quark backgrounds.  
 
@@ -162,7 +162,7 @@ The Velo detector delivers primary vertex measurements characterized by the exce
 \end{figure}
 
 \subsubsection{Silicon Tracker}
-
+\label{sec:ST}
 Silicon Tracker \cite{Silicon_Tracker} is a project that consists of two detectors based on similar technology and whose data is read by the same read-out system. The first component of this project is called TT, and it is based upstream of the magnet, while the Inner Tracker (IT) is an inner region of three tracking stations (T1, T2, T3, see figure \ref{fig:LHCBlayout}) located downstream to the magnet.
 
 The TT goal is to reconstruct low-momentum tracks outside of the detector's acceptance and tracks that come from the daughters of long-lived particles, which decay outside of the Velo. The IT reconstruct tracks with momentum larger than $1.5 GeV/c$ situated near the beam axis and passed through the magnetic field, covering approximately $2\%$ of the detector acceptance, which corresponds to $20\%$ of all tracks that pass through T stations. On the other hand, TT is designed to cover the full LHCb acceptance region.  
