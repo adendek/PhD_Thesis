@@ -1394,11 +1394,22 @@ This section is dedicated to present ideas, that can be leverages to solve a sim
 That section contains a collection of concepts, that author would want to try or implement during the study on Downstream Tracking if he would have a time travel machine.
 
 \subsection{Recurrent Neural Network}
-The models that were implemented to classify seeds and select tracks candidates uses information about the entire tracks only. They don't utilize any information can be extracted from the hits that were used to reconstruct the input tracks.  
+The models that were implemented to classify T-seeds and select tracks candidates use information that represents entire tracks, such as a track fit quality or total momentum. None of the models that were taken into consideration so far utilizes any additional information about the hits that constitute the given track.  The hypothesis is that those hits may provide some hint of whether a particular track is a ghost. 
+Moreover, the hits can be treated as a series and thus processed by the recurrent neural network (RNN). The hits representation produced by the RNN can be combined with features global track features. 
+
+A recurrent neural network can be thought of as multiple copies of the same network, each passing a message to a successor, and thus it is a promising model to approach a series problem.  Figure \ref{fig:rnn} visualize the idea of how the recurrent neural networks work. 
+
+ \begin{figure}[!h]
+\centering
+\includegraphics{figures/RNN-unrolled.png}
+\caption{Visualization of an unrolled recurrent neural network. $x_i$ may represent a $i$-th hit that constitute a track. Figure taken from \cite{rnn}. 
+\label{fig:Focal loss}}
+\end{figure}
+
+From practical perspective, such a RNN is not be able to learn long range dependencies \cite{bengio_rnn}. Therefore, it is recommended to use more robust implementation called Long-Short Term Memory (LSTM) \cite{lstm}. 
 
 
-
-One possible enhancement to the Recurrent Neural Network is leveraging the idea of attention mechanism \cite{attention}.  Attention mechanism the method to provides an understanding of other relevant sequence elements into the one that is currently processing. In other words, it relates different positions of a single sequence in order to compute a representation of the sequence. Attention has been used successfully in a variety of tasks Natural Language Processing (NLP) and sequence modeling tasks
+One possible enhancement to the recurrent neural network is leveraging the idea of attention mechanism \cite{attention}. Attention mechanism the method to provides an understanding of other relevant sequence elements into the one that is currently processing. In other words, it relates different positions of a single sequence in order to compute a representation of the sequence. Attention has been used successfully in a variety of tasks Natural Language Processing (NLP) and sequence modeling tasks. 
 
 \subsection{Focal loss}
 \label{sec:focal_loss}
