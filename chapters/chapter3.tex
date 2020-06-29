@@ -613,7 +613,7 @@ Figure \ref{fig:kNN score} presents the ROC AUC score versus the number of neigh
 \subsection{Logistic Regression}
 
 The second baseline mode is Logistic Regression described in section \ref{sec:LogReg}, and implemented using sklearn framework.
-The input to this model has to be normalized, which is the only preprocessing step that was applied, therfore the data processing pipeline was identical to the one described in section \ref{sec:KNN_result}. 
+The input to this model has to be normalized, which is the only preprocessing step that was applied, therefore the data processing pipeline was identical to the one described in section \ref{sec:KNN_result}. 
 To maximize the classifier score analysis of the L1 and L2 regularization constants were conducted. These two hyperparameters were introduced to reduce overfitting, although as presented in figure \ref{fig:RL_L1} none of them has significant impact on the classifier performance.
 
 
@@ -754,36 +754,62 @@ Pytorch provides a number of utility classes that abstract a lot of complexity, 
 Thus, the researcher has to implement two methods. The first one is the \textit{init} method, which initializes the network's layers. It is recommended to initialize the layers using the so-called Xavier initialization \cite{xavier}.  The second method that has to be implemented is the \textit{forward} method. It defines how the input tensor is processed in order to get a vector of output probabilities. The framework takes care of the backward propagation, so the researcher does not need to manually calculate the gradients of the loss function. 
 \item \textbf{Training loop}. This utility function defines the way how the model is trained and allows customizing training progress measurement. 
 Roughly speaking, the training loop consists of two nested loops (one over epochs and the second one over batches of data). 
-Within the presented studies' scope, the training progress was measured as loss function versus epoch and batch. To ensure model implementation correctness, quantities such as information flow and the changes in the model's weight distributions over time were monitored. 
+Within the presented studies' scope, the training progress was measured as loss function versus epoch and batch. To ensure model implementation correctness, quantities such as information flow and the changes in the model's weight distributions over time were monitored. An exemplary plot of the information flow is shown in figure \ref{fig:gradient_flow}.
 \end{itemize}
+
+\begin{figure}[!h]
+\centering
+\includegraphics[width=\textwidth]{figures/NN/Gradient_flow.png}
+\caption{Information or gradient flow visualization. This figure was generated for network with ten hidden units.The light blue bars indicate mean value of the information flow, while the dark blue bars represent maximum value of it.    
+\label{fig:gradient_flow}}
+\end{figure}
+
 
 When all of the mentioned components are implemented, the next step is to check whether the model can overfit a small sample of the data, this method was recommended in \cite{karpathy}. If the model is not able to reach a low error rate that may indicate some issues, bugs, or misconfiguration.
 
+The most time-consuming part of the study was the optimization of the network's architecture since the number of tested models exceeds one hundred, and training one model might take a couple of hours.
+
+The architecture optimization procedure consists of the following steps. Start with a shallow network, that contains one hidden layer only.  Then iteratively extend the previously tested model by adding a hidden layer, which makes the model deeper.  Within each iteration step, try to optimize the architecture of the current network. The following options were considered: 
+
+\begin{itemize}
+\item Use the constant number of neurons per hidden layer; 
+\item Build a triangle-type of a network, where the number of the hidden neurons decrease with network depth; 
+\item Optimize number of hidden units per layer using Bayesian Optimization;
+\item Use the Batch Normalization layer. This special layer normalizes the output of a previous activation layer by subtracting the batch mean and dividing by the batch standard deviation. For more details on how the Batch Normalization works, see \cite{batch_norm}. 
+\item Use dropout layer. The dropout layer works by randomly setting the outgoing edges of hidden units (neurons that make up hidden layers) to zero at each update of the training phase. The detailed description of the dropout layer can be found in the original paper \cite{dropout}. 
+\end{itemize}
 
 
 \begin{figure}[!htb]
   \centering
 \begin{tabular}{c c}
-\subfloat{{\includegraphics[width=0.4\textwidth]{figures/NN/learning_curve2nn.png} }}%
+\subfloat{{\includegraphics[width=0.4\textwidth]{figures/NN/learning_curve1nn.png} }}%
     \subfloat{{\includegraphics[width=0.4\textwidth]{figures/NN/learning_curve2nn.png} }}%
 \\
 \subfloat{{\includegraphics[width=0.4\textwidth]{figures/NN/learning_curve10nn.png}}}%
     \subfloat{{\includegraphics[width=0.4\textwidth]{figures/NN/learning_curve15nn.png} }}%
 \end{tabular}
-   \caption{Fully-connected neural network learning rates.  Each of the plot was obtained for model having different number of hidden layer. Upper left for two, upper right three, bottom left ten and  bottom right fifteen.  
+   \caption{Fully-connected neural network learning rates.  Each of the plot was obtained for model having different number of hidden layer. Upper left for one, upper right two, bottom left ten and  bottom right fifteen. 
 \label{fig:DNN_learning_rates}}  
 \end{figure}
 
 
+Within the presented study, models with up to fifteen hidden layers were tested. Figure \ref{fig:DNN_learning_rates} presents a selected four learning curves (cross-entropy loss versus the number of training epoch) each of them documents training progress of a model with a different number of hidden layers. Surprisingly, adding more than two hidden layers to the model has a neglectable influence on the model prediction performance, even though the number of the network parameters was increased by two orders of magnitude.  Thus, the recommended architecture of the network contains two hidden layers. Such a shallow network 
+produce similar results, measured as a ROC AUC, to the optimized xgboost one, which is shown in figure \ref{fig:DNN_roc}.
 
+\begin{figure}[!ht]
+\centering
+\includegraphics[scale=0.7]{figures/NN/roc_3nn.png}
+\caption{ Fully-connected neural network containing two hidden layers ROC curve for selecting true T tracks using a simulated  $B_0\rightarrow J/\psi K_S^0 $ sample.      
+\label{fig:DNN_roc}}
+\end{figure}
 
 
 \section{T-Seed classifier: model output interpretation}
 
 This section is dedicated to emphasizing the importance of the model's interpretability. As presented before the T-Seed filter achieved satisfactory overall performance, but the question regarding the reliance still remains open.
-Within the scope of this thesis, the three approaches have been tested, each of them has been described in section [??]. 
-
-The classical approach to interpret feature importance is to look at the model globally. The  usual way to view the importance of the features is to investigate the following metrics: 
+Within the scope of this thesis, the three approaches to interpret Boosted Decision Tree model prediction have been tested, each of them has been described in section \ref{sec:lime}. 
+The classical approach to interpret feature importance is to look at the model globally. The usual way to view the importance of the features is to investigate the following metrics: 
 
 \begin{itemize}
     \item The feature \textbf{weight} is the number of times a feature appears in a tree across an ensemble of trees. For instance, if the model was built on top of the dataset consisting  of 100 entries, five features and the model itself consist of 3 trees, and suppose the \textit{feature1} occurs in the 1 splits, 2 splits, and 3 splits in each of three trees respectively, then the weight for \textit{feature1} will be $1+2+3=6$.   
@@ -806,15 +832,12 @@ For the above reason, none of the presented global metrics gives an ultimate est
 
 The second method to take a closer look inside the xgboost black box is based on the idea of Shapley value, described in section [??]. The analysis of the importance of the features is usually done by presenting two groups of plots. The first group is presented in figure \ref{fig:shap overall}. The standardized importance plot provides a notion of relative feature importance and can be compared with the classical plots described previously. Although, it doesn't provide any additional information on the distribution of impacts that feature has on the model's output. This plot doesn't give any understanding of the feature's value on the model performance  \cite{Shap2}. To overcome this limitation the Shap summary plot was introduced, which leverages individualized feature attribution to the model's decision. In order to make that kind of plot the features are sorted by their global impact $\sum_{j=1}^{N}|\phi_i^{(j)}|$, then each of the dots corresponding to the Shap values $\phi_i^{(j)}|$ are plotted horizontally, stacked vertically when running out of space. This concept allows achieving similar effect to the violin plots, which can be further enhanced by coloring the dots according to the feature's value. 
 
-
 \begin{figure}
-\begin{subfigure}
-\includegraphics[width=\linewidth]{figures/Shap_overall.png}
-\end{subfigure}
-\hfill
-\begin{subfigure}
-\includegraphics[width=\linewidth]{figures/Shap_mean.png}
-\end{subfigure}%
+\begin{tabular}{c}
+\subfloat{{\includegraphics[width=\textwidth]{figures/Shap_overall.png} }}%
+\\
+\subfloat{{\includegraphics[width=\textwidth]{figures/Shap_mean.png}}}%
+\end{tabular}
    \caption{Shap summary plots of all T-Seed classifier features. The plots were obtained using a sample of 50 thousand test examples. The interpretation of this plot is straightforward, the higher Shap value of the feature, the higher influence on the decision of whether T-Seed is reconstructable. In the upper plot, each dot represents every feature for every individual test example that was run through the model. Dot's are colored by the feature's value (red high, blue low). The bottom plot presents the standard feature importance bar plot. The x-axis is essentially the average magnitude change in model output when a feature is hidden from the model.}  
 \label{fig:shap overall}
 \end{figure}
@@ -827,7 +850,7 @@ The second type of Shap based plots is dependence plots presented in figure \ref
 The plot (a) is the one that is the easiest to interpret. It shows the shap value versus the number of layers. It is clearly visible that T tracks with the numbers of plates smaller than 15 push strongly the classifier toward negative decisions. This effect is escalated when the track has a big value of $\chi^2 /\ dof $. This means the classifier decision agreed with an initial understanding of the problem, the track that was reconstructed using a small number of hits and it's fit to the track model has a poor quality is more likely to be a ghost. 
 
 
-\begin{figure}[tbph]
+\begin{figure}[!ht]
 \begin{center}
 \includegraphics[width = 0.49\textwidth]{figures/dependence_plot3.png} 
 \includegraphics[width = 0.49\textwidth]{figures/dependence_plot1.png} \\

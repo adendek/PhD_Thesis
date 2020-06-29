@@ -43,13 +43,14 @@ The protons are finally injected into two beam pipes of the LHC. The beam in one
 \label{fig:Bottle}}
 \end{figure}
 
-One of the key parameters that describe the particle accelerator, except for beam energy, is the quantity called integrated luminosity.  The luminosity is defined as  the ratio of the  number of events detected $N$ in a certain time $t$ to the interaction cross-section $\sigma$:  
+One of the key parameters that describe a particle accelerator (note, that we consider here the circular machine), except for beam energy, is the quantity called instantaneous luminosity.  This quantity expresses the ability to produce the required number of interactions by an accelerator, and formally it is the proportionality factor between the number of events per second (also called the event rate) $\frac{dN}{dt}$ and the interaction cross-section $\sigma$:
 \begin{equation}
-    L = \frac{1}{\sigma} \frac{dN}{dt}
+   \frac{dN}{dt} = L \times \sigma 
 \end{equation}
-In practice, the integrated luminosity $\mathcal{L}_{int}$ with respect to the time is used instead. Based on this quantity, one can estimate the number of expected events for a given process.  
+The unit of the luminosity is $cm^{-2}s^{-1}$.
+In practice, the integrated luminosity $\mathcal{L}_{int}$ is often used. Based on this quantity, one can estimate the number of expected events for a given process.  
 
-The relationship between the luminosity and the beam parameters, assuming the beam is distributed according to the Gaussian distribution, is given by:
+The relationship between the luminosity and the beam parameters for a circular machine, assuming that the beam profile is distributed according to the Gaussian distribution, and there is negligible energy loss during the bunch-bunch head-on collision is given by:
 
 \begin{equation}
     L = \frac{N_{b}^2 \cdot n_b  \cdot f_{rev}  \cdot \gamma_{r}}{4 \pi \cdot \epsilon_n  \cdot \beta^* }  \cdot F
@@ -58,7 +59,7 @@ The relationship between the luminosity and the beam parameters, assuming the be
 where $N_b$ is the number of particles per bunch, $n_b$ the number of bunches per beam, $f_{rev}$ is the revolution frequency, $\gamma_{r}$ is the relativistic gamma factor, $\epsilon_n$ the normalized transverse beam emittance, $\beta^*$ the beta function at the  collision point, and $F$ the geometric luminosity reduction factor which originates from the crossing angle at the interaction point. 
 
 
-The LHC was built to deliver a peak luminosity of $10^{34} cm^2s^{-1}$ and is accomplished by colliding 2808 bunches of $1.1 \cdot 10^{11}$ protons per bunch at a bunch crossing rate of 40MHz.  For more details on the LHC machine, see \cite{LHC_machine}.
+The LHC was built to deliver a peak luminosity of $10^{34} cm^{-2}s^{-1}$ and is accomplished by colliding 2808 bunches of $1.1 \cdot 10^{11}$ protons per bunch at a bunch crossing rate of 40MHz.  For more details on the LHC machine, see \cite{LHC_machine}.
 
 Figure \ref{fig:Luminosity} presents the integrated luminosity delivered to each of the LHC experiments. It is clearly visible that LHCb operates at a significantly lower luminosity level that the remaining general-purpose experiments.  The LHCb detector was designed to operate at a luminosity of $2 \cdot 10^{32}cm^2s^{-1}$, which is two orders of magnitude less than the LHC delivered luminosity.  This limitation comes from two sources. Operating at a lower luminosity produces fewer interactions, or primary vertices (PVs), per bunch crossing. An increasing number of PVs produce complications in physics analysis, such as tracks being identified coming from the wrong PV.  Moreover, operating at lower luminosities produces less radiation damage in the detectors. To meet the occupancy requirement, the LHCb collaboration implemented the luminosity leveling technique, described in \cite{lumi_down}. 
 
