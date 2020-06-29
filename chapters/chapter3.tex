@@ -880,6 +880,68 @@ The red color indicates that the features pushed prediction toward ghost.
 
 
 
+\section{Final machine learning model to select best downstream track candidates}
+
+In the final stage of the downstream tracking pattern recognition algorithm, a neural network is used to find the best downstream track
+candidate for a given input T-seed.
+ The network used is a fully-connected neural network with one hidden layer and fifteen nodes in the hidden layer. 
+A rectified linear unit was used as an activation function for the hidden layer. For the output layer, a sigmoid function was used. The following input variables were used:
+
+\begin{itemize}
+\item log($\chi^{2}/ndf$): Natural logarithm of track $\chi^{2}\ndf$
+given by the fit
+\item log($p$): Natural logarithm of the total momentum
+\item log($p_t$): Natural logarithm of the transverse momentum
+\item $\Delta p$: Difference between momentum estimate from the T track and final momentum estimate of downstream track candidate.
+%\item log(initial $\chi^{2}$): Natural logarithm of the $\chi^{2}$ contribution
+ %of the point in the magnet.
+\item log($|\Delta x$ magnet$|$): Natural logarithm of $x$ displacement with respect to
+the point in the magnet after the fit
+\item log($|$dist$_{\text{initial}}|$): Natural logarithm of the distance of the hits with respect 
+to the initial track estimate
+%\item log(worst $\chi^{2}$): Natural logarithm of the largest $\chi^{2}$ of any
+%hit on the track.
+\item log($|y_{track}(0)|$): Natural logarithm of the absolute $y$ position at
+$z=0$
+\item log($|x_{track}(0)|$): Natural logarithm of the absolute $x$ position at
+$z=0$
+\item \# fired Layers: Number of layers in the TT with hits on this track
+\end{itemize}
+
+The network was trained on simulated $D^{*+} \rightarrow D^{0}\pi^{+}$ decays. The sample was chosen, such that also tracks from $D$ decays are considered, which tend to have a softer momentum spectrum than tracks from $B$ 
+decays and are more similar to low-momentum background tracks. Only downstream reconstructible tracks
+coming from a strange particle decay that are not electrons were used as
+signal events. As a background sample, 
+tracks that could not be matched to a single
+simulated particle were used. The distributions of input variables are shown in figure \ref{fig:MVAVars}. The classifier output distribution and the ROC curve is shown in figure ~\ref{fig:ROC}. 
+
+\begin{figure}[!htbp]
+\begin{center}
+\includegraphics[width=0.99\linewidth]{figures/NN/input_mva.PNG}
+\caption{Input variables for the training Fully-connected neural network to select the best downstream track candidates. The training dataset contains of
+ $D^{*+} \rightarrow D^{0}\pi^{+}$ decays. The blue solid histogram is the signal
+distribution, while the hashed red distribution is the background.}
+\label{fig:MVAVars}
+\end{center}
+\end{figure}
+
+\begin{figure}[!htbp]
+\begin{center}
+\includegraphics[rotate=270, width=0.45\linewidth]{figures/NN/ClassifierOutputDistribution.pdf}
+\includegraphics[rotate=270, width=0.45\linewidth]{figures/NN/ROC.pdf}
+\caption{Left: Classifier output distribution, blue is signal, red is
+background. The default cut is at 0.1. Right: ROC curve for the fully-connected in LongLivedTracking algorithm. Both are obtained on a sample of
+ $D^{*+} \rightarrow D^{0}\pi^{+}$  decays.}
+\label{fig:ROC}
+\end{center}
+\end{figure}
+
+A candidate is written out if its probability of being a true downstream track is larger than a specific tunable threshold.
+
+
+
+
+
 
 \section{Physics Performance of the modernised downstream tracking}
 \label{sec:physic_performance}
@@ -888,7 +950,7 @@ The second method uses to evaluate the performance using real data. This method 
 
 \subsection{Monte Carlo based Downstream Tracking efficiency  }
 
-The pattern recognition algorithm performance measurement can be determined from Monte Carlo simulations by comparing the number of track that the algorithm managed to find (reconstructed tracks) with the maximum number of track that it could possibly find (reconstructable tracks). This section is based on the one \cite{PATLLT}. 
+The pattern recognition algorithm performance measurement can be determined from Monte Carlo simulations by comparing the number of track that the algorithm managed to find (reconstructed tracks) with the maximum number of track that it could possibly find (reconstructable tracks). 
 
 To discuss the efficiency of the pattern recognition algorithm it is obligatory to define a number of quantities that are used in this study.  First of all, the MC particle is said to be \textbf{reconstructible}, if it left the sufficient number of hits in the detector. The particle reconstructible criteria vary for one subdetector to another, and they are summarized \cite{track_def}:
 
