@@ -225,9 +225,9 @@ This dissertation is ready to be reviewed.
 	\renewcommand{\headrulewidth}{0.0pt} 
 	\begin{center}
 	\vspace*{1pt}
-	\Large \textcolor{Crimson}{\textit{\@title}} \normalsize\\
+	\Large \textcolor{Crimson}{\textit{Machine learning based long-lived particle reconstruction algorithm for Run 2 and upgrade LHCb trigger and a flexible software platform for the UT detector read-out chip emulation }} \normalsize\\
 	\vspace*{15pt}
-	\sc Abstract \\ \rm
+	\sc Streszczenie \\ \rm
 	\end{center}
 	\doublespace %Harvard registrar requests that abstract is double spaced
 	\input{frontmatter/abstract}
