@@ -1,5 +1,24 @@
-\chapter{Conclusion}
+\begin{savequote}[75mm] 
+I'm smart enough to know that I'm dumb.
+\qauthor{Richard Feynman}
 
+\end{savequote}
 
-This chapter provide the introduction to the second part of the thesis, the one that is related to the Upgrade study. It starts by presenting the physics of the silicon detectors. Then, the testbeam setup and software is described.  
+\chapter{Summary and Outlook}
 
+This thesis discusses two projects, which were performed during the author's work for the LHCb Collaboration. 
+
+The first one was related to the design and of the algorithm dedicated to reconstructing long-lived particles, such as $K_{s}$ or $\Lambda$ hadrons in the LHCb experiment. This algorithm is used to reconstruct the particles that decay outside of the Velo detector and depends on the input from the tracking station situated downstream from the Velo. Thus, it is called Downstream tracking. This reconstruction algorithm's time budget is minimal because it is executed as a part of a real-time LHCb trigger system.  However, due to the number of particles created during each beam crossing, the previous implementation of the tracking procedures a ghost tracks. Those tracks are the ones that do not represent a trajectory of a real particle.  To significantly reduce such cases, the two machine learning classifiers were trained and deployed. 
+Within this project, a number of models, including Logistic Regression, $k$NN, Boosted Decision Trees, and deep neural networks, were tested.
+That kind of enhancement of the tracking reconstruction has never been deployed before. 
+Each of the presented models was carefully tested, and its hyperparameters were optimized using various strategies, including Bayesian optimization.  Within the process of model validation, two methods for model prediction interpretation were proposed. 
+
+As a result of this work, the track reconstruction efficiency of the Downstream tracking was improved from 81.4\% to 85.3 \%, while the rate of misreconstructed tracks was lowered by a relative 17 \%. Those numbers were obtained using a simulated sample of  $B_0 \rightarrow J/\Psi K^{0}_{s}$. 
+These changes were integrated into the LHCb software and are used in the official reconstruction of LHCb data. Also, the new algorithm reduces the runtime of the pattern recognition by 45\%, with respect to its predecessor.  
+
+The Downstream tracking algorithm was also tested using real data. The performance of the algorithm was evaluated via reconstruction of the $K_S \rightarrow \pi^{+} + \pi^{-}$  and $\Lambda_{0} \rightarrow $.  The new algorithm allows reconstructing 6.5 \% more signals than the previous algorithm's implementation.   
+Furthermore, the tuning of the classification threshold value can decrease the background by 18\% while sacrificing only 3\% of the signal. 
+
+The presented within this thesis Downstream reconstruction algorithm is conceptually similar to the one that will be used to collect the data after the LHCb Upgrade.  Within this thesis, a couple of further enhancements were proposed. Some of them are related to the new neural network architectures and one to the new loss function, which takes into consideration the imbalanced class problem.
+
+The second part of this thesis was related to the design and implementation of the Upstream Tracker raw data emulation and performance monitoring software platform.  The result of this study an application TbUT has been created. This software was used to process all data collected during the testbeam experiments. In the future, this software will be used to perform calibration of the UT processing algorithms as well as for performance diagnostics of the UT detector.  
