@@ -1,7 +1,7 @@
 \chapter{Emulation and Monitoring of the Upstream Tracker RAW data}
-This chapter is dedicated to present the emulation and monitoring for Upstream Tracker called TbUT.
-To provide a picture of the data emulation process it starts by introducing the physics principles of data collection. Within this section 3 of silicon sensors and the interaction of particles with matter.   
-The TbUT tool was designed to emulate all raw data processing algorithms, as well as generate a number of performance plots. This software was implemented in order to process all raw data collected during the UT testbeams. The described software will play a crucial role in the future monitoring and calibration of the UT detector. The plots that will be generated will help to ensure the quality of the collected data. 
+This chapter is dedicated to present the emulation and monitoring tool for Upstream Tracker called TbUT.
+To provide a full picture of the data emulation process, this chapter starts by introducing the physics principles of data collection. Within this section, the interaction of particles with matter and review of the principles of particle detection in silicon will be discussed.    
+The TbUT tool was designed to emulate all raw data processing algorithms, as well as generate a number of performance plots. This software was implemented in order to process all raw data collected during the UT testbeams. The described software will also play a crucial role in the future monitoring and calibration of the UT detector. The outcome of this software will help to ensure the quality of the collected data. 
 
 
 \section{Interaction of Particles with Matter}
@@ -30,9 +30,9 @@ where:
     \end{equation}
 \end{itemize}
 
-The initial version of formula \ref{eq:Bethe_bloh} was proposed by Bethe \cite{Bethe} only three years after Schrodinger postulated non-relativistic Quantum Mechanic. The quantity that can be calculated using this formula can be interpreted as stopping power. Figure \ref{fig:Bethe_bloh} present the stopping power for positive muons in copper as a function of $\beta \gamma$. 
+The initial version of formula \ref{eq:Bethe_bloh} was proposed by Bethe \cite{Bethe} only three years after Schrodinger postulated non-relativistic Quantum Mechanic. The quantity $-\left< \frac{dE}{dx} \right>$ that is be calculated using this formula can be interpreted as stopping power of a particular material. Figure \ref{fig:Bethe_bloh} presents the stopping power for positive muons in copper as a function of $\beta \gamma$. 
 
-For low energies the $\frac{1}{\beta^2}$ term in equation \ref{eq:Bethe_bloh} is dominant and the stopping power decreases with increasing energy, reaching minimum when $(\beta \gamma) \approx 3 $. A particle with an energy loss at the mimimum is called a Minimum Ionizing Particle (MIP). 
+For low energies term $\frac{1}{\beta^2}$ in equation \ref{eq:Bethe_bloh} is dominant and the stopping power decreases with increasing energy, reaching minimum when $(\beta \gamma) \approx 3 $. A particle with an energy loss at the mimimum is called a Minimum Ionizing Particle (MIP). 
 
 
 
@@ -44,9 +44,9 @@ For low energies the $\frac{1}{\beta^2}$ term in equation \ref{eq:Bethe_bloh} is
 \end{figure}
 
 
-It is worth noticing that for a charged particle traversing a material, the number of collisions occurring and the amount of energy transferred in each collision is subject to statistical fluctuations. The formula \ref{eq:Bethe_bloh} provides only the average value of energy loss, which due to the statistical nature of the process, may vary from the actual value. 
-For a relatively thick material, the number of collisions will be large enough to justify modeling distribution of the energy loss by the Gaussian \cite{gauss_sensor}. Although for a thinner material, which is widely used in the current tracking detector, the average energy loss is small, the large fluctuation in the deposited energy can be observed.    
- This results in a largely asymmetric charge distribution, which is parametrized by the long-tailed Landau distribution, which is shown in figure \ref{fig:}.  This distribution is traditionally fit with a Landau convoluted with a Gaussian to extract the peak charge collection, the Most Probable Value (MPV), given by:
+It is worth noticing that for a charged particle traversing a material, the number of collisions occurring and the amount of energy transferred in each collision is subject to statistical fluctuations. Formula \ref{eq:Bethe_bloh} provides only the average value of energy loss, which due to the statistical nature of the process, may vary from the actual value. 
+For a relatively thick material, the number of collisions will be large enough to justify modeling distribution of the energy loss by the Gaussian \cite{gauss_sensor}. Although for a thinner materials, which are widely used in the current tracking detector, the average energy loss is small, so the large fluctuation in the deposited energy can be observed.    
+ This results in a largely asymmetric charge distribution, which can be parametrized by the long-tailed Landau distribution shown in figure \ref{fig:}.  This distribution is traditionally fit with a Landau convoluted with a Gaussian to extract the peak charge collection, the Most Probable Value (MPV). The Landau-Gauss convolution is given by:
 
 \begin{equation}
     \begin{split}
@@ -61,9 +61,39 @@ where :
 and $\tau$ is a Landau Most Provable Value (MPV), $\sigma_{width}$ is a width of a Landau distribution and $\sigma_{noise}$ is a Gaussian standard deviation. Landau Gauss convolution is calculated using numerical integration. 
 
 
-\section{semiconducting sensor}
-To provide a proper description of the silicon detector, first the principles of semiconductors has to be explained. 
-The semiconductor is a material, that has a band gap smaller than in insulators and bigger than in conductor, for each the band gap doesn't exist. The band gap, also called energy gap, is a energy range where no electron state can exist, it also refer to energy distance between the valence and conducting bands. In semiconductors, crystal lattice thermal vibrations can provide enough energy to transfer the elector across the band gap. When the process of excitation happens, the electron that was excited, left a hole. The hole is a carrier of a positive charge. 
+\section{Operational principles of silicon detectors}
+
+As described in chapter 1, a number of technologies are used for full event reconstruction at LHCb.  However, to achieve the highest precision and resolution, semiconducting detectors are currently the best option, since that kind of detector uses a minimal amount of material which particles need to traverse in order to be detected.  The only limitation of using this technology is its cost. Therefore they are placed where the highest resolution is required, such as around the interaction point in the LHCb detector. 
+Most of the semiconducting detectors are made of silicon.  This is due to the fact that silicon is the second most abundant element on Earth as well as it is widely used in industrial applications. Silicon has an atomic number of 14, so it has 14 electrons in three shells (2,8,4 arrangement). The electrons arranged in the outer shell are the valence electrons.  Due to this electron arrangement, within the crystalline lattice structure, each silicon atom is surrounded by four neighbors, see figure \ref{fig:silicon}.  
+
+\begin{figure}[h]
+\centering
+\includegraphics{figures/silicon.PNG}
+\caption{Lattice structure of silicon. The building block of the lattice is formed by a central atom bonded to four
+equidistant neighbors (indicated in gray). Figure taken from \cite{semiconductors_det_sys}}
+\label{fig:silicon}
+\end{figure}
+
+
+
+
+The periodic potential of the crystalline structure results in the formation of electron energy bands. The energy bounds can be interpreted as a collection of the individual energy levels of electrons surrounding each atom. The wavefunctions of the individual electrons are overlapped with those of electrons enclosed to neighboring atoms, and due to the Pauli exclusion principle, the electron energy levels are prohibited from being the same so that one obtains a set of closely spaced energy levels, forming an energy band. 
+
+At a temperature of absolute zero, the highest energy electrons lie in the valence band. Those electrons are strongly bonded to the atoms and thus are not able to carry the charge.  However, at the higher temperatures, electrons also occupy higher energy states known as the conduction band. The energy between the valence and conduction bands is called the band gap energy $E_g$.  The value of the band gap allows classifying materials into conductors, semiconductors, and insulators, which is shown in figure \ref{fig:boundgap}. 
+
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.7]{figures/bound_gap.PNG}
+\caption{Classification of metals, semiconductors and insulators according to their
+band gap energy $E_g$. The Fermi level, denoted by the dashed line, is a hypothetical energy level which would have a 50\% probability of being occupied at thermal equilibrium.  Figure adapted from \cite{radiation_damage}}
+\label{fig:boundgap}
+\end{figure}
+
+One of the most important features of semiconductors is their ability to change electrical conductivity by the introduction of impurity atoms, called dopants. These dopants replace atoms of the original material at lattice sites, and typically have more ($n$-type donors) or fewer ($p$-type donors) valence electrons in their outer shell, depending on the specific type of dopant. 
+
+
+Most semiconductor detectors are made of $p-n$ junction, which manifests a diode characteristic. Such a semiconducting device is created by connecting two components of opposite dopping in good thermodynamical contact. The most important property of such a device is the phenomena of electrons diffusing into the $p$ region and holes into the $n$ region where they recombined. As a consequence, an electric field gradient is created, which eventually stops the diffusion process and establishes thermal equilibrium. Due to the electric field, there is a potential difference across the junction. The region of changing potential is known as depletion zone since it is almost fully depleted of all mobile charge carriers. This characteristic can be utilized for radiation detectors. Electron-hole pairs that are generated in the depletion zone by ionizing radiation will be separated by the electric field and can be detected if electrical contacts are connected to the device.
 
 
 \section{TbUT Emulation Software}
@@ -95,7 +125,7 @@ Each of the TbUT components inherits from one of the following classes:
 \begin{figure}[h]
 \centering
 \includegraphics{figures/Gaudi.png}
-\caption{Object Diagram of the GAUDI Architecture, figure taken from \cite{Gaudi}}
+\caption{Object Diagram of the Gaudi architecture, figure taken from \cite{Gaudi}}
 \label{fig:gaudi flow}
 \end{figure}
 
@@ -151,14 +181,16 @@ The second phase of the pedestal subtraction algorithm is subtraction determined
 ADC_{i}=ADC^{RAW}_{i}-p_{i}
 \end{equation} 
 where: $ADC_{i}$ is signal value after pedestal subtraction for event $i$, $ADC^{RAW}_{i}$ is a raw data and the $p_{i}$ is the pedestal value. Each of this quantities are in the unit of ADC counts. 
-The figure \ref{fig:raw vs ped} presents two performance monitoring plots, the first one shows the raw data collected by the DAQ system, which is an input to the TbUT, and the second one is the data after the pedestals were removed.  
+The figure \ref{fig:raw vs ped} presents two performance monitoring plots, the first one shows the raw data collected by the DAQ system, which is an input to the TbUT, and the second one is the data after pedestal removal algorithm.  
 
-\begin{figure}[h]
-\centering
-\includegraphics{figures/Pedestal_vs_raw.png}
+\begin{figure}[tbph]
+\begin{center}
+\includegraphics[width = 0.49\textwidth]{figures/raw_data.png} 
+\includegraphics[width = 0.49\textwidth]{figures/pedestal_data.png}
 \caption{Exemplary Pedestal Subtraction Algorithm's monitoring plots. Typical raw data ADC values (left), Pedestal subtracted ADC values
-(right).} These plots were generated using data collected during one of the pedestal runs. 
+(right).} 
 \label{fig:raw vs ped}
+ \end{center}
 \end{figure}
 
 
