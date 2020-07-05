@@ -58,7 +58,7 @@ The clusters are then used as input for the tracking algorithm, which is based o
 \begin{figure}
 \centering
 \includegraphics[scale=0.9]{figures/telescope_tracks.png}
-\caption{Four example tracks reconstructed in the Timepix3 telescope. Figure taken from \cite{Sophie}.}
+\caption{Four exemplary tracks reconstructed in the Timepix3 telescope. Figure taken from \cite{Sophie}.}
 \label{fig:telescope_tracks}
 \end{figure}
 
@@ -69,8 +69,31 @@ The analog data read-out by the Beetle chip was digitalized by the Mamba board d
 The processing of the digitalized data was done by the software described in chapter \ref{chapter:tbut}. 
 
 \section{Testbeam studies and the results}
-The 
+In the course of the last five years, the LHCb UT Upgrade team has organized a number of testbeam campaigns to test new prototyped sensors. Figure \ref{fig:DUT} presents the photography of a sensor that was used during the testbeam with equipment which allowed to cool
+them and collect the data. 
 
+\begin{figure}
+\centering
+\includegraphics{figures/Sensor_photo.PNG}
+\caption{Photo of the D-type sensor that were studied during 2015 testbeam.}
+\label{fig:telescope_tracks}
+\end{figure}
+
+
+
+During this testbeams, the following tests were conducted: 
+
+\begin{itemize}
+\item Landau distribution as a function of bias voltage. This test scenario was executed to measure the influence of radiation fluence on a signal to noise ratio (S/N).  For each sensor, data was collected at bias voltages ranging from well below the full depletion region (about 50V) to the region well above it (usually 500V).
+\item  Cluster size vs. bias voltage and angle of incidence.  This study was performed to understand the effect of charge sharing in high irradiated sensors. 
+\item Cluster charge vs. cluster size and interstrip position. In this section, the team investigates the dependence of the collected charge on the cluster size. With no radiation effects, one would expect that the collected charge to be independent of the cluster size. However, radiation effects can lead to a difference which was investigated. 
+\item Cluster size and resolution vs. angle.  Studies of the detector performance were also carried out at angles ranging from normal incidence to 30 o (with respect to the normal to the sensor). 
+\item Charge collection near the quarter-circle region. One type of sensor that will constitute the UT sensor has a quarter-circle region where there are no strips. This study aimed to investigate whether there is any drop in charge collected as a cluster approaches the quarter-circle radially. 
+\end{itemize}
+
+The results of this studies lead to the following publications \cite{tb1} \cite{tb2} \cite{tb3}. To get a broader picture of the UT testbeam studies, one can also refer to these PhD thesis \cite{Federica} and \cite{Kelsey}.
+
+ 
 \section{Charge sharing}
 This section focuses on the analysis of charge sharing. Charge sharing occurs when a particle deposits charge between two strips, see figure \ref{fig:charge_Sharing}. The precision at which the position of a charged particle can be reconstructed is dependent on how charge is shared between
 In this case, the charge can flow to both the left and right strips.  
