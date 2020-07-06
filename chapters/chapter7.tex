@@ -93,9 +93,69 @@ During this testbeams, the following tests were conducted:
 
 The results of this studies lead to the following publications \cite{tb1} \cite{tb2} \cite{tb3}. To get a broader picture of the UT testbeam studies, one can also refer to these PhD thesis \cite{Federica} and \cite{Kelsey}.
 
- 
+
+\section{Cross-talk correction}
+
+One of the effects that may influence sensor performance measurements is an asymmetric cross-talk between $N$-th and $(N+1)$-th channel. This effect can be measure by studying the asymmetry between $(N-1)$-th and $(N+1)$th channel, where $N$-th channel is a cluster seed strip position. The effect was studied separately for odd and even channels since it was observed, that this effect is stronger for even channels, see figure \ref{fig:charge asymmetry profile}.  
+
+
+\begin{figure}[htb]
+\centering
+\includegraphics[scale=0.5]{figures/eta/profile_0deg.png}
+\caption{The charge collection difference ($ADC(N+1) - ADC(N-1)$) as a function of the strip position. The statistical uncertainty, which were calculated for each bin independently, are shown as one standard deviation. }
+\label{fig:charge asymmetry profile}
+\end{figure}
+
+To get a better understanding of the signal cross-talk effect on a collected data, the difference between $ADC(N-1)$ and $ADC(N+1)$ as a function of a cluster charge was studied. Figure \ref{fig:difference_odd_even} shows that this difference is strongly dependent on a cluster charge. Thus any proposed correction should take this fact into consideration.  The idea to correct this effect is to create a two-dimensional map with a strip position and cluster charge as indexes and a correction as a value. The correction can be modeled using Gaussian distribution since it was empirically discovered that the charge difference is normally distributed.
+Therefore the correction algorithm splits the cluster data into bins according to strip position $N$ and the cluster charge, then for each of the bin, the correction is calculated by fitting Gaussian distribution to the charge difference  $ADC(N-1)$ and $ADC(N+1)$. 
+Figure \ref{fig:correction} present this correction calculation procedure for cluster charge between 300 and 400 ADC, and figure \ref{fig:correction_map} present the entire 2D correction map. 
+
+\begin{figure}[htb]
+\begin{center}
+\includegraphics[width = 0.49\textwidth]{figures/eta/difference_vs_charge_even.png} 
+\includegraphics[width = 0.49\textwidth]{figures/eta/difference_vs_charge_odd.png}
+\caption{The charge collection difference ($ADC(N+1) - ADC(N-1)$) as a function of the cluster charge collected in channel $N$. The left plot shows the difference value for even strips while right plot for even ones }
+\label{fig:difference_odd_even}
+ \end{center}
+ \end{figure}
+
+
+
+\begin{figure}[htb]
+\begin{center}
+\includegraphics[scale=0.8]{figures/eta/correction_2d.png} 
+\caption{Cross-talk correction map. The color indicates value of the correction obtained from the Gaussian fit to the charge difference ($ADC(N+1) - ADC(N-1)$).}
+\label{fig:correction_map}
+ \end{center}
+ \end{figure}
+
+
+\begin{figure}[htb]
+\centering
+\includegraphics[width=\textwidth]{figures/eta/correction.png}
+\caption{The cross-talk correction procedure visualization. Left plots shows charge difference for odd channels while the right plots presents same distribution for even channels. The data was fitted with a Gaussian distribution. } 
+\label{fig:charge asymmetry profile}
+\end{figure}
+
+
+After application of this correction the cross-talk is not detectable anymore, since the difference is smaller than 1 ADC, see figure \ref{fig:after_correction}. 
+All DUTs have similar odd–even cross-talk corrections. The even/odd cross-talk correction was similar for all of the DUTs, but not identical. Therefore, each sensor had a unique cross-talk correction to remove this bias.
+
+\begin{figure}
+\begin{center}
+\includegraphics[width = 0.49\textwidth]{figures/eta/difference_ac.png} 
+\includegraphics[width = 0.49\textwidth]{figures/eta/difference_vs_charge_ac.png}
+\caption{The charge difference ($ADC(N+1) - ADC(N-1)$) after 2D correction as a function of the cluster charge collected in channel $N$ (left) and cluster charge (right) }
+\label{fig:after_correction}
+ \end{center}
+ \end{figure}
+
+
+
 \section{Charge sharing}
-This section focuses on the analysis of charge sharing. Charge sharing occurs when a particle deposits charge between two strips, see figure \ref{fig:charge_Sharing}. The precision at which the position of a charged particle can be reconstructed is dependent on how charge is shared between
+This section focuses on the analysis of charge sharing. Charge sharing occurs when a particle deposits charge between two strips, see figure \ref{fig:charge_Sharing}. 
+
+
 In this case, the charge can flow to both the left and right strips.  
 This phenomenon can be quantified via parameter $\eta$ given by:
 
@@ -104,4 +164,3 @@ This phenomenon can be quantified via parameter $\eta$ given by:
 \end{equation}
 
 
-\section{Charge sharing correction}
