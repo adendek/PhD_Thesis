@@ -95,7 +95,7 @@ The results of this studies lead to the following publications \cite{tb1} \cite{
 
 
 \section{Cross-talk correction}
-
+\label{sec:cross_talk}
 One of the effects that may influence sensor performance measurements is an asymmetric cross-talk between $N$-th and $(N+1)$-th channel. This effect can be measure by studying the asymmetry between $(N-1)$-th and $(N+1)$th channel, where $N$-th channel is a cluster seed strip position. The effect was studied separately for odd and even channels since it was observed, that this effect is stronger for even channels, see figure \ref{fig:charge asymmetry profile}.  
 
 
@@ -123,14 +123,25 @@ Figure \ref{fig:correction} present this correction calculation procedure for cl
 
 \begin{figure}[htb]
 \begin{center}
-\includegraphics[scale=0.8]{figures/eta/correction_2d.png} 
+\includegraphics[scale=0.7]{figures/eta/correction_2d.png} 
 \caption{Cross-talk correction map. The color indicates value of the correction obtained from the Gaussian fit to the charge difference ($ADC(N+1) - ADC(N-1)$).}
 \label{fig:correction_map}
  \end{center}
  \end{figure}
 
 
-\begin{figure}[htb]
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width = 0.49\textwidth]{figures/eta/difference_ac.png} 
+\includegraphics[width = 0.49\textwidth]{figures/eta/difference_vs_charge_ac.png}
+\caption{The charge difference ($ADC(N+1) - ADC(N-1)$) after 2D correction as a function of the cluster charge collected in channel $N$ (left) and cluster charge (right) }
+\label{fig:after_correction}
+ \end{center}
+ \end{figure}
+
+
+\begin{figure}
 \centering
 \includegraphics[width=\textwidth]{figures/eta/correction.png}
 \caption{The cross-talk correction procedure visualization. Left plots shows charge difference for odd channels while the right plots presents same distribution for even channels. The data was fitted with a Gaussian distribution. } 
@@ -141,26 +152,89 @@ Figure \ref{fig:correction} present this correction calculation procedure for cl
 After application of this correction the cross-talk is not detectable anymore, since the difference is smaller than 1 ADC, see figure \ref{fig:after_correction}. 
 All DUTs have similar odd–even cross-talk corrections. The even/odd cross-talk correction was similar for all of the DUTs, but not identical. Therefore, each sensor had a unique cross-talk correction to remove this bias.
 
-\begin{figure}
-\begin{center}
-\includegraphics[width = 0.49\textwidth]{figures/eta/difference_ac.png} 
-\includegraphics[width = 0.49\textwidth]{figures/eta/difference_vs_charge_ac.png}
-\caption{The charge difference ($ADC(N+1) - ADC(N-1)$) after 2D correction as a function of the cluster charge collected in channel $N$ (left) and cluster charge (right) }
-\label{fig:after_correction}
- \end{center}
- \end{figure}
-
 
 
 \section{Charge sharing}
-This section focuses on the analysis of charge sharing. Charge sharing occurs when a particle deposits charge between two strips, see figure \ref{fig:charge_Sharing}. 
+Charge sharing is manifested when a particle deposits charge between two strips.  In this case, the charge can flow to both the left and right strips, see figure \ref{fig:eta}. The theoretical explanation of this effect can be seen as a transverse diffusion of the holes (or electrons) during the drift towards the strip implant \cite{semiconductors_det_sys}. 
+ 
 
+\begin{figure}[htb]
+\centering
+\includegraphics[scale=0.8]{figures/eta/eta.PNG}
+\caption{Cartoon of the charge deposited by a particle passing through the silicon. The charge, $C_{\{L, R\}}$, is deposited on the strips left and right of the particle’s impact point x. On the far-left strip some charge is measured as well due to capacitive coupling. Figure adapted from \cite{eta_note} } 
+\label{fig:eta}
+\end{figure}
 
-In this case, the charge can flow to both the left and right strips.  
-This phenomenon can be quantified via parameter $\eta$ given by:
-
+This phenomenon can be quantified via parameter $\eta$, proposed in \cite{eta}, given by:
 \begin{equation}
     \eta = \frac{Q_{left}}{Q_{left}+Q_{right}}
 \end{equation}
 
+To charge sharing were analyzed with respect to the cluster interstrip position and the rotation angle. Each distribution was fitted with an error function model given by:
 
+\begin{equation}
+\label{eq:eta_model}
+f(x;\sigma) = a \left(1 - erf(\frac{x-\mu}{\sqrt{2}\sigma})\right) + b
+\end{equation}
+
+where $a$, $b$ are constants,  $\mu$ is a mean interstrip position, $\sigma$ is a width and 
+\begin{equation}
+erf(x) = \frac{2}{\pi} \int^{0}_{x} e^{-t^2} dt
+\end{equation}
+
+This charge sharing non-linear model can be interpreted as a smeared step function in which the width of the charge sharing ($ \sigma $) equals the width of the Gaussian smearing.   The full derivation of this formula can be find \cite{eta_note}. 
+
+The purpose of this analysis was to measure the dependence of charge sharing $ \eta $ versus the angle of particle incidence.  Different incidence angles were obtained by rotating the stage where the DUT box was mounted around the $y$ axis. 
+
+The data that were used within this analysis comes from May 2016 testbeam.  This section presented studies related to one selected unirradiated mini sensor produced by Hamamatsu Photonics \cite{Hamamatsu}. The sensor is $p^{+}-on-n$ and has a thickness of $320 \mu m$ and a pitch of $190 \mu m$. The clusters that were considered during the presented have to lie in the beam region, be matched with a telescope tracks.  Moreover, the reconstruction quality of those matched tracks should also be satisfactory ($\chi^{2}\/ndf<10$).
+Finally the cross-talk correction described in section \ref{sec:cross_talk} was applied.
+
+Figure \ref{fig:eta_distribution} present the $\eta$ distributions integrated overall connected and not masked channels of the mini sensor. Each subfigure is dedicated to present the  $\eta$ for a different particle incidence angle. 
+The charge sharing seems to be symmetric, thus no further correction was recommended. 
+
+To get a better understanding of the charge sharing, its dependence versus the cluster interstrip position on the rotation around the $y$-axis is shown in figure \ref{fig:eta_distribution_2d}. Figure \ref{fig:eta_fit} presents same distribution but with mode \ref{eq:eta_model} fitted to the data. One can find that the effect of clockwise and anticlockwise rotations around the $y$-axis is the same.  The $\sigma$ as a function
+of the particle incident angle have a minimum at zero degrees and to is symmetrically distributed around the minimum. The effect of a rotation around the $y$-axis is to increase the charge sharing between neighbouring strips, which can be quantified using the value of $\sigma$ obtained from the fit. 
+
+
+\begin{figure}[tbph]
+\begin{center}
+\includegraphics[width = 0.49\textwidth]{figures/eta/eta_1d_10.png} 
+\includegraphics[width = 0.49\textwidth]{figures/eta/eta_1d_neg10.png}
+\includegraphics[width = 0.49\textwidth]{figures/eta/eta_1d_2.png} 
+\includegraphics[width = 0.49\textwidth]{figures/eta/eta_1d_neg2.png} 
+\includegraphics[width = 0.49\textwidth]{figures/eta/eta_1d_0.png} 
+
+\caption{Distribution of a charge sharing $\eta$ obtained for particles incident at a different angle. Upper row $10\circ$ and $-10\circ$, middle row $-2 \circ$ and $2 \circ$, bottom row $0\circ$ - perpendicular to the $x$ axis.    }
+\label{fig:eta_distribution}
+ \end{center}
+ \end{figure}
+ 
+ 
+ 
+\begin{figure}[tbph]
+\begin{center}
+\includegraphics[width = 0.49\textwidth]{figures/eta/eta_2d_10.png} 
+\includegraphics[width = 0.49\textwidth]{figures/eta/eta_2d_neg10.png}
+\includegraphics[width = 0.49\textwidth]{figures/eta/eta_2d_2.png} 
+\includegraphics[width = 0.49\textwidth]{figures/eta/eta_2d_neg2.png} 
+\includegraphics[width = 0.49\textwidth]{figures/eta/eta_2d_0.png} 
+
+\caption{Distribution of a charge sharing $\eta$ versus interstrip position obtained for particles incident at a different angles. Upper row $10\circ$ and $-10\circ$, middle row $-2 \circ$ and $2 \circ$, bottom row $0\circ$ - perpendicular to the $x$ axis.    }
+\label{fig:eta_distribution_2d}
+ \end{center}
+ \end{figure}
+ 
+ 
+ 
+\begin{figure}[tbph]
+\begin{center}
+\includegraphics[width = 0.49\textwidth]{figures/eta/eta_fit_10.png} 
+\includegraphics[width = 0.49\textwidth]{figures/eta/eta_fit_neg10.png}
+\includegraphics[width = 0.49\textwidth]{figures/eta/eta_fit_2.png} 
+\includegraphics[width = 0.49\textwidth]{figures/eta/eta_fit_neg2.png} 
+\includegraphics[width = 0.49\textwidth]{figures/eta/eta_fit_0.png} 
+
+\caption{Charge sharing $\eta$ as a function of the cluster interstrip position obtained for different rotation angles around $y$ axis. Upper row $10\circ$ and $-10\circ$, middle row $-2 \circ$ and $2 \circ$, bottom row $0\circ$ - perpendicular to the $x$ axis. The black solid line is a charge sharing model \ref{eq:eta_model} fitted to the data. }
+\label{fig:eta_fit}
+ \end{center}
+ \end{figure}
