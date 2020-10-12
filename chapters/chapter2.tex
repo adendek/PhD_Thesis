@@ -547,14 +547,14 @@ XGBoost is a perfect combination of software and hardware optimization technique
 \begin{itemize}
     \item \textbf{Split finding approximate algorithm} To find the best split over a continuous feature, data needs to be sorted and fit entirely into memory. This may be a problem in the case of large datasets.
     An approximate algorithm is used for this. Candidate split points are proposed based on the percentiles of feature distribution.
-    \item  \textbf{Sparsity-aware algorithm}. The input may be sparse due to reasons such as one-hot encoding, missing values, and zero entries. XGBoost is aware of the sparsity pattern in the data and visits only the default direction (non-missing entries) in each node.
+    \item  \textbf{Sparsity-aware algorithm}. The input may be sparse due to such reasons as one-hot encoding, missing values, and zero entries. XGBoost is aware of the sparsity pattern in the data and visits only the default direction (non-missing entries) in each node.
     \item  \textbf{Out-of-core computation} 
-    Data that do not fit into main memory divide the data into multiple blocks, and store each block on the disk. Compress each block by columns and decompress on the fly by an independent thread while disk reading.
+    Data that do not fit into main memory is divided into multiple blocks, and each block is stored on the disk. Compress each block by columns and decompress on the fly by an independent thread while disk reading.
     \item \textbf{Regularized Learning Objective} The default loss function is composed of two components 
     \begin{equation}
         \mathcal{L}_{xgboost}(w) = \mathcal{L}(w) + \Omega(w)
     \end{equation}
-    where $\Omega(w)$ is a  regularization term depends on the complexity of the model. Most of the implementations, including TMVA \cite{tmva}, miss this term and thus they are more prone to overtraining. 
+    where $\Omega(w)$ is a  regularization term depends on the complexity of the model. Most of the implementations, including TMVA \cite{TMVA}, miss this term and thus they are more prone to overtraining. 
 \end{itemize}
 
 
@@ -675,7 +675,7 @@ where $\odot$ is a Hadamard Product also known as element-wise product defined a
     (A \odot B)_{ij} = (A \odot B)_{ij} = (A)_{ij} (B)_{ij}
 \end{equation}
 
-The backprop, which is demonstrated by the algorithm \ref{alg:backward_prop} is specified to the feed-forward neural network only. However, the modern deep learning framework, such as TensorFlow \cite{tensrflow} or PyTorch \cite{pytorch}, is based on a general form of backpropagation, which is implemented using computational graphs. 
+The backprop, which is demonstrated by the algorithm \ref{alg:backward_prop} is specified to the feed-forward neural network only. However, the modern deep learning framework, such as TensorFlow \cite{tensorflow} or PyTorch \cite{pytorch}, is based on a general form of backpropagation, which is implemented using computational graphs. 
 A computational graph is a graph in which each node represents a variable. The variable may be a scalar, matrix,  tensor \footnote{In the field of deep learning, a tensor is an object that has more than two dimensions and, in contrary to the tensor in physics, does not need to follow any transformation rules.} or variable of another type which is useful when calculating higher-order derivations.    
 The edges of the graph represent the operations that are applied to particular nodes. The direction of the edge indicates whether some node is a parent of a given child node. 
 One of the approaches to calculating the gradient is to extend the graph by adding additional nodes to the graph that provide a symbolic description of the desired derivatives. A detailed explanation of how the PyTorch implements gradient calculation can be found in \cite{autograd}. 
@@ -882,7 +882,7 @@ where $Z= \frac{\mu_{x}-f(\widetilde{x})}{\sigma(x)}-\xi$, $\mu(x)$ and $\sigma(
 
 \subsection{Model interpretation}
 
-One of the crucial problems when building \footnote{in this context model building is understood as a complete model selection and validation processes} a complex Machine Learning model is lack of interpretability of its prediction. This fact raises the question of why the researcher should trust the prediction that model generates. The Machine Learning model's interpretability is an active research area, and many ideas were recently published. To make sure that the model, that was trained to classify the track seeds provide reliable predictions two methods, except measuring overall statistics\footnote{in this context overall statistic is understood as a single number that was calculated based on a whole validation or test set.}, were proposed: LIME ( Local Interpretable Model-Agnostic Explanations) \cite{lime}  and SHAP (Shapley Additive exPlanations) \cite{shap}. This section starts by presenting a brief overview of both methods.  Section \ref{xxx} resents the results obtained in order to understand the prediction of the trained seed classifier.
+One of the crucial problems when building \footnote{in this context model building is understood as a complete model selection and validation processes} a complex Machine Learning model is lack of interpretability of its prediction. This fact raises the question of why the researcher should trust the prediction that model generates. The Machine Learning model's interpretability is an active research area, and many ideas were recently published. To make sure that the model, that was trained to classify the track seeds provide reliable predictions two methods, except measuring overall statistics\footnote{in this context overall statistic is understood as a single number that was calculated based on a whole validation or test set.}, were proposed: LIME ( Local Interpretable Model-Agnostic Explanations) \cite{lime}  and SHAP (Shapley Additive exPlanations) \cite{shap}. This section starts by presenting a brief overview of both methods.  Section \ref{sec:interpretability} resents the results obtained in order to understand the prediction of the trained seed classifier.
 \subsubsection{LIME - Local Interpretable Model-Agnostic Explanations }
 
 The discussion of the LIME should start from choosing models, that are human interpretable. An interpretable explanation needs to use a representation that is understandable to humans, regardless of the actual model's architectures or features used to make a decision. For instance, a possible interpretable representation of the text classification is a vector of binary values indicating the presence or absence of a certain word, even though the model uses more complex input features such as word embedding

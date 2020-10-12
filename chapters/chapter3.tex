@@ -198,10 +198,10 @@ $y_{\text{mag}}$ obtained using simulated quantities and reconstructed quantitie
 The following empirical parametrisations of the uncertainty
 were used:
 \begin{eqnarray}
-\sigma_{x, OT} & = & (2.0 + 18.0\cdot \Delta_{\text{slope}})\mm \nonumber \\
-\sigma_{y, OT} & = & (5.0 + 20.0\cdot \Delta_{\text{slope}} + 50\cdot \Delta_{\text{slope}}^{2})\mm  \nonumber \\
-\sigma_{x, IT} & = & (1.0 + 16.0\cdot \Delta_{\text{slope}})\mm  \nonumber \\
-\sigma_{y, IT} & = & (2.0 + 15\cdot \Delta_{\text{slope}})\mm  \nonumber
+\sigma_{x, OT} & = & (2.0 + 18.0\cdot \Delta_{\text{slope}})mm \nonumber \\
+\sigma_{y, OT} & = & (5.0 + 20.0\cdot \Delta_{\text{slope}} + 50\cdot \Delta_{\text{slope}}^{2})mm  \nonumber \\
+\sigma_{x, IT} & = & (1.0 + 16.0\cdot \Delta_{\text{slope}})mm  \nonumber \\
+\sigma_{y, IT} & = & (2.0 + 15\cdot \Delta_{\text{slope}})mm  \nonumber
 \end{eqnarray}
 The numerical values of those parameters were obtained by fitting residual distributions.
 
@@ -806,7 +806,7 @@ produce similar results, measured as a ROC AUC, to the optimized xgboost one, wh
 
 
 \section{T-Seed classifier: model output interpretation}
-
+\label{sec:interpretability}
 This section is dedicated to emphasizing the importance of the model's interpretability. As presented before the T-Seed filter achieved satisfactory overall performance, but the question regarding the reliance still remains open.
 Within the scope of this thesis, the three approaches to interpret Boosted Decision Tree model prediction have been tested, each of them has been described in section \ref{sec:lime}. 
 The classical approach to interpret feature importance is to look at the model globally. The usual way to view the importance of the features is to investigate the following metrics: 

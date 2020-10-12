@@ -9,18 +9,18 @@ Not only is the Universe stranger than we think, it is stranger than we can thin
 This chapter is dedicated to providing a brief introduction to the physics of LHCb. It starts by presenting the fundamental concept of symmetries in physics, including the particular type of discrete symmetries and its consequence, then the Standard Model of particle physics is briefly described. 
 
 \section{Symmetries in physics}
-Until the 20th-century, principles of symmetry played a little role in theoretical physics. The ancient Greeks were fascinated by the symmetries of objects and believed that these would be mirrored in the structure of nature. Still, they did not manage to associate those symmetries with any deterministic law of physics. Instead, symmetry was a critical component that inspires several architects designing the most stunning and recognizable buildings, and even recently, psychologies proved that symmetrical faces are more attractive \cite{faces}. 
+Until the 20th-century, principles of symmetry played a minor role in theoretical physics. The ancient Greeks were fascinated by the symmetries of objects and believed that these should be mirrored in the structure of nature. Still, they did not manage to associate those symmetries with any deterministic law of physics. Instead, symmetry was a critical component that inspires several architects designing the most stunning and recognizable buildings, and even recently, psychologies proved that symmetrical faces are more attractive \cite{faces}. 
 In one of the most important book of all time "Philosophiæ Naturalis Principia Mathematica" \cite{newton} 
-Newton postulated that laws of mechanics incorporate symmetry principles, notably the principle of equivalence of inertial frames, or Galilean invariance. These symmetries implied conservation laws. Although these conservation laws, especially those of momentum and energy, were regarded to be of fundamental importance. These conservation laws were seen as consequences of the dynamical laws of nature rather than as consequences of the symmetries that underlay these laws.  
+Newton postulated that laws of mechanics incorporate symmetry principles, notably the principle of equivalence of inertial frames, or Galilean invariance. These symmetries implied conservation laws. However, these conservation laws were seen as consequences of the dynamical laws of nature rather than as consequences of the underlaying symmetries.  
 
-This status had dramatically changed at the beginning of the 20 century when Emmy Noether proved her famous theorem relating continuous symmetry and conservation laws.
-This theorem states that due to the invariance of physics laws under spatial transformations, momentum is conserved due to time, translational invariance energy is conserved, and due to the invariance under a change in phase of the wave functions of charged particles electric charge is conserved. Precisely speaking, asymmetry is a mathematical operation that leaves the system invariant. 
+This situation had dramatically changed at the beginning of the 20th century when Emmy Noether proved her famous theorem relating continuous symmetries and conservation laws.
+This theorem states that as a direct consequence of the invariance of physics laws under continuous spatial transformations, such as spatial translation, spatial rotation and time translation, momentum angular momentum and energy are conserved respectively. The less intuitive case is the symmetry of the wave function under the change of its phase that leads to the conservation of the electric charge. Precisely speaking, asymmetry is a mathematical operation that leaves the physical system invariant. 
 From the moment of this paper publication onwards, physics can be defined as the science that studies fundamental symmetries and the mechanism of the symmetries breaking.  
 
-In Quantum Mechanics, symmetries are mostly discreet and satisfied if an operator commutes with the Hamiltonian. If a discrete symmetry holds, it leads to a conserved quantum number and a selection rule for the transitions between different states. 
+In Quantum Mechanics, symmetries are mostly discrete and satisfied if an operator commutes with the Hamiltonian (representing the time transformations). If a discrete symmetry holds, it leads to a conserved quantum number and a selection rule for the transitions between different states. 
 Within the framework of particle physics, there are three fundamental symmetries $P$, $C$, and $T$; those symmetries are shown in figure \ref{fig:CPT}
 
-A parity transformation $P$ is an inversion of the spatial coordinates of a system and changing the helicity of the particle. Namely the eigenfunction of the parity operator $  \hat{P}$ satisfy the condition: 
+A parity transformation $P$ can be represented by inversion of the spatial coordinates of a coordinate system and changing the helicity of the particle. Namely, the eigenfunction of the parity operator $  \hat{P}$ satisfy the condition: 
 
 \begin{equation}
     \hat{P}~ \ket{\Psi, \vec{r}} = \ket{\Psi, - \vec{r}} = p \ket{\Psi, \vec{r}}  
@@ -28,29 +28,25 @@ A parity transformation $P$ is an inversion of the spatial coordinates of a syst
 Where $p$ is an eigenvalue of the $ \hat{P}$ operator and $\ket{\Psi}$ its eigenstate. A second application of the $\hat{P}$ transforms the $\ket{\Psi}$ to its initial state, therefore the $p$ must be equal to $\pm 1$, and by convention for fermions $p=1$.  
 
 
-Time transformation $T$ reverse the time direction of a process, and the charge conjugation $C$ changes the sign of the quantum numbers, transforming particles into antiparticles keeping their helicity. The eigenvalues of the  charge conjugation operator $\hat{C}$ can be expressed in the following form:
+Time parity $T$ reverse the time direction of a process, and the charge conjugation $C$ changes the sign of the additive quantum numbers, transforming particles into antiparticles keeping their helicity. The eigenvalues of the  charge conjugation operator $\hat{C}$ can be expressed in the following form:
  
 
 \begin{equation}
     \hat{C}~ \ket{particle} = \ket{anti~ particle} = c \ket{particle}  
 \end{equation}
 
-Where $c$ is an eigenvalue of the $ \hat{C}$ operator, and similarly to the $\hat{P}$ operator's eigenvalues can have one of $\pm 1$ value.   
+Where $c$ is an eigenvalue of the $ \hat{C}$ operator, and similarly to the $\hat{P}$ operator's eigenvalues can have one of $\pm 1$ value. It is interesting to note that only particles that
+are their own antiparticles can be eigenstates of the charge parity operator.
 
-The strong and electromagnetic interactions are invariant under each of $C$, $P$, and $T$ symmetries.  The combination of $CPT$ is an exact symmetry of any interaction described by the Lorenz invariant quantum field theory. This phenomenon is described within the theory of  $CPT$ theorem \cite{CPT_theorm}.
-It is observed that $C$ and $P$ are not symmetries held by the weak interactions: the weak charged currents couple exclusively to left-handed fermions and right-handed anti-fermions, and hence maximally violate $C$ and $P$ symmetries individually. The combined $CP$ operation transforms a left-handed fermion into a right-handed anti-fermion, and hence it could be expected that the $CP$ symmetry is the one that is held by the weak interactions. This statement was valid until 1964 when the group working on neutral kaons decays discovered that this is not a case, \cite{CPV_kaons}. 
-
+The strong and electromagnetic interactions are invariant under each of $C$, $P$, and $T$ symmetries.  The combination of $CPT$ is an exact symmetry of any interaction described by the Lorenz invariant quantum field theory. This phenomenon is described as the $CPT$ theorem \cite{CPT_theorm} (thus far we did not find any experimental results that would negate this fundamental theorem).
+It is observed that $C$ and $P$ are not exact symmetries and they are both broken by the weak interactions: the weak charged currents couple exclusively to left-handed fermions and right-handed anti-fermions, and hence maximally violate $C$ and $P$ symmetries individually. The combined $CP$ operation transforms a left-handed fermion into a right-handed anti-fermion. Therefore it could be expected that the $CP$ symmetry is the one that is held by the weak interactions. This statement was valid until 1964 when the group , led by James Cronin and Val Fitch, working on neutral kaons decays discovered that this is not a case, \cite{CPV_kaons}. 
 
 \begin{figure}
 \centering
-\includegraphics[scale=0.6]{figures/CPT.png}
-\caption{Symmetries in particle physics. Each arrow represents a different or combination of $C$, $P$, $T$ symmetries and its influence on a system. Figure taken from \cite{CPT}
+\includegraphics[scale=1.0]{figures/CPT.png}
+\caption{Symmetries in particle physics. Each arrow represents one of the $C$, $P$, $T$ transformations or their combinations. With the discovery that the weak interactions maximally violate both charge and spatial parity symmetries, it was postulated the true symmetry between matter and antimatter is the combined charge and spatial parity transformation. As it turned out, this one is also broken by the weak interaction, but in that case, the violation effects are relatively small. The combined $CPT$ transformation is treated as the fundamental property of our Universe and should hold for all processes. Figure taken from \cite{CPT}
 \label{fig:CPT}}
 \end{figure}
-
-
-
-
 
 \subsection{Group Theory}
 This subsection is dedicated to providing a brief introduction to Group Theory, which is a branch of mathematics that was developed to studying symmetries. This section reviews some of the properties of them.
@@ -69,56 +65,54 @@ Group G is called Abelian or commutative if also the following axiom is satisfie
     \item Commutativity $\forall u,v \in G u \cdot v = v \cdot u$
 \end{itemize}
 
-In elementary particle physics, the most common groups are of the type of $U(n)$, which is a collection of all unitary $n\times n$ matrices \footnote{A unitary matrix is one whose inverse is equal to its transpose conjugate $U^{-1}=U^\dagger$}. The second type of group used to construct the Standard Model is a Super Unitary group $SU(n)$. In addition to the $U(n)$, $SU(n)$ requires the matrix determinant is equal to 1. 
-A group of matrices can represent every group, thus for every element $u$ there is corresponding matrix $M_u$, which needs to fulfill all axioms listed above. 
+In elementary particle physics, the most common groups are of the type of $U(n)$, which can be represented as a collection of all unitary $n\times n$ matrices \footnote{A unitary matrix is one whose inverse is equal to its transpose conjugate $U^{-1}=U^\dagger$}. The second type of group used to construct the Standard Model is a Super Unitary group $SU(n)$. One of the fundamental properties of the unitary matrices is that their determinant is equal to 1, this plays a vital role in quantum theory that requires probability
+conservation. 
+A group of matrices can represent any group, thus for every abstract element $u$, there is a corresponding matrix $M_u$, which needs to fulfil all axioms listed above. 
 
-As a concrete example let consider a group of real, orthogonal \footnote{An orthogonal matrix is an matrix whose inverse is equal to its transpose: $O^{-1} = O^{T}$} $n\times n$ matrices of determinant 1, this group called $SO(n)$ and can represent all rotation is a space of $n$ dimensions. For $n=3$, group $SO(3)$  describes rotational symmetry of our word, which according to the Noether's theorem is equivalent to the conservation of angular momentum \cite{griffiths}. 
+As a concrete example let consider a group of real, orthogonal \footnote{An orthogonal matrix is a matrix whose inverse is equal to its transpose: $O^{-1} = O^{T}$} $n\times n$ matrices with the determinant equal to  1, this group called $SO(n)$ and can represent all rotation is space of $n$ dimensions. For $n=3$, group $SO(3)$  describes rotational symmetry of our word, which according to the Noether's theorem is equivalent to the conservation of angular momentum \cite{griffiths}. 
 
-\section{Standard Model for elementary particle}
+\section{Standard Model of elementary particles}
 \label{sec:SM}
 
-The Standard Model (SM) is a Quantum Field Theory that describes properties of the elementary particles and the electromagnetic, weak, and strong interactions. It has been experimentally validated on numerous occasions,
-making very accurate predictions. However, it is an incomplete theory since it does not include the gravity interaction and does not explain the dark matter and dark energy, the neutrino masses, nor the matter-antimatter asymmetry of the Universe.
+The Standard Model (SM) is a relativistic Quantum Field Theory that describes properties of elementary particles and the electromagnetic, weak, and strong interactions. It has been experimentally validated on numerous occasions,
+making very accurate predictions. However, it is an incomplete theory since it does not include the theory of gravity and does not explain the dark matter and dark energy, the neutrino masses, nor the matter-antimatter asymmetry of the Universe.
 
-This theory was built to model the particle interaction observed in nature. Using this framework, one can obtain predictions for physical phenomena by calculating transmission probability from an initial state $\bra{i, i'}$ to a given final state$\ket{k, k' }$. These calculations are performed using Quantum Field Theory tools such as expansions of a path integral into a power series, which can be visualized using Feynman diagrams (one diagram per term). Each term in those series can be interpreted as a particular interaction process. 
+This theory was built to model the particle interactions observed in nature. Using this framework, one can obtain predictions for physical phenomena by calculating transition probability from an initial state $\bra{i, i'}$ to a given final state$\ket{k, k' }$. These calculations are performed using Quantum Field Theory tools such as expansions of a path integral into a power series, which can be visualized using Feynman diagrams (one diagram per term). Each term in those series can be interpreted as a particular interaction process. 
 
-According to the Standard Model, the whole space is filled with different types of field, and the excitation of those fields are what can be interpreted as particles, the visualization of properties of elementary particles are shown in figure \ref{fig:SM} . The matter is built by twelve particles called fermions \footnote{And their corresponding antiparticles}, which has a half-integer spin, and they have to obey the Pauli exclusion principle. The interactions between fermions are perceived as an exchange of integer spin particles called bosons. 
-None of them are known to have any underlying substructure.
-All fermions can be further split into two groups: quarks and leptons. This split is driven by the interaction in which a particular fermion can involve. 
+According to the Standard Model, the whole space is filled with different types of fields, and the excitation of those fields are what can be interpreted as particles, the visualization of properties of elementary particles are shown in figure \ref{fig:SM} . The matter is built by twelve particles called fermions \footnote{And their corresponding antiparticles}, which has a half-integer spin, and they have to obey the Pauli exclusion principle. The interactions between fermions are perceived as an exchange of integer spin particles called bosons. 
+None of them is known to have any underlying substructure. Thus they are called fundamental particles.
+All fermions can be further split into two groups: quarks and leptons. This distinction is driven by the interaction in which a particular fermion can participate. 
 
 
-The fundamental properties of the Standard Model of Particle Physics the fact that it is based on the following symmetry groups:
+The mathematical structure of the Standard Model can be described by the following symmetry group:
 
 \begin{equation}
     SU(3)_C \times SU(2)_L \times U(1)_Y
 \end{equation}
 
+The group $SU(3)_C$ represents symmetry transformations in an internal colour space that are used to describe properties of the strong interactions. The dimension of the group corresponds to three types of colour charge. The second $SU(2)_L \times U(1)_Y$ symmetry group describes electro-weak interactions and takes into account the spontaneous symmetry breaking leading to massive intermediate bosons. The $SU(2)_L$ group describes rotations in an abstract weak-isospin space and the subscript $L$ is used to express the fact that the fundamental representations of the weak interactions are left-handed dublets and right-handed singlets. The remaining $U(1)_Y$ group describes the electromagnetic interactions that should conserve weak hypercharge $Y$. In this case, the symmetry transformations can be interpreted as phase shifts of the wave function. The core idea behind the significance of this combined symmetry group is that the Lagrangian describing any process occurring in Nature must be invariant with respect to any transformation that belongs to it.
 
+The strong interactions, which are mediated by eight massless gluons carrying a quantum number called colour and occurs between quarks, those interactions are described by a theory called Quantum Chromodynamic (QCT). Among all fermions, only quarks can carry colour charge, which allows them to interact via the strong interaction. There are six types of quarks known as flavors: up $u$,  down $d$, charm $c$, strange $s$, top $t$ and beauty $b$.  Due to the unique nature of the strong interaction, in which the mediators of the force, the gluons, carry the same colour charge that they mediate, quarks are \footnote{This happens for all quarks besides the top quark, which lifetime is too short to combine with other quarks to form hadrons} "glued" to quarks and in Nature they always form colourless composite particles called hadrons. 
 
-Where the term $SU(3)_C$ is responsible for the strong interactions, which are mediated by eight massless gluons and occurs between quarks, those interactions are described by a theory called Quantum Chromodynamic (QCT).  Only the quarks can carry color charge, which allows them to interact via the strong interaction. Quarks occur in six flavors up $u$,  down $d$, charm $c$, strange $s$, top $t$ and beauty $b$.  Due to the unique nature of the strong interaction, in which the mediators of the force, the gluons, carry the same color charge that they mediate, quarks are \footnote{This happens for all quarks besides the top quark, which lifetime is too short to combine with other quarks to form hadrons} glued to the other quarks to form colorless particle composition called hadrons. 
-
-Depending on the number of quarks they are made of, hadrons are classified to mesons (composed of $q\bar{q}$ pair), baryons (with three quarks combining all the colors) and exotic hadrons composed of four and five quarks, which has been recently discovered and reported by the LHCb collaboration \cite{pentaquarks}.  
-
-
+Depending on the number of quarks they are made of, hadrons are classified as mesons (composed of $q\bar{q}$ pair), baryons (with three quarks combining all the colors) and exotic hadrons composed of four and five quarks, which has been recently discovered and reported by the LHCb collaboration \cite{pentaquarks}.  
 
 \begin{figure}
 \centering
-\includegraphics[scale=0.5]{figures/SM.png}
-\caption{Illustration of the fundamental particles in the Standard Model and their properties. The fermions organized in three generations (denoted by I, II, and III) comprise of quarks preseted as the purple squares and leptons as the green squares. The bosons consist of the gauge bosons denoted in red, and the scalar Higgs boson indicated by the yellow square. 
+\includegraphics[scale=1.0]{figures/SM.png}
+\caption{Illustration of the fundamental particles in the Standard Model and their properties. The fermions are organized in three generations (denoted by I, II, and III) comprised of quarks preseted as the purple squares and leptons as the green squares. The  gauge bosons are shown as red circles, and the yellow square indicates the scalar Higgs boson 
 \label{fig:SM}}
 \end{figure}
 
 \section{Weak interactions and CKM matrix}
 
-The $ SU(2)_L \times U(1)_Y$ symmetry describes the gauge group of electroweak interactions. Those interactions are carried by four bosons, namely $W^{\pm}$, $Z$, and the $\gamma$.  The first two of them mediate the weak interaction, and $\gamma$ is responsible for carrying electromagnetic interaction. One of the key features of the weak interaction is the experimental observation that they couple to the left-handed particles only, which revealed as a maximum violation of the parity. Another unique feature of the weak forces is the mixing between different quarks families, which is understood as the quark mass eigenstates are not the same as the weak eigenstates. The Cabibbo-Kobayashi-Maskawa (CKM) matrix relates the weak eigenstates,  ($d\prime$,$s\prime$,$b\prime$), with the mass eigenstates, ($d$,$s$, $b$), and is written as:
+As explained in the previous section, the $ SU(2)_L \times U(1)_Y$ gauge group describes the properties of the electro-weak interactions. Those interactions are carried by four vector (i.e., spin 1) bosons, namely $W^{\pm}$, $Z$, and the $\gamma$.  The first three of them mediate the weak interactions, and $\gamma$ is responsible for carrying electromagnetic interactions. One of the key features of the weak interactions is the experimental observation that they couple to the left-handed particles only, which is a direct manifestation of the maximal violation of the charge and spatial parity symmetries. Another unique feature of the weak forces is the mixing between different quarks families, which leads in consequence to the experimental observation that the quark mass eigenstates are not the same as the weak eigenstates. The Cabibbo-Kobayashi-Maskawa (CKM) matrix relates the weak eigenstates,  ($d\prime$,$s\prime$,$b\prime$), with the mass eigenstates, ($d$,$s$, $b$), and is written as:
 
 \begin{equation}
 \label{eq:ckm}
   \begin{bmatrix}  d^\prime  \\  s^\prime  \\  b^\prime  \end{bmatrix} = \begin{bmatrix} V_{ud} & V_{us} & V_{ub} \\ V_{cd} & V_{cs} & V_{cb} \\ V_{td} & V_{ts} & V_{tb} \end{bmatrix} \begin{bmatrix}  d  \\  s  \\  b  \end{bmatrix}
 \end{equation}
 
-
-where the $3 \times 3$ unitary matrix $V_{CKM}$ is known as the Cabibbo-Kobayashi-Maskawa (CKM) quark mixing matrix\cite{ckm1}\cite{ckm2}. The magnitude of each element in $V_{CKM}$ represents the coupling strength of the quarks in the subscript to the weak field $W^{\pm}$ boson.  One of the properties of such a matrix is the possibility to fully describe its transformation properties by three Euler angles and one complex phase angle. Analysis of the value of this phase is vital due to it is not invariant under time reversal $R$ symmetry, which implies violation of Charge-Parity $CP$ symmetry if its value is not zero:
+where the $3 \times 3$ unitary matrix $V_{CKM}$ is known as the Cabibbo-Kobayashi-Maskawa (CKM) quark mixing matrix\cite{ckm1}\cite{ckm2}. The magnitude of each element in $V_{CKM}$ represents the coupling strength of the quarks in the subscript to the weak field $W^{\pm}$.  One of the properties of such matrix is the possibility to fully describe its transformation properties by three Euler angles and one complex phase. This phase parameter is vital for the theory since its non-zero value can explain, within the theoretical framework of the SM, the violation of Charge-Parity $CP$ symmetry. Using the relation between the unitary matrices and rotation matrices the CKM matrix can be decomposed as follow:
 
 \begin{align} V_{CKM}  &= \begin{bmatrix} 1 & 0 & 0 \\ 0 & c_{23} & s_{23} \\ 0 & -s_{23} & c_{23} \end{bmatrix}
  \begin{bmatrix} c_{13} & 0 & s_{13}e^{-i\delta_{13}} \\ 0 & 1 & 0 \\ -s_{13}e^{i\delta_{13}} & 0 & c_{13} \end{bmatrix}
@@ -127,10 +121,10 @@ where the $3 \times 3$ unitary matrix $V_{CKM}$ is known as the Cabibbo-Kobayash
  -s_{12}c_{23} - c_{12}s_{23}s_{13}e^{i\delta_{13}} & c_{12}c_{23} - s_{12}s_{23}s_{13}e^{i\delta_{13}} & s_{23}c_{13}\\
  s_{12}s_{23} - c_{12}c_{23}s_{13}e^{i\delta_{13}} & -c_{12}s_{23} - s_{12}c_{23}s_{13}e^{i\delta_{13}} & c_{23}c_{13} \end{bmatrix}
 \end{align}
-where $c_{ij} =\cos(\theta_{ij})$, $s_{ij} =\sin(\theta_{ij})$,  $\theta_{ij}$ are the mixing angles, and $\delta_{13}$ is a complex phase. Angle $\theta_{12}$ is called Cabbibo angle, which was introduced in 1963 when only two generation of quarks were known \cite{cabibbo}. 
+where $c_{ij} =\cos(\theta_{ij})$, $s_{ij} =\sin(\theta_{ij})$,  $\theta_{ij}$ are the respective quark mixing angles, and $\delta_{13}$ is a complex phase. Angle $\theta_{12}$ is called Cabbibo angle, which was introduced in 1963 when only two generation of quarks were known \cite{cabibbo}. 
 
 
-One of the parametrizations of the $V_{CKM}$, that is convenient to present the hierarchical structure of its parameters is called Wolfenstein \cite{wolfenstein} parametrization:.
+One of the customary parametrizations of the $V_{CKM}$, that is convenient to present the hierarchical structure of its parameters is called Wolfenstein \cite{wolfenstein} parametrization:.
 
 \begin{equation}
 \label{eq:wolfenstein}
@@ -138,7 +132,6 @@ One of the parametrizations of the $V_{CKM}$, that is convenient to present the 
  -\lambda & 1-\tfrac{1}{2}\lambda^2 & A\lambda^2 \\
  A\lambda^3(1-\rho-i\eta) & -A\lambda^2 & 1  \end{bmatrix} + O(\lambda^4).
 \end{equation}
-
 
 Experimentally, it is found that the mixing between mass and weak eigenstates is relatively small in the quark sector. Based on current knowledge \cite{CKMFitter}, the values of $V_{CKM}$ parameters are:
 \begin{itemize}
@@ -150,8 +143,6 @@ Experimentally, it is found that the mixing between mass and weak eigenstates is
 
  Therefore each of the mixing angles, represented as an off-diagonal element \ref{eq:ckm}, is small, and the CKM matrix is approximately diagonal, see figure \ref{fig:ckm_magnitudes}. Therefore, processes that involve off-diagonal elements of the CKM matrix, those that change the generation of the quarks are Cabibbo-suppressed with respect to those on the diagonal, which are referred to as Cabibbo-favoured.
 
-
-
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.5]{figures/ckm_structure.PNG}
@@ -159,19 +150,17 @@ Experimentally, it is found that the mixing between mass and weak eigenstates is
 \label{fig:ckm_magnitudes}}
 \end{figure}
 
-
-
- The consequence of the fact that there are three quarks families only is unitarity of the $V_{CKM}$ matrix. This property gives a series of constraints between different elements of the  $V_{CKM}$ matrix that can be tested experimentally. These constraints impose the following relations:
+ The $V_{CKM}$ matrix is unitary one what leads to a series of relationships between different elements that can be experimentally probed. These constraints impose the following relations:
 
 \begin{equation}
 \label{eq:unitary}
 \begin{split}
-        V_{1j}^{*}V_{1k} +  V_{2j}^{*}V_{2k} +  V_{j3}^{*}V_{3k} = \delta_{jk} \\
+        V_{1j}^{*}V_{1k} +  V_{2j}^{*}V_{2k} +  V_{3j}^{*}V_{3k} = \delta_{jk} \\
         V_{j1}^{*}V_{k1} +  V_{j2}^{*}V_{k2} +  V_{j3}^{*}V_{k3} = \delta_{jk} 
 \end{split}
 \end{equation}
 
-Those six relations, summarized by equation \ref{eq:unitary}, can be visualized as triangles in the complex plane.  The most popular to study is the triangle with  $j=b$ and $k=d$. It drew attention due to having all sides of the same order of magnitude.  This triangle can be completely constructed by a single apex:
+Those six relations, summarized by equation \ref{eq:unitary}, can be visualized as, so called, unitarity triangles in the complex plane. The most popular to study is the triangle with  $j=b$ and $k=d$. It drew attention due to having all sides of the similar sizes. This triangle can be completely constructed by defining that one of the sides lies on the real axis and then by defining its apex as:
 \begin{equation}
    (\overline{\rho}, \overline{\eta}) =- \frac{V_{ub}^{*}V_{ud}}{V_{cb}^{*}V_{cd}}
 \end{equation}
@@ -193,7 +182,7 @@ The angles of this unitary triangle denoted as $\alpha, \beta, \gamma$ are defin
 \label{fig:triangle}}
 \end{figure}
 
-The values of those angles cannot be predicted using the Standard Model framework. Instead, they can be measured experimentally. Any possible discrepancy in relation \ref{eq:unitary} may indicate a contribution from physics beyond the Standard Model. Figure \ref{fig:triangle} shows the overall status of the CKM unitary triangle in the $\overline{\rho}, \overline{\eta}$ plane, with a global fit to the apex. Within the current experimental uncertainties, there are no significant deviations from the Standard Model predictions. 
+The values of those angles cannot be predicted using the Standard Model framework. Instead, they must be measured experimentally. Any possible discrepancy in relation \ref{eq:unitary} may indicate a contribution from physics beyond the Standard Model. Figure \ref{fig:triangle} shows the overall status of the CKM unitary triangle in the $\overline{\rho}, \overline{\eta}$ plane, with a global fit to the apex. Within the current experimental uncertainties, there are no significant deviations from the Standard Model predictions. 
 
 \begin{figure}
 \centering
@@ -205,20 +194,19 @@ The values of those angles cannot be predicted using the Standard Model framewor
 
 \section{Neutral Meson Mixing and $CP$ violation}
 
-One of the promising channel that can be used in order to measure the $CP$ violation and it is a manifestation the fact that the mass eigenstates are not the same as the weak eigenstates is the phenomenon of flavor oscillation in neutral mesons ($K^0$, $D^0$, $B^0$, and $B^0_ s$ ). 
-Those mixing processes can be described by the so-called box diagram presented in figure \ref{fig:Mixinig}. 
+One of the most astonishing phenomena in physics is neutral meson mixing, i.e., the ability to change into its antiparticle spontaneously. Such transitions are related with the corresponding flavour quantum number violation (strangeness for $K^0$ mesons, charm for $D^0$ mesons and beauty for $B^0$, and $B^0_ s$ mesons) and they can only be induced by the weak interactions. Mixing, also called flavour oscillation, is also an essential source of $CP$ violation in the SM. Those mixing processes can be described by the so-called box diagram presented in figure \ref{fig:Mixinig}. 
 
 
 \begin{figure}
 \centering
 \includegraphics[scale=0.9]{figures/Box-diagrams-depicting-K-0-K-0-mixing.png}
 \caption{Box diagrams illustrating the mixing of $K^{0}$ mesons. In both cases virtual $W$ bosons
-and quarks connect the four vertexes. Figure adopted from \cite{Mixing}.
+and quarks connect the four vertices. Figure adopted from \cite{Mixing}.
 \label{fig:Mixinig}}
 \end{figure}
 
 
-The mass eigenstates are written as a superposition of flavor eigenstates:
+The mass eigenstates, that propagate in space, are written as a superposition of flavor eigenstates:
 \begin{equation}
     \begin{split}
         \ket{M_L} = p \ket{M} + q \ket{\overline{M}} \\
@@ -226,23 +214,36 @@ The mass eigenstates are written as a superposition of flavor eigenstates:
     \end{split}
 \end{equation}
  where $p$ and $q$ are complex numbers satisfying the normalization condition $|p|^{2}+|q|^{2} = 1$. 
- The evaluation of this system is determined by the non-hermitian Hamiltonian, given as: 
+ The evolution of this system is described by the non-hermitian Hamiltonian, given as:
 
 \begin{equation}
 \label{eq:mixing_hamiltonian}
-    \mathcal{H}  = \textbf{M} - \frac{i}{2} \textbf{\Gamma}
+    \mathcal{H}  = M - \frac{i}{2} \Gamma
 \end{equation}
 
-
-where $\textbf{M}$ and $\textbf{\Gamma}$ are the mass and width matrices, respectively, defined as: 
+where $M$ and $\bm{\Gamma}$ are the mass and decay matrices, respectively, defined as:
 
 \begin{align}
-    \textbf{M} &= \left( \begin{matrix} M_{11} & M_{12}  \\ M_{12}^{*} & M_22 \end{matrix} \right), & 
-    \textbf{\Gamma} &=  \left( \begin{matrix} \Gamma_{11} & \Gamma_{12}  \\ \Gamma_{12}^{*} & \Gamma_22 \end{matrix} \right) 
+    M &= \left( \begin{matrix} M_{11} & M_{12}  \\ M_{12}^{*} & M_{22} \end{matrix} \right), & 
+    \bm{\Gamma} &=  \left( \begin{matrix} \Gamma_{11} & \Gamma_{12}  \\ \Gamma_{12}^{*} & \Gamma_{22} \end{matrix} \right) 
 \end{align}
 
-The Hamiltonian of the process, equation \ref{eq:mixing_hamiltonian}, is not hermitian, thus ensures that the neutral meson may eventually decay. The on-diagonal elements of both $\textbf{M}$ and $\textbf{\Gamma}$ matrixes are the same due to $CPT$  theorem, and if the off-diagonal elements are equal to zero the meson states are degenerated and the mixing would not occur. Moreover both  $\textbf{M}$ and $\textbf{\Gamma}$ are hermitian. 
-The time evolution of the flavor eigenstates obeys the time-dependent Schrodinger equation:
+The Hamiltonian of the process, equation \ref{eq:mixing_hamiltonian}, is not hermitian, thus ensures that the neutral meson may eventually decay. The diagonal elements of both $M$ and $\bm{\Gamma}$ matrices are the same due to $CPT$  theorem, and if the off-diagonal elements are equal to zero the meson states are degenerated and the mixing would not occur. Moreover, both  $M$ and $\bm{\Gamma}$ are hermitian operators. It is customary to define the average mass and average decay widths as follow:
+
+\begin{equation}
+\label{eq:mass_gamma}
+    M \equiv \frac{M_{H} + M_{L}}{2}, ~~~~
+    \Gamma \equiv \frac{\Gamma_{H} + \Gamma_{L}}{2}
+\end{equation}
+Next, we can define two parameters x and y using the mass and decay width differences respectively:
+\begin{equation}
+\label{eq:x_y}
+    x \equiv \frac{M_{H} - M_{L}}{\Gamma} = \frac{\Delta M}{\Gamma}, ~~~~
+    y \equiv \frac{\Gamma_{H} - \Gamma_{L}}{2 \Gamma} = \frac{\Delta \Gamma}{2 \Gamma}
+\end{equation}
+The mass difference, $\Delta M$, can be related to the mixing frequency and together with the decay width, $\Delta \Gamma$, can be measured experimentally.
+
+The time evolution of the flavor eigenstates obeys the time-dependent Schr\"{o}dinger equation:
 
 \begin{align}
 \label{eq:time dependent hamiltonian}
@@ -273,7 +274,7 @@ Using mentioned notation the time evolution of the flavor states can be written 
 \label{eq:time_evaluation}
   \left(\begin{matrix} \ket{M(t)}  \\ \ket{\overline{M}(t)} \end{matrix}  \right) 
   = QPQ^{-1} \left(\begin{matrix} \ket{M}  \\ \ket{M} \end{matrix}  \right) 
-  = \left(\begin{matrix} g_{+}(t) &  \frac{q}{p}g_{-}(t)  \\  \frac{p}{1}g_{-}(t)  & g_{+}(t)  \end{matrix}\right) 
+  = \left(\begin{matrix} g_{+}(t) &  \frac{q}{p}g_{-}(t)  \\  \frac{p}{q}g_{-}(t)  & g_{+}(t)  \end{matrix}\right) 
   \left(\begin{matrix} \ket{M}  \\ \ket{M} \end{matrix}  \right)   
 \end{align}
 

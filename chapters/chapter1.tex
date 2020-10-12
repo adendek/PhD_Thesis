@@ -219,7 +219,7 @@ The systematic errors related to the track reconstruction procedure, which can p
 
 Particle identification (PID) is a vital step in any physics analysis. For instance, the ability to significantly reduce the background often relies on the correct separation of kaons and protons from pions. The LHCb PID system is complex and comprises of two ring-imaging Cherenkov detectors (RICH), a series of muon chambers, and a calorimeter system (ECAL and HCAL), see figure \ref{fig:LHCBlayout}. 
 
-The combined information from these sub-detectors allows distinguishing between various types of charged and neutral particles. Identification of the charged particles can be enhanced using tracking information. Calorimeters, apart from measuring the energy, can also provide information regarding the particle type for electrons, photons and hadrons. The muon system provides identification of muons with a high purity that is necessary for all CP-sensitive decay processes. Ability to distinguish pions and kaons/protons with high efficiency is done using the RICH detectors and is critical for the purely hadronic decays. It is important to note that for LHCb experiment the performance of the PID reconstruction is measured using data-driven techniques since the simulation poorly reproduces the PID variables. At the moment, two mutually exclusive approaches are used where simple low-level variables measured by respective sub-detectors are combined to provide more powerful selection variables. The first method, called $DLL_{X,\pi}$, relies on a linear combination of likelihood information produced by each detector which is then added to form the combined log-likelihood difference between particle $X$ (where $X \in {K, p, \mu, e}$) and pion hypothesis. So, the general idea of applying the $DLL_{X,\pi}$ method is to evaluate log-likelihood difference between a given particle $X$ and a pion hypothesis as follow:
+The combined information from these sub-detectors allows distinguishing between various types of charged and neutral particles. Identification of the charged particles can be enhanced using tracking information. Calorimeters, apart from measuring the energy, can also provide information regarding the particle type for electrons, photons and hadrons. The muon system provides identification of muons with a high purity that is necessary for all CP-sensitive decay processes. Ability to distinguish pions and kaons/protons with high efficiency is done using the RICH detectors and is critical for the purely hadronic decays. It is important to note that for LHCb experiment the performance of the PID reconstruction is measured using data-driven techniques since the simulation poorly reproduces the PID variables. At the moment, two mutually exclusive approaches are used where simple low-level variables measured by respective sub-detectors are combined to provide more powerful selection variables. The first method, called $DLL_{X,\pi}$, relies on a linear combination of likelihood information produced by each detector which is then added to form the combined likelihood ratio (or difference of log-likelihoods) between particle $X$ (where $X \in {K, p, \mu, e}$) and pion hypothesis. So, the general idea of applying the $DLL_{X,\pi}$ method is to evaluate log-likelihood difference between a given particle $X$ and a pion hypothesis as follow:
 
 \begin{equation}
 \Delta log \mathcal{L}_{X,\pi} = log \mathcal{L}_{X} - log \mathcal{L}_{\pi}  
@@ -227,8 +227,8 @@ The combined information from these sub-detectors allows distinguishing between 
 Where: $ \mathcal{L}_{X}$ and $ \mathcal{L}_{\pi}$ represents log-likelihoods for particle $X$ and a $\pi$. The classification is performed by simply comparing the $DLL_{X,\pi}$ to a tuned threshold. When the $DLL_{X,\pi}$ is greater than this threshold, it means that the particle is likely not to be a pion. 
 
 
-To enhance the PID performance the LHCb collaboration decided to apply also the multivariate analysis \cite{PID}. The model, called $ProbNNX$, that was proposed and deployed is a fully-connected neural network (that kind of model is described in section \ref{sec:DNN}) with one hidden-layer implemented using the TMVA package \cite{TMVA}. In order to produce the $ProbNNX$ output the tracking information, such as track momentum and pseudo-rapidity, is also used. In the end the output of the model is employed to distinguish a given particle specie $X$ from any other (i.e., a multi class classification problem). Additional models are trained to identify neutral particles as well. In particular two models $isNotE$ and $isNotH$ are trained to separate photons from electrons and hadrons.
-These baseline models proved that the application of Machine Learning could significantly improve the performance of Particle identification. The figure \ref{fig:PID baseline} shows performance comparisons, measured as a ROC curve \footnote{For a formal definition of ROC curve see section \ref{sec:ROC}} between these two models.
+To enhance the PID performance the LHCb collaboration decided to apply also the multivariate analysis \cite{PID}. The model, called $ProbNNX$, that was proposed and deployed is a fully-connected neural network (that kind of model is described in section \ref{sec:DNN}) with one hidden-layer implemented using the TMVA package \cite{TMVA}. In order to produce the $ProbNNX$ output the tracking information, such as track momentum and pseudo-rapidity, is also used. In the end the output of the model is employed to distinguish a given particle specie $X$ from any other (i.e., a multi class classification problem). Additional models are trained to identify neutral particles as well. In particular two models $isNotE$ and $isNotH$ are trained to separate photons from electrons and hadrons respectively.
+These baseline models proved that the application of Machine Learning could significantly improve the performance of Particle identification. Figure \ref{fig:PID baseline} shows performance comparisons using ROC curves \footnote{For a formal definition of ROC curve see section \ref{sec:ROC}} determined for respective models.
 
 \begin{figure}[h]
  \begin{center}
@@ -279,23 +279,23 @@ The most critical component of the Particle Identification system is the Ring Im
  \end{center}
 \end{figure}
 
-
-The RICH detector works by measuring Cherenkov radiation emitted when the charged particle traverse through the detector. Cherenkov radiation is emitted when a charged particle moves through a medium at the velocity higher than the speed of light at this medium. The emitted radiation angle ($\theta_c$) depends directly on the particle velocity, and it is expressed by:
+The fundamental principle of operation of the RICH detector is to measure Cherenkov radiation emitted when a charged particle traverses its active volume. Cherenkov radiation is always emitted when a charged particle moves through a medium at the velocity higher than the speed of light at this medium. The angle at which the Cherenkov photons are emitted ($\theta_c$) depends directly on the particle velocity, and it is expressed by
 
 \begin{equation}
 cos \theta_c = \frac{1}{n\beta}
 \end{equation}
 
-Where: $\beta$ is the velocity of the particle divided by the speed of light,\\ and $n = \frac{c}{v_{medium}}$. 
+Where: $\beta$ is the velocity of the particle divided by the speed of light,\\ and $n = \frac{c}{v_{medium}}$
+is the refractive index. 
 
-Once emitted, Cherenkov radiation is reflected via a combination of spherical and flat mirrors to hybrid photon detectors (HPD). The HPD has a photocathode that emits electrons when excited by the Cherenkov radiation. Electrons are accelerated by a potential of about 20kV towards a silicon detector, which allows identifying the location of the hit. The performance understood as an identification efficiency, of the RICH detector is shown in figure \ref{fig:RICH_performance}. 
+Once emitted, Cherenkov radiation is reflected via a combination of spherical and flat mirrors to hybrid photon detectors (HPD). The HPD has a photocathode that emits electrons when excited by the Cherenkov radiation. Electrons are accelerated by a potential of about 20kV towards a silicon detector, which allows identifying the location of the hit. The performance, quantified using the identification efficiency is shown in figure \ref{fig:RICH_performance}. 
 
 
 \begin{figure}[h]
  \begin{center}
   \includegraphics[width=0.49\linewidth]{figures/Kaon_proton.PNG}
    \includegraphics[width=0.49\linewidth]{figures/Chernkov_angle.PNG}
-    \caption{Kaon identification efficiency and pion misidentification rate measured using simulated events as a function of track momentum. Two different $\Delta log \mathcal{L}(K − \pi)$ requirements have been imposed on the
+    \caption{Kaon identification efficiency and pion misidentification rate measured using simulated events as a function of track momentum. Two different $\Delta log \mathcal{L}(K − \pi)$ requirements (often called tight and loose) have been imposed on the
 samples (left), reconstructed Cherenkov angle as a function of track momentum in the $C_4F_{10}$ radiator (right). Figures taken from \cite{RICH_performance}}%
     \label{fig:RICH_performance}%
  \end{center}
@@ -306,11 +306,11 @@ samples (left), reconstructed Cherenkov angle as a function of track momentum in
 
 The proper muon identification is an essential requirement because muons are the final decay states of some of the most important heavy flavor decays such as $B_s^0 \rightarrow J/\psi ~~ \mu^{+}\mu^{-}$,  $B^{0}_s \rightarrow K^{*0} ~~ \mu^{+}\mu^{-}$ and they can be used as an initial flavor tag for measurements of $B^0$  and $B^0_{s}$ oscillations. 
 
-The muon system provides muon identification as a Log-Likelihood, which depends on the track momentum and the number of hits detected in muon stations and how close the hits are with respect to the extrapolated track position in the muon system. It also provides such information as $x,y$ position in the muon station, which can be used for standalone-track reconstruction, and $p_T$ information used by the L0 trigger system. More details refer to section \ref{sec:trigger}. Therefore, the muon station is read out at the frequency of $40 Mhz$. 
+The muon system provides muon identification as a log-likelihood variable, which depends on the track momentum and the number of hits detected in muon stations and how close the hits are with respect to the extrapolated track position in the muon system. It also provides such information as $x,y$ position in the muon station, which can be used for standalone-track reconstruction and finally $p_T$ information used by the L0 trigger system. More details refer to section \ref{sec:trigger}. Because the information from the muon stations is used in the hardware part of the LHCb trigger system, it is read out at the frequency of $40 Mhz$ (which is the LHC machine clock). 
 
-Muon stations are located the farthest from the interaction point. The placement of these detectors is dictated by the fact that muons do not interact strongly, have a high masses ($105~ MeV/c^2$), and long lifetime ($2.2 \cdot 10^{-6}s$) thus muons travels much farther than any other charged particles.  
+Muon stations are located the farthest from the interaction point. The placement of these detectors is dictated by the fact that muons interact very weakly with the material, have a high masses ($105~ MeV/c^2$), and long lifetime ($2.2 \cdot 10^{-6}s$) thus muons travels much farther than any other charged particles.  
   
-The muon system is composed of five stations, one situated just before the calorimeter and four downstream from the calorimeter. Each of the stations is composed of two types of detectors. The first one is a multiwire proportional chamber located far from the beam pipe, and triple gas electron multiplier (GEM) detectors \footnote{GEM detector is used due to the higher particle flux} placed in central quadrants close to the beam. Those detector use gas mixture consisting of $Ar$, $CO_2$ and $CF_4$. A cartoon of the muon station is shown in figure \ref{fig:muon}. 
+The muon system is composed of five stations, one situated just before the calorimeters and four downstream from them. Each of the stations is composed of two types of detectors. The first one is a multiwire proportional chamber located far from the beam pipe, and triple gas electron multiplier (GEM) detectors \footnote{GEM detector is used due to the higher particle flux} placed in central quadrants close to the beam. Those detector use gas mixture consisting of $Ar$, $CO_2$ and $CF_4$. A cartoon of the muon station is shown in figure \ref{fig:muon}. 
 The efficiency of the muon identification is, on average, above $98\%$ with pion and kaon misidentification rate below $1\%$, which is shown in figure \ref{fig:muon_missidentify}. 
 
 
@@ -318,7 +318,7 @@ The efficiency of the muon identification is, on average, above $98\%$ with pion
  \begin{center}
   \includegraphics[width=0.49\linewidth]{figures/muon_stations.PNG}
    \includegraphics[width=0.49\linewidth]{figures/muon_photo.PNG}
-    \caption{Site view of the muon detector (left) and a photo of M5 station. Figures taken from \cite{lhcb}.}%
+    \caption{Side view of the muon detector (left) and a photo of M5 station. Figures taken from \cite{lhcb}.}%
     \label{fig:muon}%
  \end{center}
 \end{figure}
@@ -328,7 +328,7 @@ The efficiency of the muon identification is, on average, above $98\%$ with pion
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.6]{figures/muon_eff.PNG}
-\caption{Muon-identification efficiency as a function of momentum, for different requirements on the number of hits. Figure taken from \cite{muon_tdr}.
+\caption{Muon identification efficiency as a function of momentum, for different requirements on the number of hits. Figure taken from \cite{muon_tdr}.
 \label{fig:muon_missidentify}}
 \end{figure}
 
@@ -338,12 +338,11 @@ The efficiency of the muon identification is, on average, above $98\%$ with pion
 
 The calorimeter system performs several functions. It is responsible for providing fast information for the hardware trigger level and allows identification of electrons, photons, and hadrons, jointly with a measurement of their energies and transverse positions.
 
-The calorimeter system is designed to measure the energy of an interacting particle. This is achieved via measuring the energy of secondary electromagnetic and hadronic showers, which are created when the particle travels through the absorber material. Scintillators or silicon detectors perform this measurement. The measured energy is the total energy of all showers absorbed in the active materials, thus corresponds to the initial energy of the initial particle. 
+The calorimeter system is designed to measure the energy of an interacting particle. This is achieved via measuring the energy of secondary electromagnetic and hadronic showers, which are created when a particle travels through the very dense absorber material (i.e., the material with a very low radiation length). The signal is formed using scintillator detectors (see text below). The measured energy is the total energy of all showers absorbed in the active materials, thus corresponds to the initial energy of the initial particle. 
 
-The calorimeter system consists of an electromagnetic calorimeter (ECAL) and Hadron Calorimeter.  Both are placed between the first and second muon stations, see \ref{fig:LHCBlayout}. ECAL subdetector is dedicated to identifying photons and electrons.  It is equipped with two additional detectors, placed in front of it, a PreShower detector (PS) and a Scintillator Pad Detector (SPD), the layout and granularity of both are presented in figure \ref{fig:ECAL}. 
+The calorimeter system consists of an Electromagnetic Calorimeter (ECAL) and Hadron Calorimeter.  Both are placed between the first and second muon stations, see \ref{fig:LHCBlayout}. ECAL subdetector is dedicated to identifying photons and electrons.  It is equipped with two additional detectors, placed in front of it, a PreShower detector (PS) and a Scintillator Pad Detector (SPD), the layout and granularity of both are presented in figure \ref{fig:ECAL}. 
 
-
-PS and the SPD are used by the low-level trigger to distinguish electrons from photons and pions. The information about the number of tracks per event obtained by SPD is also used by the trigger to disregard those events that are too crowded. 
+PS and the SPD are used by the low-level trigger to distinguish electrons from photons and pions. The information about the number of tracks per event obtained by SPD is also used by the trigger to drop events that are too busy. 
 The ECAL is made of 2 mm lead plates followed by a 4 mm scintillator pad (shashlik like layout).  Its granularity depends on the distance from the beam, see figure \ref{fig:ECAL}.
 The energy resolution of the ECAL detector can be expressed: 
 
@@ -364,7 +363,7 @@ and of the HCAL (right). Figure taken from \cite{lhcb}.
 \label{fig:ECAL}}
 \end{figure}
 
-The HCAL has a alternating structure of iron and scintillator tiles. The scintillator tiles are 4 mm tick and the iron ones are 16 mm. The HCAL energy resolution, obtained from the testbeam data are expressed: 
+The HCAL has an alternating structure of iron and scintillator tiles. The scintillator tiles are 4 mm tick and the iron ones are 16 mm. The HCAL energy resolution, obtained from the testbeam data can be expressed as: 
 
 \begin{equation}
     \frac{\sigma_E}{E} = \frac{(69\pm 5) \%}{\sqrt{E}} \oplus (9\pm 2) \%
@@ -372,77 +371,90 @@ The HCAL has a alternating structure of iron and scintillator tiles. The scintil
  
 \section{LHCb trigger}
 \label{sec:trigger}
-LHCb trigger system was designed to make a fast decision; the trigger is a real-time application, whether or not to keep the data read-out by the detectors. Its goal is to select heavy flavor decays from other proton-proton interactions. The trigger was implemented to reduce the data rate from the initial bunch crossing rate of 40 MHz to about 5kHz of data recorded on tapes. The initial data rate is several orders of magnitude above the current abilities of data recording and storage, and the interesting events from the physics point of view would be taken for further studies composed of a tiny fraction of the overall rate of proton-proton collisions.  The data rate reduction is achieved by making a fast decision based on approximate measurement of particle transverse momentum and energy, muon identification, track displacement, and topological properties, which allows discriminating some specific decays. 
+LHCb trigger is an example of the real-time system dedicated to compressing the input data stream. The raw data volume is far beyond the limit of the present storage technology, thus the necessity of employing such a system. The fundamental idea behind the large detector's trigger is to work out a decision whether a given event is interesting, from the point of view of the physics programme, or not. The LHCb trigger was designed to reduce the data rate from the initial bunch crossing rate of 40 MHz (i.e., one collision event each 25 ns) to about 12.5kHz of fully reconstructed events to be recorded on tapes. The data rate reduction is achieved by making a fast decision based on approximate measurement of particle transverse momentum and energy, muon identification, track displacement, and topological properties, which allows selecting some specific decays. 
 
-The trigger system is composed of two sub-systems. The first one, called Level-0 trigger (L0), is wholly implemented in hardware through the use of FPGA's \footnote{FPGA stands from Field Programmable Gate Arrays, which are a semiconducting device based on a matrix of configurable logic blocks connected via programable interconnection. Their design has a benefit with respect to a CPU that allows massive parallelism since FPGA programable blocks can work independently and simultaneously. } L0 trigger usees the information from calorimeters and muon detector to reduce the bunch-crossing rate to below 1.1 MHz, which is the maximum input rate fo the front-end ASICs used in Velo and ST.  It is divided into three independent trigger decisions (L0 pileup, L0 muon, L0 calorimeters). Each of them has its own specific selections, and the final decision is a combination of each through a logic "or". 
+The LHCb trigger is built as a two-stage system. The first one, called Level-$O$ trigger (or L$O$ for brevity), is implemented as a hardware layer with the fixed response time of 6 $mu s$. The processing power is provided by FPGA \footnote{FPGA stands for Field Programmable Gate Arrays, which are devices based on a matrix of configurable logic blocks. Their design has a benefit compared to a general-purpose CPU that allows massive parallelism since FPGA programable blocks can work independently and simultaneously as streaming processors.} chips. L$O$ trigger uses the information from calorimeters and muon stations to reduce the bunch-crossing rate to 1.1 MHz, which is the maximum input rate of the front-end ASICs used by other sub-systems. This partial information is then combined and process by dedicated electronics boards that give a final decision to process a given event further or drop it. 
 
-The L0 pileup triggers contribute to luminosity measurements \cite{trigger}.
-The L0 calorimeter trigger leverage the information from ECAL, the HCAL, the PS, and the SPD. Its decision is mostly based on transverse energy deposited in a cluster of $2\times 2$ cells of the same size. The transverse energy, which is rather odd units since the energy is a scalar, not a vector, is defined as :
+%The L0 pileup triggers contribute to luminosity measurements \cite{trigger}.
+The L$O$ calorimeter trigger leverage the information from ECAL, HCAL, PS, and  SPD detectors. Its decision is mostly based on transverse energy deposited in a cluster of $2\times 2$ cells (the cells are presented in figure \ref{fig:ECAL}) of the same size. The transverse energy, which is rather interesting quantity, is defined as:
 
 \begin{equation}
     E_T = \sum_{i=1}^{4} E_i \sin\theta_i
 \end{equation}
 
-Where $E_i$ is the energy deposited in cell $i$, and $\theta_i$ is the angle between the beam axis and the direction of the particle. 
-This quantity is combined with information on the number of hits in the PS and SPD to distinguish between hadron, photon and electron candidates. 
+Where $E_i$ is the energy deposited in the $i-th$ cell, and $\theta_i$ is the angle between the beam axis and the direction of the particle's flight path. 
+This quantity is combined with the information on the number of hits in the PS and SPD to distinguish between hadron, photon and electron candidates. 
 
 
-Events accepted by the L0 trigger are sent to the Event Filter Farm, a computing cluster located at the LHCb pit, consisting of 29 000 cores during Run I and more than 50 000 cores during Run II.  This computing farm is responsible for running High Level Trigger (HLT) applications. Those applications were written in C++ and consist of several trigger selections designed to collect specific events, for instance, $b$ or $c$ hadron decays. The trigger strategy had changed over the course of years when LHCb detector collected the data. Figure \ref{fig:trigger} presents the triggering scheme for both Run I and Run II. 
+Events accepted by the L0 trigger are sent to the Event Filter Farm, a computing cluster located at the LHCb pit, that consisted of approximately 29 000 and 50 000 CPU cores during Run 1 and Run 2 respectively. This computing farm is responsible for running High Level Trigger (HLT) application instances. The HLT software is written in C++ and consists of selection algorithms designed to identify specific decay processes, for instance, $b$ or $c$ hadron decays. The trigger strategy had changed over the course of years when LHCb detector collected the data. Figure \ref{fig:trigger} presents the triggering scheme for both Run 1 and Run 2. 
 
 
 \begin{figure}
 \centering
 \includegraphics[width=\linewidth]{figures/trigger.PNG}
-\caption{LHCb trigger flow during Run I (left) and Run II (right). Each graph illustrate a trigger selections and typical event acceptance rate after each stage. Figure taken from \cite{trigger_schame}.
+\caption{LHCb trigger data flow during Run 1 (left) and Run 2 (right). Each graph illustrate a high-level trigger architecture and a typical event acceptance rate after each stage. Figure taken from \cite{trigger_schame}.
 \label{fig:trigger}}
 \end{figure}
 
-HLT consists of two stages, the first one called HLT1 evaluates a simplified version of tracking and muon reconstruction in order to identify the track that could trigger an event quickly. HLT 1 allows reducing the data flow going from the L0 trigger, giving a sufficient amount of time to HLT2 to perform the more sophisticated reconstruction.
+Implementing the second stage of the LHCb trigger as a full software application has
+a great advantage of the flexibility that plays a paramount role in adapting to changing
+data taking conditions. On the other hand, it also requires constant monitoring of the
+trigger configuration, which is a highly non-trivial task. The machine provided beams
+that were tuned in the way that the average number of proton-proton interactions per
+one beam crossing was 1.6. The data taking periods, when protons were circulating
+in the machine, were called fills and they were, in turn, divided in runs. Each run
+could possibly be configured individually, taking into account differences in the Data
+Acquisition system, calibration and alignment conditions etc. 
 
-Within the HLT1 tracks are reconstructed in Velo and selected based on the probability that particular tracks originate from heavy flavor decays, which is achieved by determining their impact parameter. Selected tracks are then associated with track segments in the tracking stations, which allows estimation of the transverse momentum of the corresponding charged particle. This information, together with track's $\chi^2$ and impact parameter $\chi^2_{IP}$, is used to select interesting events.  
-During Run II, a small portion of data selected by HLT1 is used to calibration and alignment of the detectors. This process, which takes a few minutes, is performed to reduce the probability of misalignment on the tracker. Any misalignment would impact the momentum resolution affecting the quality of reconstruction in HLT2. 
+%HLT consists of two stages, the first one called HLT1 evaluates a simplified version of tracking and muon reconstruction in order to identify the track that could trigger an event quickly. HLT1 allows reducing the data flow going from the L0 trigger, giving a sufficient amount of time to HLT2 to perform the more sophisticated reconstruction.
 
-The HLT2 constitute of two types of algorithm inclusive and exclusive ones. Exclusive algorithms are used to select specific decays at the trigger level. For instance, they required all decay products to be reconstructed. 
-Inclusive trigger selections, also called topological lines, trigger on partially-reconstructed $b$ hadrons decays. Those lines are designed to collect all $b$ hadrons decays with a displaced secondary vertex and at least two charged particles in the final state.
-The quality of reconstruction in the HLT2 during Run II allowed LHCb to implement so-called "Turbo" lines that return fully reconstructed analysis-ready data. Additionally, those lines allow saving space by discarding the raw data, keeping only the relevant information describing reconstructed events. 
+During the down period between Run 1 and Run 2 (called the Long Shutdown 1) a considerable amount of work has been done to optimise and improve the HLT software. This led to splitting the trigger into two logically exclusive parts called HLT1 and HLT2 (see text below for details). It allowed evaluating the online alignment and calibration, while the events were stored in the disk buffer.
+The online calibration procedures were vital for achieving high-quality reconstruction in HLT that is comparable to the offline one.
 
-The trigger efficiency is estimated using the TITOS method, described in great detail in \cite{trigger_eff}. 
+Within HLT1 the full detector information is used. The reconstruction process starts with the vertex detector. The track candidates are selected based on the probability that particular track originates from heavy flavor decay, which is achieved by determining their impact parameter. Selected tracks are then associated with track segments in the tracking stations, which allows estimation of the transverse momentum of the corresponding charged particle (so called forward tracking algorithm). This information, together with track's $\chi^2$ and impact parameter $\chi^2_{IP}$, is used to select interesting events.  
+During Run 2, a small portion of data selected by HLT1 was used to calibration and alignment of the detectors. This process, which takes a few minutes, is performed to reduce the probability of misalignment on the tracker. Any misalignment would impact the momentum resolution affecting the quality of reconstruction in HLT2. No particle-identification is available at this stage (apart from a coarse muon identification). The final output rate of HLT1 is approximately 110 kHz.
 
-What is worth to notice, the algorithm described in chapter \ref{chapter ML algo} was executed as a part of the HLT2. 
+The final selections are performed by HLT2 trigger using the full particle identification variables. HLT2 implements two types of trigger lines that select exclusive and inclusive processes, respectively . Exclusive algorithms are used to select specific decays. For instance, they required all decay products to be within the detector acceptance and reconstructed. 
+Inclusive trigger selections, also called topological lines, trigger on partially-reconstructed $b$ hadrons decays. Those lines are designed to detect all $b$ hadrons decays with a displaced secondary vertex, and at least two charged particles in the final state. The output bandwidth is divided into three streams and undergoes constant, careful monitoring. About 40$\%$ of the total output rate is assigned to inclusive topological selections, another 40$\%$ is reserved to exclusive lines targeting the c-hadron decays and the rest is given to other exclusive processes.
+The quality of reconstruction in the HLT2 during Run 2 allowed LHCb to implement so-called "Turbo" lines that return fully reconstructed analysis-ready data. Additionally, those lines allow saving space by discarding the raw data, keeping only the relevant information describing reconstructed events. 
+
+The trigger efficiency is estimated using the so-called TIS-TOS (Triggered Independent of Signal - Triggered on Signal) method, described in detail in \cite{trigger_eff}. TOS events are those where daughter particles that form a particular decay candidate passed the trigger selection criteria. In the case where other particles in the event passed the criteria, a given decay candidate is called TIS.
+Both categories are not exclusive. When estimating the trigger efficiency, detailed knowledge of which class a given event belongs to is very important.
+It should be stressed that the reconstruction algorithm that is the subject of this thesis (described in chapter \ref{chapter:PLLT}) was executed as a part of the HLT2. 
 
 \section{LHCb software}
 
-In order to generate Monte Carlo simulated samples (see figure \ref{fig:lhcb_sim}) and analyze data collected by the detectors, the LHCb collaboration designed and implemented a number of packages \cite{lhcb_software}. Most of them were implemented in  C++, and they are based on two frameworks ROOT \cite{root} and Gaudi \cite{gaudi}. The list below contains a brief description of selected packages:
+In order to produce the Monte Carlo simulated samples (see figure \ref{fig:lhcb_sim}) and analyze data collected by the LHCb spectrometer a dedicated software framework has been designed and implemented \cite{lhcb_software}. Most of the applications were written in  C++, and they are based on two frameworks ROOT \cite{root} and Gaudi \cite{gaudi}. The list below contains a brief description of selected packages:
 
 \begin{itemize}
-    \item \textbf{Gauss} \cite{gauss_lhcb} was designed to generate the initial particles and simulates their transport through the LHCb detector. The Gauss application consists of two major independent processing phases. The first one is a generation of the primary events whose outcome is particles coming out of the primary proton-proton collision. This generation is handled by the PYTHIA \cite{pythia}, a general-purpose event generator, whist the decay and time evolution of the produced particles is delegated to EventGen \cite{EventGen}. The second phase of Gauss application: detector response simulation is performed via customized Geant4 \cite{geant4} based module. 
-    \item \textbf{Bool} \cite{lhcb_software}  performs a final stage of the LHCb detector simulation. It applies the detector response to hits previously generated by the Gauss. This step, called digitization, includes simulation of the detector and read-out electronics response, together with  L0 trigger hardware information. The Bool's output format mimics the data coming from the real detector.
-    \item \textbf{Brunel} \cite{lhcb_software} this package is responsible for the whole process of data reconstruction, which consist of retrieving all recorded hits in a detector, doing the pattern recognition to identify trajectories, finding primary vertices of interaction and assigning PID likelihood. Brunel can process both simulated and the real collected by detector data. The outcome of the Brunel are reconstructed object (e.g tracks described in chapter \ref{chapter ML algo}) are saved in a Data Summary Tape (DST) files.   
-    \item  \textbf{DaVinci} \cite{lhcb_software} was designed to process the Brunel output and based on it reconstruct decays of interest and apply selection criteria to reduce the background. The outcome of this step is a dataset containing decay candidates for the user-specific decay topologies, which are used as a starting point for further physics analysis.   
+    \item \textbf{Gauss} \cite{gauss_lhcb} was designed to generate the initial particles and simulates their transport through the LHCb detector. The Gauss application consists of two major independent processing phases. The first one is a generation of the proton-proton interactions (primary vertices), at LHC energies, that result, in turn, in producing primary particles. This generation process  is handled by PYTHIA \cite{pythia}, a general-purpose event generator, whist the decay and time evolution of the produced particles is delegated to EventGen \cite{EventGen}. The second phase of Gauss application performs detector response simulation via a customized Geant4 \cite{geant4} based module. 
+    \item \textbf{Boole} \cite{lhcb_software}  performs a final stage of the LHCb detector simulation. It applies the detector response to hits previously generated by the Gauss. This step, called digitization, includes simulation of the detector and read-out electronics response, together with L0 trigger hardware information. The output format of Boole corresponds exactly to the data coming from the real detector.
+    \item \textbf{Brunel} \cite{lhcb_software} this package is responsible for the whole process of data reconstruction, which consist of retrieving all recorded hits in a detector, doing the pattern recognition to identify trajectories, finding primary vertices of proton-proton interactions, and assigning PID likelihoods. Brunel can process both simulated and the real collected by detector data in a completely agnostic way. The outcome of the Brunel consists of the high-level reconstructed objects (e.g tracks and vertices described in Chapter~\ref{chapter:PLLT}) that are saved in a Data Summary Tape (DST) format.   
+    \item  \textbf{DaVinci} \cite{lhcb_software} was designed to process the Brunel output and, based on it, reconstruct decays of interest and apply selection criteria to reduce the background. The outcome of this step is a dataset containing decay candidates for the user-specific decay topologies, which are used as a starting point for further physics analyses.   
     
 \end{itemize}
 
 
 \begin{figure}[!h]
 \centering
-\includegraphics[width=\linewidth]{figures/LHCb_simulation.PNG}
-\caption{LHCb event simulation flow. Each rectangle with a sharp corners represents a separated LHCb package described in text. Figure taken from  \cite{lhcb_computing}.
+\includegraphics[angle =90]{figures/LHCb_simulation.PNG}
+\caption{LHCb event simulation flowchart. Each rectangle with a sharp corners represents a separated LHCb package described in text. Figure taken from  \cite{lhcb_computing}.
 \label{fig:lhcb_sim}}
 \end{figure}
 
 
 
 \section{LHCb upgrade}
-This section is divided into three parts. The first one is dedicated to presents the general concept of why LHCb collaboration decided to upgrade its detector. The second one describes the scope of the Upgrade by discussing which elements will be replaced. The final subsection focuses on the Upstream Tracker detector. It provides a very detailed description of this detector since the author was personally involved in its development.  
+This section is divided into three parts. The first one is dedicated to present the general concepts of why LHCb collaboration decided to upgrade its detector. The second one describes the scope of the Upgrade by discussing which elements will be replaced. The final subsection focuses on the Upstream Tracker detector. It provides a very detailed description of this detector since the author was personally involved in its development.  
 
 \subsection{Motivation}
 
-The data collected during both Run I and Run II allowed to perform and report a number of precise measurements of rare decays of $b$ and $c$ hadrons, which were used to set new limits on models describing New Physics. Although, some of the precise measurements are still limited by statistical uncertainties and continuing data collection at the current rate would not allow to decrease them to the expected by theory level. In order to increase annual data yields, the LHCb detector must undergo a major upgrade during the Long Shutdown II.  The changs will allow the detector to operate at the increased luminosity level to $20 \times 10^{33} cm^{-2}s^{-1}$, which is five times higher than the current one. The new detector is expected to read data at the bunch crossing rate of 40 MHz, which allows collecting about $5~ fb^{-1}$ per year while during both Run I and Run II, LHCb collected nearly $8~ fb^{-1}$. Figure \ref{fig:lhcb_lumi} present the luminosity plan. This figure also presents the prediction of the longer-term future of the LHCb experiment, which is out of the scope of this thesis.  
+The data collected during both Run 1 and Run 2 allowed to perform and report several World best measurements of rare decays of $b$ and $c$ hadrons, which were used to set new limits on models describing New Physics. However, many measurements are still limited by the statistical uncertainties. Continuing data collection at the current rate would not allow us to decrease them to the level compatible with the theoretical predictions. In order to increase annual data yields, the LHCb detector must undergo a major upgrade during the Long Shutdown 2 (expected to be finished in early 2022).  The changes will allow the detector to operate at the increased luminosity of $20 \times 10^{33} cm^{-2}s^{-1}$, which is five times higher than the previous one. The new detector is expected to read data (full detector information) at the bunch crossing rate of 40 MHz, which allows collecting about $10~ fb^{-1}$ per year while during both Run 1 and Run 2, LHCb collected approximately $8~ fb^{-1}$. Figure \ref{fig:lhcb_lumi} present the luminosity plan. This figure also presents the prediction of the longer-term future of the LHCb experiment, which is out of the scope of this thesis.  
 
 \begin{figure}[!h]
 \centering
 \includegraphics[width=\linewidth]{figures/lhcb_lumi.PNG}
-\caption{Luminosity plan from 2010 to 2037 for the LHCb experiment. Red dots represent
+\caption{Actual and predicted integrated luminosity from 2010 to 2037 for the LHCb experiment. Red dots represent
 the value of measured or predicted instantaneous luminosity. Solid blue line represents the value of measured or predicted integrated luminosity.
 \label{fig:lhcb_lumi}}
 \end{figure}
@@ -450,24 +462,24 @@ the value of measured or predicted instantaneous luminosity. Solid blue line rep
 
 \subsection{General aspects of the LHCb Upgrade}
 
-One of the main limitations that drive the idea of the LHCb Upgrade is the collision rate, which must be reduced to 1.1 MHz. This limitation comes from the specific of the current read-out system, see section \ref{sec:velo}.  To overcome this limitation, all tracking detector and their read-out system have to be replaced to be capable of reading out the full detectors at a $40 ~MHz$ rate. New read-out electronic will allow removing the L0 trigger, keeping only the software flexible part. Figure \ref{lhcb_upgrade} presents the new layout of the LHCb detector. When comparing this layout with the current one, see figure \ref{fig:LHCBlayout}, it is clearly visible that the entire structure of the detector stays as it was, only tracking detectors will be replaced. In fact, the detectors that are currently used by the L0 trigger will not have major interventions. 
+One of the main limitations that drive the idea of the LHCb Upgrade was the limitation of the hardware L$O$ trigger and the readout electronics (which resulted in limited event input rate to HLT trigger). This limitation comes from the specific of the current read-out system, see section \ref{sec:velo}.  To overcome this limitation, all tracking detectors and their read-out systems have to be replaced to be capable of reading out the full detector information at the rate of $40 ~MHz$. New read-out electronics will allow removing the L0 trigger, keeping only the software flexible part. Figure \ref{fig:lhcb_upgrade} presents the new layout of the LHCb detector. When comparing this layout with the previous one, see figure \ref{fig:LHCBlayout}, it is clearly visible that the overall structure of the spectrometer stays as it was. All components of the tracking system (vertex detector, TT and T stations) will be replaced. The Cherenkov detectors will be heavily modified, and both the PS and SPD detectors will be removed from the spectrometer. Only the detectors that were previously contributing to the L0 trigger will not have major interventions. 
 
 \begin{figure}[!h]
 \centering
 \includegraphics[width=\linewidth]{figures/LHCb_upgrade.PNG}
-\caption{Layout of the upgraded LHCb detector. Figure taken from \cite{upgrade_tdr}
-\label{fig:LHCBlayout}}
+\caption{Layout of the upgraded LHCb detector. Figure taken from \cite{upgrade_tracker_tdr}
+\label{fig:lhcb_upgrade}}
 \end{figure}
 
 \subsection{Upgraded Velo}
-The upgraded Velo detector, which is the only upgraded tracking detector that keeps its old name, will be placed closer to the beam, its active area starting at the distance of $5.1 mm$ from the beam axis and it will have a finer granularity. The new Velo will operate at the higher particle flux going through it due to increased luminosity, which causes an increase in the average number of visible proton-proton collisions from 1.7 to 5.2. To reduce occupancy on the read-out channels, the microstrips were replaced by pixels. The upgraded Velo detector will consist of 41 million $55\times 55 \mu m$ pixels, which will be read-out by the custom-build VeloPix front-end ASIC, at the 40 MHz rates. 
-The cooling is provided by evaporative CO2 circulating within miniature channels embedded in the modules.
+The upgraded Velo detector will be placed closer to the beam, its active area will reach the distance of $5.1 mm$ from the beam axis, and it will have a finer granularity thanks to changing from micro-strip to pixel technology. The new Velo will operate at much higher particle flux due to increased luminosity, which causes an increase in the average number of visible proton-proton collisions from 1.6 to 5.2 (i.e., on average 5.2 primary vertices will be present at each beams crossing). Thus, the Velo group decided to use pixel sensors to reduce occupancy. The upgraded Velo detector will consist of 41 million $55\times 55 \mu m$ pixels, which will be read out by the custom-build VeloPix front-end ASIC, at the 40 MHz rate. 
+The cooling is provided by evaporative $CO_{2}$ system. It will employ an innovative micro-channels embedded in the structure of the support silicon modules.
 A layout of the upgraded Velo module is shown in figure \ref{fig:veloUpgradeModule}. 
-The expected improvement of the impact parameter reconstruction efficiency is shown in figure \ref{fig:upgrade_velo_performance}.    
+Both the expected performance of the track reconstruction efficiency and impact parameter as a function of the inverse of the transverse momentum are shown in figure \ref{fig:upgrade_velo_performance}.    
 
 \begin{figure}[!h]
 \centering
-\includegraphics[width=\linewidth]{figures/Velo_upgraded_module.PNG}
+\includegraphics[width=\linewidth]{figures/Velo_upgraded_module.pdf}
 \caption{Layout of a module of the upgraded VELO detector. Figure taken from \cite{velo_upgrade_tdr}
 \label{fig:veloUpgradeModule}}
 \end{figure}
@@ -479,16 +491,16 @@ The expected improvement of the impact parameter reconstruction efficiency is sh
  \begin{center}
   \includegraphics[width=0.49\linewidth]{figures/Velo_upgrade_tracking.PNG}
    \includegraphics[width=0.49\linewidth]{figures/Velo_upgrade_IP.PNG}
-    \caption{The left figure shows the reconstruction efficiency for particles which are reconstructible as Velo tracks as a function of momentum. The right plot shows the  3D resolution of the IP, the light gray histogram shows the relative population of $b$ hadron daughter tracks in each $1/p_t$ bin. Figures taken from \cite{velo_upgrade_tdr}.}%
+    \caption{The left figure shows the reconstruction efficiency evaluated for particles which are reconstructible as Velo tracks as a function of momentum. The right plot shows the  3D resolution of the IP, the light gray histogram shows the relative population of $b$ hadron daughter tracks in each $1/p_t$ bin. Figures taken from \cite{velo_upgrade_tdr}.}%
     \label{fig:upgrade_velo_performance}%
  \end{center}
 \end{figure}
 
 \subsection{Scintillating Fibre Tracker}
 
-Scintillating Fibre Tracker (SciFi) \cite{upgrade_tracker_tdr} \footnote{The name of this sub-detector refers to the speculative fiction genre since many people did not believe that the construction of such a detector is feasible. In the future, this detector will probably be renamed to the Forward Tracker (FT).} was designed to replace the T stations. This decision was driven by two factors. Extensive simulations studies showed that the upgraded condition would be too harsh for OT, the foreseen occupancy would be too high to provide reliable input to the tracking pattern recognition algorithm. Moreover, the read-out electronics of both OT and IT detectors would not be capable of working as a part of a new data acquisition system. SciFi covers the full detector acceptance downstream to the magnet and, by design, guarantees a spatial resolution of nearly $80 \mu m$. 
+Scintillating Fibre Tracker (FT) \cite{upgrade_tracker_tdr} \footnote{The previous name of this sub-detector was SciFi and referred to the speculative fiction genre since many people did not believe that the construction of such a detector is feasible.} was designed to replace the T tracking stations. Two factors drove this decision. Extensive simulations studies showed that the upgraded condition would be too harsh for a straw gas detector (like the previous OT gaseous system). The foreseen occupancy would be too high to provide reliable input to the tracking pattern recognition algorithm. Moreover, the readout electronics of both OT and IT detectors would not be capable of working as a part of a new data acquisition system. FT tracker covers the full LHCb detector acceptance downstream to the magnet and, by design, guarantees a spatial resolution close to $80 \mu m$. 
 This detector will consist of three stations, each of them composed of four detection planes organized, similar to IT,  in a $(X, U, V, X)$ orientation, see figure \ref{fig:SciFI}.
- The module will consist of scintillating fibers with a radius of  $125 \mu m$, and a length of 2.5 m, which will be read out by Silicon PhotoMultipliers (SiPMs), located either at the top and bottom of the detector. The SiPMs are kept in a cold box, at $-40 \circ C$, to reduce the dark count rate \footnote{The dark count rate, is the count rate that is measured in the absence of photons, is caused by thermally generated electron-hole pairs.} and each of them consists of nearly 100 pixels.   
+ The module will consist of scintillating fibres with a radius of  $125 \mu m$, and a length of 2.5 m, which will be read out by Silicon Photo-Multipliers (SiPMs), located either at the top or bottom of the detector. The SiPMs are kept in a cold box, at $-40 \circ C$, to reduce the dark count rate \footnote{The dark count rate, is the count rate that is measured in the absence of photons, is caused by thermally generated electron-hole pairs.}, and each of them consists of nearly 128 individual pixels.   
 
 
 \begin{figure}[!h]
@@ -498,20 +510,20 @@ This detector will consist of three stations, each of them composed of four dete
 \label{fig:SciFI}}
 \end{figure}
 
-The SciFi detection mechanism is based on measuring the photons emitted when a particle traverses the detector's active area. Those photons are propagated through the fibers and finally reach the pixels located at the end of the fibers. A signal proportional to the number of fired pixels within a given SiPM channel is used to determine the position of the particle, shown in figure \ref{fig:SciFI_idea}. 
+The FT detection mechanism is based on measuring the photons emitted when a particle traverses the detector's active area. Those photons are propagated through the fibres and finally reach the silicon pixels located at the end of the fibres. A signal proportional to the number of photons detected within a given SiPM detector is used to determine the position of the particle, shown in figure \ref{fig:SciFI_idea}. Each pixel can detect one photon at a time.
 
 
 \begin{figure}[!h]
 \centering
 \includegraphics[scale=0.5]{figures/SciFi_idea.PNG}
-\caption{Visualization of the detection mechanism of the SciFi. The squares show the pixel located at the end of the fibers, and the circles indicate the cross-section of the scintillating fibers. Note that the fibers are not aligned to the detector channels, and the photons can arrive at the detector outside the fiber area.  Figure taken from \cite{upgrade_tracker_tdr}
+\caption{Simplified visualization of the detection mechanism of the FT. The squares show the pixels located at the end of the fibres, and the circles indicate the cross-section of the scintillating fibres. Note that the fibres are not aligned to the detector channels, and the photons can arrive at the detector outside the fibre area.  Figure taken from \cite{upgrade_tracker_tdr}
 \label{fig:SciFI_idea}}
 \end{figure}
 
  
  \section{Upstream Tacker}
- 
-The Upstream Tracker (UT) is a detector that was designed to replace TT. Its structure is very similar to its predecessor. Thus it will be composed of four planes of silicon-strip detectors divided into two sets of two planes, as it is schematically shown in figure \ref{fig:UT_scheme}. Similarly to TT, the detector plates will be arranged in a $(X, U, V, X)$ orientation, with the second and third planes rotated at a stereo angle of $\pm5^{\circ}$ with respect to the $y$-axis.   
+ \label{sec:UT}
+The Upstream Tracker (UT) is a detector that was designed to replace TT tracker. Its structure and sensor technology is very similar to its predecessor. Thus it will be composed of four planes of silicon-strip detectors divided into two stations, as it is schematically shown in figure \ref{fig:UT_scheme}. Similarly to TT, the detector plates will be arranged in a $(X, U, V, X)$ orientation, with the second and third planes rotated at a stereo angle of $\pm5^{\circ}$ with respect to the $y$-axis.   
 
  \begin{figure}[!h]
 \centering
@@ -521,7 +533,7 @@ The Upstream Tracker (UT) is a detector that was designed to replace TT. Its str
 \end{figure}
 
 
-The expected trigger efficiency enhancement with respect to the TT will originate from improved acceptance coverage at small polar angles and finer granularity.  This will be achieved by designing the innermost sensor to have a circular opening around the beampipe, as shown in figure \ref{fig:UT_scheme} (reddish sensors). The UT sensors will have improved radiation hardness, which is critical since the UT sensors have to withstand an integrated luminosity of $50 fb^{-1}$, which is a factor of 5 more than TT.  Figure \ref{fig:UT_dose} presents  the expected irradiation dose, obtained by a FLUKA simulation \cite{fluka}, after $50 fb^{-1}$ as a function of $y$ coordinate, obtained for a detector station slice at $x=0$. Those expected irradiation doses drove the decision on the sensor's technologies. The sensors that are situated closer to the beam will be $n^{+}\text{-on-p}$ technology, which is more radiation hard than $p^{+}\text{-on-n}$.  
+The expected trigger efficiency enhancement with respect to the TT will originate from improved acceptance coverage at small polar angles and finer granularity.  This will be achieved by designing the innermost sensor to have a circular cut-off around the beampipe, as shown in figure \ref{fig:UT_scheme} (reddish sensors). The UT sensors will have improved radiation hardness, which is critical since the UT sensors have to withstand an integrated luminosity of $50~ fb^{-1}$, which is a factor of 5 more than TT.  Figure \ref{fig:UT_dose} presents  the expected irradiation dose, estimated by a FLUKA simulation \cite{fluka}, after $50~ fb^{-1}$ as a function of $y$ coordinate, obtained for a detector station slice at $x=0$. Those expected irradiation doses drove the decision on the sensor's technologies. The sensors that are situated closer to the beam will be $n^{+}\text{-on-p}$ technology, which is more radiation hard than $p^{+}\text{-on-n}$.  
  
  \begin{figure}[!h]
 \centering
@@ -539,17 +551,14 @@ The expected trigger efficiency enhancement with respect to the TT will originat
 \centering
 \includegraphics{figures/UT_sensors.PNG}
 \caption{Sketch of the three mask designs for the UT upgrade. Sensors C and D are shorter and
-can be produced in a single 4 inch wafer, whereas sensors A and B require a full wafer.  Figure taken from \cite{upgrade_tracker_tdr}
+can be produced in a single 4-inch wafer, whereas sensors A and B require a full wafer.  Figure taken from \cite{upgrade_tracker_tdr}
 \label{fig:UT_sensors}}
 \end{figure}
-
-
- 
  
  \section{SALT ASIC}
  \label{sec:salt}
-The design of the new readout chip, operating at bunch crossing frequency of 40 MHz, was a critical part of the LHCb Upgrade. The primary goal of this ASIC was to overcome hardware trigger limitation, which significantly limits the amount of collected data, see section \ref{sec:trigger}. 
-The Silicon ASIC for LHCb Tracking (SALT) is an ASIC designed at AGH-UST Krakow that is capable of reading 128-channels. It was manufactured in radiation-hard TSMC CMOS\footnote{CMOS stands from Complementary metal–oxide–semiconductor and it's a technology that uses complementary and symmetrical pairs of p-type and n-type  MOSFETs (Metal–Oxide–Semiconductor Field-Effect Transistor) for logic functions.} $130 nm$ \footnote{$130 nm$ refers to the minimum gate length that can be manufactured using a particular technology. } technology uses a novel architecture comprising an analog front-end and an ultra-low power (< 0.5 mW) fast (40 MSps\footnote{milion of samples per second}) sampling 6-bit ADC in each channel. 
+The design of the new strip readout chip, operating at bunch crossing frequency of 40 MHz, was a critical part of the LHCb Upgrade. The primary goal of this ASIC was to overcome hardware trigger limitation, which significantly limited the amount of collected data in Run 1 and Run 2, see section \ref{sec:trigger}. 
+The Silicon ASIC for LHCb Tracking (SALT) is a chip designed at AGH-UST Krakow that is capable of reading 128-channels. It was manufactured in radiation-hard TSMC CMOS\footnote{CMOS stands from Complementary metal–oxide–semiconductor and it's a technology that uses complementary and symmetrical pairs of p-type and n-type  MOSFETs (Metal–Oxide–Semiconductor Field-Effect Transistor) for logic functions.} $130 nm$ \footnote{$130 nm$ refers to the minimum gate length that can be manufactured using a particular technology. } technology and employed a novel architecture comprising an analogue front-end and an ultra-low power (< 0.5 mW) fast (40 MSps\footnote{milion of samples per second}) sampling 6-bit ADC in each channel. Thus, the chip is capable of performing quite involved data processing on-detector and significantly reducing the data volume sent to the trigger system.
 
 
 \begin{figure}[ht!]
@@ -561,19 +570,19 @@ The Silicon ASIC for LHCb Tracking (SALT) is an ASIC designed at AGH-UST Krakow 
 
 
 The Salt consists of two main blocks analog and digital, see diagram \ref{fig:SALT}. The analog block consists of a charge preamplifier and a fast shaper with a peaking time of about $25 ns$, and 25 ns after the peaking time of no more than $5\%$ of the peak value.  Those parameters are required to distinguish between consecutive LHC bunch crossings. The SALT was designed to operate with both types ($p^{+}\text{-on-n}$ and $n^{+}\text{-on-p}$) of strip sensors with capacitance in range $5-20~ pF$. 
-The shaper is followed by a single-to-differential block that converts a single-ended signal to a differential one \footnote{Single-ended signaling is a method of signal transmission where one wire carries a changing voltage (signal) and the second wire is connected to a reference voltage (ground), while differential signaling sends a signal via employing two complementary voltage signals to transmit one information signal \cite{signals}}. The last component of the analog block is a fully differential 6-bit SAR ADC, which converts the analog signal to the digital domain. 
+The shaper is followed by a single-to-differential block that converts a single-ended signalling to a differential one \footnote{Single-ended signaling is a method of signal transmission where one wire carries a changing voltage (signal) and the second wire is connected to a reference voltage (ground), while differential signaling sends a signal via employing two complementary voltage signals to transmit one information signal \cite{signals}}. The last component of the analog block is a fully differential 6-bit SAR ADC, which converts the analog signal to the digital domain. 
 
 The digital ADC output is processed by a Digital Signal Processing (DSP) block, which performs the following algorithms: 
 
 \begin{itemize}
-    \item \textbf{Channel masking}. Noisy or dead channels can be masked and not taken removed from further processing; 
+    \item \textbf{Channel masking}. Noisy or dead channels can be masked and removed from further processing; 
     \item \textbf{Pedestal subtraction}. This subtraction is performed in each channel independently using a different value;
     \item \textbf{Mean Common Mode Subtraction}. Removal of the mean value of calculated on top of channels with signal below the certain hit threshold; 
-    \item \textbf{Zero Suppression}; Only the channels with signal above hit threshold are sent out.
+    \item \textbf{Zero Suppression}; Only the data registered in channels where the signal is above hit threshold are sent out for further processing in the trigger system.
 \end{itemize}
 
 Since high level emulation of these algorithms is part of the topic of this thesis, the detailed explanation of each can be found in chapter \ref{chapter:tbut}. 
 
-After the DSP the data is serialized and sent out through e-links using SLVS interface \cite{SLVS} operating at $320 MBit/s$ data rate. Each ASIC is equipped with  e-links, but only some of them are active, depending on the expected hit occupancy on the sensor.  The configuration and monitoring of the SALT ASIC can be adjusted through the Inter-Integrated
+After the DSP, the data is serialized and sent out through, so-called, e-links using SLVS interface \cite{SLVS} operating at $320 MBit/s$ data rate. Each ASIC is equipped with  e-links, but only some of them are active, depending on the expected hit occupancy on the sensor.  The configuration and monitoring of the SALT ASIC can be adjusted through the Inter-Integrated
 Circuit ($I^{2}C$) interface \cite{i2c}.  
 

@@ -1,4 +1,6 @@
 \chapter{Emulation and Monitoring of the Upstream Tracker RAW data}
+\label{chapter:tbut}
+
 This chapter is dedicated to present the emulation and monitoring tool for Upstream Tracker called TbUT.
 To provide a full picture of the data emulation process, this chapter starts by introducing the physics principles of data collection. Within this section, the interaction of particles with matter and review of the principles of particle detection in silicon will be discussed.    
 The TbUT tool was designed to emulate all raw data processing algorithms, as well as generate a number of performance plots. This software was implemented in order to process all raw data collected during the UT testbeams. The described software will also play a crucial role in the future monitoring and calibration of the UT detector. The outcome of this software will help to ensure the quality of the collected data. 
@@ -97,7 +99,6 @@ Most semiconductor detectors are made of $p-n$ junction, which manifests a diode
 
 
 \section{TbUT Emulation Software}
-\label{chapter:tbut}
 The TbUT package is a software developed entirely by the author, and similarly to all of the official LHCb software, it is based on the Gaudi framework \cite{gaudi}. Gaudi identifies components with specific purposes and well-defined interfaces, interacting with each other to provide the complete functionality of an application. Gaudi provides to the application general-purpose components, like messaging and configuration services, see figure \ref{fig:gaudi flow}. The configuration is performed via the customized python scripts. By design, the Gaudi framework decouples objects describing data from those describing algorithms.
 
 

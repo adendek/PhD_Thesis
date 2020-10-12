@@ -29,6 +29,8 @@
 
 \RequirePackage[centertags]{amsmath}
 \RequirePackage{amssymb}
+\RequirePackage{bm}
+\RequirePackage{upgreek}
 \RequirePackage[numbers, comma, sort&compress]{natbib}
 \RequirePackage[small, md, sc]{titlesec}
 \RequirePackage[tight,nice]{units}
