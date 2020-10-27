@@ -78,7 +78,7 @@ One of the analyses, which utilizes long-lived particles, is a study of time-dep
 
 \begin{figure}[h]
 \centering
-\includegraphics[scale=0.9]{figures/B0JPKs.png}
+\includegraphics[width=\textwidth]{figures/B0JPKs.png}
 \caption{The Feynman diagram presenting the decay topologies contributing to the $B_0 \rightarrow J/\psi K_S^0 $ channel:  (left) tree diagram and (right) penguin diagram.
 \label{fig:BJPSi}}
 \end{figure}
@@ -254,7 +254,7 @@ This section provide an overview of the stages of the pattern recognition in Lin
 
 \begin{figure}
 \centering
-\includegraphics[scale=0.7]{figures/PatLL.pdf}
+\includegraphics[scale=0.65]{figures/PatLL.pdf}
 \caption{Different stages of pattern recognition within the  PatLongLivedTracking algorithm. 
 \label{fig:PatLL}}
 \end{figure}
@@ -520,7 +520,7 @@ The next step that were performed is Exploratory Data Analysis. This step is ess
 
 \begin{figure}
 \centering
-\includegraphics{figures/features.pdf}
+\includegraphics[scale=0.9]{figures/features_2.png}
 \caption{Distribution of the input variables used to train T-Seed filter. The sample was extracted using a $B_0\rightarrow J/\psi K_S^0 $ samples decays. The green solid histogram is the signal distribution, while the light blue
 distribution is the background.
 \label{fig:input features}}
@@ -560,15 +560,8 @@ This parameter has value in the range of $<-1,1>$. The value of 0 indicates no c
 
 \begin{figure}
   \centering
-  \begin{tabular}{@{}c@{}}
-    \includegraphics[width=\linewidth]{figures/corr_matrixTrue.png}
-  \end{tabular}
-
-  \vspace{\floatsep}
-
-  \begin{tabular}{@{}c@{}}
-    \includegraphics[width=\linewidth]{figures/corr_matrixFalse.png}
-  \end{tabular}
+    \includegraphics[width=0.8\linewidth]{figures/corr_matrixTrue.png}\\
+    \includegraphics[width=0.8\linewidth]{figures/corr_matrixFalse.png}
 
   \caption{Pearson  correlation matrix that were obtained using a subset of input features. The top plot shows correlation matrix for True T-seeds. The bottom plot presents similar Pearson correlation matrix generated using the ghost T-Seeds.  
 \label{fig:corrMatrix}}  
@@ -579,7 +572,7 @@ The Pearson  correlation coefficient is a good metric to detect linear dependenc
 
 \begin{figure}[!h]
 \centering
-\hspace*{-2cm}\includegraphics[width=1.3\textwidth]{figures/pair_plot.png}
+\includegraphics[width=\textwidth]{figures/pair_plot.png}
 \caption{Pair-plots that were generated using subset of input features. The input data was separated based on the value of the target flag. The blue points represents ghost T-Seeds and the orange points represents true T-Seeds. }
 \label{fig:Pair plot}
 \end{figure}
@@ -1274,7 +1267,6 @@ This analysis focuses on the algorithm's total event yield difference between th
  
 \begin{table}[h]
 \caption{Selection criteria for $K_s$ and $\Lambda_0$ }
-\hspace*{1.2cm}
 \begin{tabular}{|c|c|c|}
 \hline
 cut                                      & $K_S$              & $\Lambda_0$        \\ \hline
@@ -1340,7 +1332,6 @@ To summarize this study, increasing the value of the classification threshold to
 
 \begin{table}[h]
 \caption{Evolution of the Long-Lived tracking algorithm $K_s$ and $\Lambda_0$ events yield for change of the T-Seed classification threshold.}
-\hspace*{-2.5cm}
 \begin{tabular}{|c|c|c|c|c|c|c|}
 \hline
 classification threshold & decay channel                                              & signal & background & S/B [\%] & $\Delta$ signal [\%] & $\Delta$ background [\%] \\ \hline

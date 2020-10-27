@@ -125,7 +125,7 @@ The Velo detector is comprised of twenty-one silicon tracking stations positione
 \label{fig:veloLayout}}
 \end{figure}
 
-The first type of the Velo sensor is called $R$-type, and it is dedicated to measuring $r$-coordinate, i.e., the distance from the proton beam, thus, the strips have a semi-circular shape. The $R$-type sensors are divided into four sectors in the azimuthal angle to improve the pattern recognition phase of the track reconstruction. The strip pitch \footnote{Pitch is a distance between the centres of two adjacent strip implants} increases from $38\mu m$ at the innermost region to $102 \mu m$ at the far edge. The $\varphi$-type sensor is, in turn, divided into two regions, inner and outer, with different pitches to cope with high occupancies. The respective strip topologies are presented in Figure \ref{fig:velo}. Both $R$ and $\varphi$ sensors have a thickness of $300 \mu m$. The Velo sensors and read-out electronics are cooled by the evaporated $CO_2$ system. This system keeps the sensors approximately at the temperature of $-8^\circ$C during data taking.  
+The first type of the Velo sensor is called $R$-type, and it is dedicated to measuring $r$-coordinate, i.e., the distance from the proton beam, thus, the strips have a semi-circular shape. The $R$-type sensors are divided into four sectors in the azimuthal angle to improve the pattern recognition phase of the track reconstruction. The strip pitch \footnote{Pitch is a distance between the centres of two adjacent strip implants} increases from $38\mu m$ at the innermost region to $102 \mu m$ at the far edge. The $\varphi$-type sensor is, in turn, divided into two regions, inner and outer, with different pitches to cope with high occupancies. The respective strip topologies are presented in Figure \ref{fig:velo}. Both $R$ and $\varphi$ sensors have a thickness of $300~\mu m$. The Velo sensors and read-out electronics are cooled by the evaporated $CO_2$ system. This system keeps the sensors approximately at the temperature of $-8^\circ$C during data taking.  
 
 \begin{figure}[h]
  \begin{center}
@@ -145,12 +145,12 @@ The read-out of the data is performed by the Beetle front-end ASIC\footnote{ASIC
    \includegraphics[width=0.6\linewidth]{figures/Velo_photo.jpg}
    \caption{
    The photo of a Velo module with 16 readout Beetle chips (right). 
-   Figure was taken from\cite{lhcb}.  
+   Figure taken from \cite{lhcb}.  
      \label{fig:velo1}}
  \end{center}
 \end{figure}
 
-The primary vertex spatial resolution of about $13 \mu m $ in the transverse plane and close $70 \mu m $ along the $z$ axis allows for very precise decay-time measurements that are vital for the LHCb physics programme. The dependence of the primary vertex resolution versus number of tracks obtained using 2012 calibration data is shown in figure \ref{fig:veloPerformance}. The resolution of the Impact Parameter, critical for detecting the displaced secondary 
+The primary vertex spatial resolution of about $13~\mu m $ in the transverse plane and close $70~\mu m $ along the $z$ axis allows for very precise decay-time measurements that are vital for the LHCb physics programme. The dependence of the primary vertex resolution versus number of tracks obtained using 2012 calibration data is shown in figure \ref{fig:veloPerformance}. The resolution of the Impact Parameter, critical for detecting the displaced secondary 
 heavy-flavour decay vertices, depends on  multiple scattering, primary vertex resolution and single-hit resolution can be expressed as a function of transverse momentum $p_t$ \cite{veloPerformance}: 
 
 \begin{equation}
@@ -294,7 +294,6 @@ Once emitted, Cherenkov radiation is reflected via a combination of spherical an
 
 \begin{figure}[h]
  \begin{center}
-\setkeys{Gin}{height=80mm}
   \includegraphics[width=0.49\linewidth]{figures/Kaon_proton.PNG}
    \includegraphics[width=0.49\linewidth]{figures/Chernkov_angle.PNG}
     \caption{Kaon identification efficiency and pion misidentification rate measured using simulated events as a function of track momentum. Two different $\Delta log \mathcal{L}(K − \pi)$ requirements (often called tight and loose) have been imposed on the
@@ -439,7 +438,7 @@ In order to produce the Monte Carlo simulated samples (see figure \ref{fig:lhcb_
 
 \begin{figure}[!h]
 \centering
-\includegraphics[angle =90]{figures/LHCb_simulation.PNG}
+\includegraphics[angle =-90]{figures/LHCb_simulation.PNG}
 \caption{LHCb event simulation flowchart. Each rectangle with a sharp corners represents a separated LHCb package described in text. Figure taken from  \cite{lhcb_computing}.
 \label{fig:lhcb_sim}}
 \end{figure}
@@ -482,7 +481,7 @@ Both the expected performance of the track reconstruction efficiency and impact 
 \begin{figure}[!h]
 \centering
 \includegraphics[width=\linewidth]{figures/Velo_upgraded_module.pdf}
-\caption{Layout of a module of the upgraded VELO detector. Figure taken from \cite{velo_upgrade_tdr}
+\caption{Layout of a module of the upgraded VELO detector, see detailed description in text. Figure taken from \cite{velo_upgrade_tdr}
 \label{fig:veloUpgradeModule}}
 \end{figure}
 
@@ -586,5 +585,4 @@ The digital ADC output is processed by a Digital Signal Processing (DSP) block, 
 Since high level emulation of these algorithms is part of the topic of this thesis, the detailed explanation of each can be found in chapter \ref{chapter:tbut}. 
 
 After the DSP, the data is serialized and sent out through, so-called, e-links using SLVS interface \cite{SLVS} operating at $320 MBit/s$ data rate. Each ASIC is equipped with  e-links, but only some of them are active, depending on the expected hit occupancy on the sensor.  The configuration and monitoring of the SALT ASIC can be adjusted through the Inter-Integrated
-Circuit ($I^{2}C$) interface \cite{i2c}.  
-
+Circuit ($I^{2}C$) interface \cite{i2c}.

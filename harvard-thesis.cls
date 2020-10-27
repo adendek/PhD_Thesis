@@ -11,7 +11,7 @@
 
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{harvard-thesis}[2012/04/05 v0.4 Harvard University Thesis Class]
-\LoadClass[12pt, oneside, letterpaper]{book}
+\LoadClass[12pt, a4paper]{book}
 
 \setcounter{secnumdepth}{4}
 
@@ -74,7 +74,7 @@
 \nobibliography*        
 
 \RequirePackage{lettrine} % big letter at start of chapter
-\RequirePackage[width=5in, letterpaper]{geometry}
+\RequirePackage[lmargin=3.5cm, rmargin=1.5cm, height=10.0in, a4paper]{geometry}
 
 \RequirePackage{fancyhdr} 
 \pagestyle{fancy} % options: empty , plain , fancy
@@ -99,7 +99,7 @@ UprightFont=ArnoPro-Regular,
 BoldFont=ArnoPro-Bold,
 ItalicFont=ArnoPro-Italic,
 BoldItalicFont=ArnoPro-BoldItalic,
-Numbers={OldStyle,Proportional}]{ArnoPro}
+Numbers={Proportional}]{ArnoPro}
 \setmathrm
 [Path = fonts/,Extension = .otf,
 UprightFont=ArnoPro-Regular,
@@ -109,13 +109,13 @@ BoldItalicFont=ArnoPro-BoldItalic
 ]{ArnoPro}
 
 \RequirePackage{xltxtra,xunicode}
-\defaultfontfeatures{Mapping=tex-text, Numbers=OldStyle}
+\defaultfontfeatures{Mapping=tex-text}
 \aliasfontfeatureoption{Ligatures}{Historic}{Historical}
 \setromanfont
 [Path = fonts/,
 Extension = .otf,
 Mapping=tex-text, 
-Numbers=OldStyle, 
+%Numbers=OldStyle, 
 Ligatures={Common}, 
 SizeFeatures={%
 	{Size={-10}, Font=*-RegularCaption},
