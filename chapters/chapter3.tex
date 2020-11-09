@@ -18,16 +18,13 @@ The tracking procedure consists of three major subroutines listed below:
 
     The pattern recognition efficiency has vital importance. In order to reconstruct $B$ meson decays, one has to reconstruct several tracks. As an example, let consider decay channel $B^0 \rightarrow K^{*0} (\rightarrow K^+\pi^â')\mu^+  + \mu^â' $, which is one of the most promising channels to detect a New Physics phenomena \cite{k*mumu}. In this case, in order to accurately reconstruct $B^0$, meson four charged particles have to be reconstructed. Thus the efficiency of $B$ meson reconstruction depends on the fourth-order on the track reconstruction efficiency. 
     Pattern recognition algorithms have to be fast. Thus there are executed as a part of software online trigger, for which timing is essential. 
-\item \textbf{Track Fitting}. The tracks that were found by the pattern reconstruction are then fitted using a Kalman filter approach \cite{kalman}\cite{kalman2}. This method is capable of accounting multiple scattering and energy loss in the detector. This tracking reconstruction subroutine is the most CPU time consuming because it has to perform the intense computation of material interaction and propagation through the magnetic field. The detailed description of how this method is utilized within the LHCb tracking can  be found in   
+\item \textbf{Track Fitting}. The tracks that were found by the pattern reconstruction are then fitted using a Kalman filter approach \cite{kalman}\cite{kalman2}. This method is capable of accounting multiple scattering and energy loss in the detector. This tracking reconstruction subroutine is the most CPU time consuming because it has to perform the intense computation of material interaction and propagation through the magnetic field. The detailed description of how this method is utilized within the LHCb tracking can  be found in \cite{lhcb_computing}. 
 
 \item \textbf{Clone killing}. The final step in the Track reconstruction is called Clone killing. In this stage, tracks that have been reconstructed multiple times are eliminated. Those duplicated tracks originate from the redundant pattern recognition when the algorithms create two tracks with similar hits content. The outcome of this step can be used for physics analysis.   
 \end{itemize}
 
-
-
 \section{The LHCb track types}
 The tracks reconstructed in the LHCb detector are split into five categories. The splitting criterion is based on subdetectors in which they were reconstructed, which is shown in figure \ref{fig:track_types}. 
-
 
 \begin{figure}
 \centering
@@ -42,8 +39,7 @@ The second type of track is \textbf{Upstream tracks}. They consist of VELO segme
 
 \textbf{T tracks} are defined as those which have measurements only in T stations. Despite the worst momentum resolution, around 25\%, they play a vital role in improving the purity of LHCB's photon reconstruction by identifying Electromagnetic Calorimeter clusters create by the electrons. 
 
-The most important category is \textbf{Long tracks}, which contains those tracks which originate
-in the vertex detector and traverse the full tracker acceptance, including passing through T and TT stations. These tracks provide the best momentum resolution for particles that traverse the full tracking detector and are used in the majority of LHCb analyses.
+The most important category is \textbf{Long tracks}, which contains those tracks which originate in the vertex detector and traverse the full tracker acceptance, including passing through T and TT stations. These tracks provide the best momentum resolution for particles that traverse the full tracking detector and are used in the majority of LHCb analyses.
 
 The final most significant from this thesis perspective, a group of tracks, are \textbf{Downstream tracks}. The Downstream track contains T-segments matched to the hits in the TT. Those tracks are created by the daughters of the long-lived particles, which decays outside of the VELO detector. The reconstruction of the Downstream tracks allows almost double the LHCb acceptance for long-lived particles. Those tracks are reconstructed by the PatLongLivedTracking algorithm. 
 The accurate description of this algorithm is a topic of section \ref{Sec:Downstrean Overview}. 
@@ -60,9 +56,6 @@ where: $t_x = \frac{\partial x}{\partial z}$ and $t_y = \frac{\partial y}{\parti
 
 To visualize the complexity of tracking reconstruction problem figure \ref{fig:event display} presents a single event display, that was collected during Run II.   
 
-
-
-
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.9]{figures/LHCb7_event.png}
@@ -70,11 +63,9 @@ To visualize the complexity of tracking reconstruction problem figure \ref{fig:e
 \label{fig:event display}}
 \end{figure}
 
-
 One of the analyses, which utilizes long-lived particles, is a study of time-dependent CP-violating asymmetries in $B_0 \rightarrow J/\psi K_S^0 $ decays. Measurement of time-dependent $CP$ asymmetries provides a valuable test of the Standard Model's flavor sector as well as an opportunity for discovery effects of physics beyond the Standard Model.  
  The study of this asymmetry in the $B_0 \rightarrow J/\psi K_S^0 $  decay mode provides a way to determine the effective $CP$ phase. The $CP$ violation asymmetry in $b \rightarrow c\bar{c}s$decays of the B mesons is caused by the interference between mixed and unmixed decay amplitudes.
  A state initially prepared as a $B^0$ can directly decay into $J/\psi K_S^0$ or can oscillate into a $\bar{B}$ and then decays into  $J/\psi K_S^0$. Taking the correction to the theoretical uncertainty, this amplitude is equal to twice the angle $\beta = arg [ -  \frac{V_{cd}V_{cb}^*}{V_{td}V_{tb}^*} ] $ of the Unitary Triangle. 
-
 
 \begin{figure}[h]
 \centering
@@ -753,7 +744,7 @@ Within the presented studies' scope, the training progress was measured as loss 
 \begin{figure}[!h]
 \centering
 \includegraphics[width=\textwidth]{figures/NN/Gradient_flow.png}
-\caption{Information or gradient flow visualization. This figure was generated for network with ten hidden units.The light blue bars indicate mean value of the information flow, while the dark blue bars represent maximum value of it.    
+\caption{Information or gradient flow visualization. This figure was generated for network with ten hidden layers. The light blue bars indicate mean value of the information flow, while the dark blue bars represent maximum value of it.    
 \label{fig:gradient_flow}}
 \end{figure}
 

@@ -11,7 +11,7 @@
 
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{harvard-thesis}[2012/04/05 v0.4 Harvard University Thesis Class]
-\LoadClass[12pt, a4paper]{book}
+\LoadClass[12pt, a4paper, openany]{book}
 
 \setcounter{secnumdepth}{4}
 
