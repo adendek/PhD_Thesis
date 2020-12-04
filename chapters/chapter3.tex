@@ -1,6 +1,6 @@
 \begin{savequote}[75mm] 
-Live long and prosper
-\qauthor{Spock} 
+Research is what I’m doing when I don’t know what I’m doing
+\qauthor{Wernher Von Braun} 
 \end{savequote}
 
 \chapter{Machine learning based algorithm for long-lived particles reconstruction in LHCb}
@@ -9,18 +9,17 @@ Live long and prosper
 This chapter presents a Machine Learning based study related to the improvement of the Downstream Tracking algorithm. It starts by providing the general introduction to the LHCb track reconstruction methodology, and the Downstream Tracking algorithm is described, including a section focused on a seed classifier. Then, the performance of the entire Downstream Tracking algorithm is discussed. The final section is dedicated to present ideas on how to approach similar types of problems by leveraging more sophisticated Deep Learning models. Those models will be tested as a part of the development of the Downstream Tracking algorithm for the Upgraded LHCb experiment.   
 
 \section{Track reconstruction}
-Tracking is one of the essential steps in event reconstruction. This procedure is dedicated to reconstructing particle trajectories using a collection of hits that were created when a particle interacts with tracking stations. Tracks are used to provide precision vertexing and momentum estimation. Without that information, no physics analysis can be performed. Moreover, track information together is important is crucial for particle identification. Calorimeter cluster, muon station hits, and Cherenkov rings need associated tracks to be properly reconstructed.
+Tracking is one of the essential steps in the event reconstruction. This procedure is dedicated to reconstructing particle trajectories using a collection of hits that were created when a particle interacts with tracking stations. Tracks are essential to provide precision vertexing and momentum estimation. Without that information, no physics analysis can be performed. Moreover, track information is crucial for particle identification. In order to find a specie of particles the calorimeter clusters, muon station hits, and Cherenkov rings need associated tracks to be properly detected.
 
 The tracking procedure consists of three major subroutines listed below: 
 
 \begin{itemize}
     \item \textbf{Pattern Recognition}. Pattern recognition is the first step in the tracking reconstruction sequence, that is responsible for associating hits to a given particle. These algorithms have to deal with big combinatorics, which originates from the number of hits that are recorded by the tracking detectors. 
 
-    The pattern recognition efficiency has vital importance. In order to reconstruct $B$ meson decays, one has to reconstruct several tracks. As an example, let consider decay channel $B^0 \rightarrow K^{*0} (\rightarrow K^+\pi^â')\mu^+  + \mu^â' $, which is one of the most promising channels to detect a New Physics phenomena \cite{k*mumu}. In this case, in order to accurately reconstruct $B^0$, meson four charged particles have to be reconstructed. Thus the efficiency of $B$ meson reconstruction depends on the fourth-order on the track reconstruction efficiency. 
-    Pattern recognition algorithms have to be fast. Thus there are executed as a part of software online trigger, for which timing is essential. 
-\item \textbf{Track Fitting}. The tracks that were found by the pattern reconstruction are then fitted using a Kalman filter approach \cite{kalman}\cite{kalman2}. This method is capable of accounting multiple scattering and energy loss in the detector. This tracking reconstruction subroutine is the most CPU time consuming because it has to perform the intense computation of material interaction and propagation through the magnetic field. The detailed description of how this method is utilized within the LHCb tracking can  be found in \cite{lhcb_computing}. 
+    The pattern recognition efficiency has vital importance. In order to reconstruct $B$ meson decays, one has to reconstruct several tracks. As an example, let consider decay channel $B^0 \rightarrow K^{*0} (\rightarrow K^+\pi^â')\mu^+  + \mu^â' $, which is one of the most promising channels to detect a New Physics phenomena \cite{k*mumu}. In this case, in order to accurately reconstruct $B^0$, meson four charged particles have to be reconstructed. Thus the efficiency of $B$ meson reconstruction depends on the fourth-order on the track reconstruction efficiency. Moreover, Pattern recognition algorithms have very limited CPU time budget because they are executed as a part of software online trigger, for which timing is essential. 
+\item \textbf{Track Fitting}. The tracks that were found by the pattern reconstruction are then fitted using a Kalman filter algorithm \cite{kalman}\cite{kalman2}. This method is capable of accounting multiple scattering and energy loss in the detector. This track reconstruction subroutine is the most CPU-time consuming because it has to perform the intense computation of material interaction and propagation through the magnetic field. The detailed description of how this method is utilized within the LHCb tracking can  be found in \cite{lhcb_computing}. 
 
-\item \textbf{Clone killing}. The final step in the Track reconstruction is called Clone killing. In this stage, tracks that have been reconstructed multiple times are eliminated. Those duplicated tracks originate from the redundant pattern recognition when the algorithms create two tracks with similar hits content. The outcome of this step can be used for physics analysis.   
+\item \textbf{Clone killing}. The final subroutine of track reconstruction is called \textbf{clone killing}. In this stage, tracks that have been reconstructed multiple times are eliminated. Those duplicated tracks originate from the redundant pattern recognition, when the algorithms create two tracks with similar hits content. The outcome of this step can be used for further physics analysis.   
 \end{itemize}
 
 \section{The LHCb track types}
@@ -33,25 +32,25 @@ The tracks reconstructed in the LHCb detector are split into five categories. Th
 \label{fig:track_types}}
 \end{figure}
 
-The first category of the tracks is \textbf{VELO tracks}. That tracks are reconstructed using only hits measured in the VELO detector. Therefore, for this track, momentum measurement is impossible. Nevertheless, VELO tracks also play an essential role in classifiers designed to select isolated particles, for instance, when the analysis focuses on searching for rare or forbidden decays. 
+The first category of the tracks is \textbf{VELO tracks}. That tracks are reconstructed using only hits measured in the VELO detector. Therefore, for this track, momentum measurement is impossible \footnote{As mentioned in section \ref{sec:velo}, in the VELO region there is no bending magnetic field, so the track are modeled as a straight lines}. Nevertheless, VELO tracks also play an essential role to select isolated particles, for instance, when the analysis focuses on searching for a rare or forbidden decays. 
 
-The second type of track is \textbf{Upstream tracks}. They consist of VELO segments matched with hits in the TT detector. This track is reconstructed to expand the detector's acceptance for low momentum particles, which would otherwise be removed by the magnet. However, because of the weak residual magnetic field in TT, the estimated momentum resolution for these tracks is worst than 10\%.
+The second type of track is \textbf{Upstream tracks}. They consist of VELO segments matched with hits in the TT detector. Those tracks are reconstructed to expand the detector acceptance for low momentum particles, which would otherwise be removed by the magnet. Moreover, because of the weak residual magnetic field in TT, the estimated momentum resolution for these tracks is worst than 10\%.
 
-\textbf{T tracks} are defined as those which have measurements only in T stations. Despite the worst momentum resolution, around 25\%, they play a vital role in improving the purity of LHCB's photon reconstruction by identifying Electromagnetic Calorimeter clusters create by the electrons. 
+\textbf{T tracks} are defined as those which have measurements only in the T stations. Despite the worst momentum resolution, estimated to be around 25\%, they play a vital role in improving the purity of LHCB's photon reconstruction by identifying ECAL's clusters create by the electrons. 
 
-The most important category is \textbf{Long tracks}, which contains those tracks which originate in the vertex detector and traverse the full tracker acceptance, including passing through T and TT stations. These tracks provide the best momentum resolution for particles that traverse the full tracking detector and are used in the majority of LHCb analyses.
+The most important category of the tracks is \textbf{Long tracks}, which contains those tracks originating in the vertex detector and traverse the full tracker acceptance, including passing through T and TT stations. These tracks provide the best momentum resolution for particles that traverse the full tracking detector and are used in the majority of LHCb analyses.
 
-The final most significant from this thesis perspective, a group of tracks, are \textbf{Downstream tracks}. The Downstream track contains T-segments matched to the hits in the TT. Those tracks are created by the daughters of the long-lived particles, which decays outside of the VELO detector. The reconstruction of the Downstream tracks allows almost double the LHCb acceptance for long-lived particles. Those tracks are reconstructed by the PatLongLivedTracking algorithm. 
+The final and the most significant, from this thesis perspective, group of tracks is \textbf{Downstream tracks}. The Downstream track contains T-segments matched to the hits in the TT detector. Those tracks are created by the daughters of the long-lived particles, which decays outside of the VELO detector. The reconstruction of the Downstream tracks allows to almost double the LHCb acceptance for long-lived particles. Those tracks are reconstructed by, the PatLongLivedTracking algorithm~\cite{PATLLT}. 
 The accurate description of this algorithm is a topic of section \ref{Sec:Downstrean Overview}. 
 
-Within the framework of LHCb experiment, a track is modelled as a series of straight line segments, known as track states. A track state is defined as a 5 dimensional vector of the form:
+Within the framework of LHCb experiment, a track is modeled as a series of straight line segments, known as track states. A track state is defined as a 5 dimensional vector of the form:
 \begin{equation}
     \vec{x} = \begin{pmatrix}
     x \\ y \\ t_{x} \\ t_{y} \\ \frac{p}{q} 
     \end{pmatrix}
 \end{equation}
 
-where: $t_x = \frac{\partial x}{\partial z}$ and $t_y = \frac{\partial y}{\partial z}$, $p$ is a track momentum and $q$ is a track's associated particle charge. It is worth to notice that LHCb uses the coordinate system, which is right-handed. The $x-z$ is bending plane and the $y-z$ is non-bending. 
+where: $t_x = \frac{\partial x}{\partial z}$ and $t_y = \frac{\partial y}{\partial z}$, $p$ is a track momentum and $q$ is a track's associated particle charge. It is worth to notice that LHCb uses the right-handed coordinate system, in which the $x-z$ is bending plane and the $y-z$ is non-bending one. 
 
 
 To visualize the complexity of tracking reconstruction problem figure \ref{fig:event display} presents a single event display, that was collected during Run II.   
@@ -63,9 +62,9 @@ To visualize the complexity of tracking reconstruction problem figure \ref{fig:e
 \label{fig:event display}}
 \end{figure}
 
-One of the analyses, which utilizes long-lived particles, is a study of time-dependent CP-violating asymmetries in $B_0 \rightarrow J/\psi K_S^0 $ decays. Measurement of time-dependent $CP$ asymmetries provides a valuable test of the Standard Model's flavor sector as well as an opportunity for discovery effects of physics beyond the Standard Model.  
- The study of this asymmetry in the $B_0 \rightarrow J/\psi K_S^0 $  decay mode provides a way to determine the effective $CP$ phase. The $CP$ violation asymmetry in $b \rightarrow c\bar{c}s$decays of the B mesons is caused by the interference between mixed and unmixed decay amplitudes.
- A state initially prepared as a $B^0$ can directly decay into $J/\psi K_S^0$ or can oscillate into a $\bar{B}$ and then decays into  $J/\psi K_S^0$. Taking the correction to the theoretical uncertainty, this amplitude is equal to twice the angle $\beta = arg [ -  \frac{V_{cd}V_{cb}^*}{V_{td}V_{tb}^*} ] $ of the Unitary Triangle. 
+One of the analyses, which utilizes long-lived particles, is a study of time-dependent $CP$-violating asymmetries in $B_0 \rightarrow J/\psi K_S^0$~decays. Measurement of time-dependent $CP$~asymmetries provides a valuable test of the Standard Model's flavor sector as well as an opportunity for discovery effects of physics beyond the Standard Model.  
+ The study of this asymmetry in the $B_0 \rightarrow J/\psi K_S^0 $  decay mode provides a way to determine the effective $CP$ phase. The $CP$ violation asymmetry in $b \rightarrow c\bar{c}s$~decays of the B mesons is caused by the interference between mixed and unmixed decay amplitudes.
+ A state initially prepared as a $B^0$ can directly decay into $J/\psi K_S^0$ or can oscillate into a $\bar{B}$ and then decays into  $J/\psi~K_S^0$. Taking the correction to the theoretical uncertainty, this amplitude is equal to twice the angle $\beta = arg [ -  \frac{V_{cd}V_{cb}^*}{V_{td}V_{tb}^*} ] $ of the Unitary Triangle.
 
 \begin{figure}[h]
 \centering
@@ -76,46 +75,39 @@ One of the analyses, which utilizes long-lived particles, is a study of time-dep
 
 \section{Downstream Tracking Algorithm overview}
 \label{Sec:Downstrean Overview}
-The description of the downstream tracking pattern recognition algorithm is based on \cite{patllt}. 
+The description of the downstream tracking pattern recognition algorithm is based on \cite{PATLLT}. 
 
-Downstream tracks at LHCb are reconstructed in the following way. First, a standalone track reconstruction in the T stations with an algorithm called PatSeeding is performed, creating T tracks, also called T-Seeds. 
-Roughly speaking, the downstream tracking algorithm's goal is to add TT hits that are likely to match those T-seeds. 
+Downstream tracks at LHCb are reconstructed in the following way. First, a standalone track reconstruction in the T stations with an algorithm called PatSeeding~\cite{PatSeeding} is performed, creating T tracks, also called \textbf{T-Seeds}. 
+Roughly speaking, the downstream tracking algorithm's goal is to add TT hits that are likely to match those T-Seeds. 
 
-After filtering with a machine learning classifier to discard bad candidates that are tracks that do not represent the trajectory of a real particle, these tracks are propagated back through the magnet to the TT station, described in great details in section \ref{sec:TT}, assuming they are coming from the point of origin of the coordinate system. 
-Firstly, the pattern recognition algorithm searches for clusters in the two $x $-layers of the TT.  Those clusters already allow constraining the flight path of the particle with good precision. Then a cluster in the other $x$ layer is searched for. Finally, clusters in $U$ and $v$ layers are added. 
- Those selected clusters are then fitted to a parabola model using a $\chi^{2} $ minimization technique \footnote{Fitting a model to data involves the construction of a test statistic from the model and the data and minimizing that test statistics with respect to all parameters that are not considered fixed }. 
- The   $\chi^{2} $ is defined as :
+Those T-Seeds are filtered by a machine learning classifier to discard bad candidates which are tracks that do not represent the trajectory of a real particle. Accepted T-Seeds are then propagated back through the magnet to the TT station. Then the pattern recognition algorithm searches for clusters in the two $x $-layers of the TT detector.  Those clusters already allow constraining the flight path of the particle with good precision. Then a cluster in the other $x$ layer is searched for. Finally, clusters in $u$ and $v$ layers are added. 
+ Those selected clusters are then fitted to a parabola model using a $\chi^{2} $ minimization technique \footnote{Fitting a model to the data involves construction of a test statistic, designated to measure the goodness of fit, and the model that for a given data minimize beforementioned statistic}. 
+ The $\chi^{2} $ test is defined as:
 
 \begin{equation}
 \chi^{2}(\alpha) = \sum_{i=1}^{n} \frac{(f(x_i, \alpha)-x_i)^{2}}{\sigma_{i}^{2}}
 \end{equation}
-where  $\alpha$ us a vector of free parameters being fitted, $f(x_i;\alpha)$  is a model, and $\sigma_i$ are the uncertainties in the individual measurement $x_i$.  
+where  $\alpha$ is a vector of free parameters being fitted, $f(x_i;\alpha)$  is a model, and $\sigma_i$ are the uncertainties in the individual measurement $x_i$.  
 
-To reduce spilover influence on a tracking reconstruction, a flag is set for each cluster if it is likely to have been created in a different collision than the current one.  This flag is called a high-threshold bit.  Tracks with a large number of high-threshold clusters are rejected. 
+To reduce spilover influence on a tracking reconstruction, a flag is set for each cluster if it is likely to have been created in a different collision than the current one. This flag is called a high-threshold bit. Tracks with a large number of high-threshold clusters are rejected. 
 Finally, the best track is chosen according to the output of another multivariate classifier. 
 
-
-
 \section{Downstream Track model}
-
-
 
 \subsection{Propagation through the magnetic field}
 \label{sec:magPoint}
 
 Charged particles traversing through the tracking
 stations, which are located outside of the magnetic field, follow a straight-line path. The bending of their trajectory inside the magnetic field can be approximated by a sharp kink in the flight path at a given $z$ position of a magnet point, called $z_{\text{mag}}$. The kink method is visualized in figure \ref{fig:magnetPointSketch}.
-This $z$ position depends on the parameters of the track and is also affected by inhomogeneities in the field. The numerical value of this position can be obtained for the parametrized empirical formula: 
+This $z$ position depends on the parameters of the track and is also affected by inhomogeneities in the magnetic field. The numerical value of this position can be obtained using the parametrized empirical formula: 
 \begin{eqnarray}
 \label{eq:zMag}
 z_{\text{mag}} & = &\alpha_{0} + \alpha_{1} \cdot t_{y}^{2} + \alpha_{2} \cdot t_{x}^{2} + \alpha_{3} \cdot 1/p \\
 & & +\, \alpha_{4} \cdot | x_{T} | + \alpha_{5} \cdot | y_{T} | + \alpha_{6} \cdot | t_{y} |. \nonumber
 \end{eqnarray}
-where , $t_{x}$ and $t_{y}$ are the slopes of the last track state in the
-T stations. The absolute momentum, $p$, is
-estimated from the T track, using a simplified parametrisation that assumes a kink of the trajectory at the center of the magnet and the track to come from the point of origin.
-The observables $x_{T}$ and $y_{T}$ are the
-$x$ and $y$ positions of the last state in the T stations, respectively. Analyzing equation \ref{eq:zMag}, one can find that the variable $z_{\text{mag}}$ depends mostly on the values in the first line, while the dependence on the ones from the second row is smaller.
+
+where $\alpha$ are free parameters, $t_{x}$ and $t_{y}$ are the slopes of the last track state in the T stations. The absolute momentum, $p$, is estimated from the T track, using a simplified parametrisation that assumes a kink of the trajectory at the center of the magnet and the track to come from the point of origin. The observables $x_{T}$ and $y_{T}$ are the $x$ and $y$ positions of the last state in the T stations, respectively. Analyzing equation \ref{eq:zMag}, one can find that the variable $z_{\text{mag}}$ depends mostly on the values in the first line, while the dependence on the ones from the second row are smaller. 
+
 
 \begin{figure}[!htbp]
  \begin{center}
@@ -125,9 +117,7 @@ $x$ and $y$ positions of the last state in the T stations, respectively. Analyzi
  \end{center}
 \end{figure}
 
-
-The $\alpha$ parameters are determined in using Monte Carlo simulations. Those numbers are obtained by fitting a straight line to the true position of the hits in TT, and a third-order polynomial to the true
-position of the hits in the T stations. The crossing point of both curves in the $x$-$z$ projection
+The $\alpha$ parameters are determined in using Monte Carlo simulations. Those numbers are obtained by fitting a straight line to the true position of the hits in TT, and a third-order polynomial to the true position of the hits in the T stations. The crossing point of both curves in the $x$-$z$ projection
 determines the \textbf{true} value of $z_{\text{mag}}$. An illustration of $z_{\text{mag}}$ determined in described way, and
 the difference between the values obtained with equation \ref{eq:zMag} when using measured 
 instead of simulated quantities are shown in figure \ref{fig:zMag}.
@@ -136,7 +126,7 @@ instead of simulated quantities are shown in figure \ref{fig:zMag}.
  \begin{center}
    \includegraphics[width=0.49\linewidth]{figures/zMag.png}
     \includegraphics[width=0.49\linewidth]{figures/deltaZMag.png}
-   \caption{Left: <<True>> z position of the magnet point. Right: Difference
+   \caption{Left: \textbf{true} z position of the magnet point. Right: Difference
    between true and estimated $z$ position of the magnet point. For the true position, simulated observables, for the estimated position measured observables were used.
      \label{fig:zMag}}
  \end{center}
@@ -197,10 +187,7 @@ were used:
 The numerical values of those parameters were obtained by fitting residual distributions.
 
 \subsection{Determination of the momentum}
-The momentum of a downstream track mainly depends on the kink it undergoes in
-the magnetic field, but also shows a dependence on the slopes in $x$ and $y$.
-The following parameterisation results in a momentum resolution of about 2\%
-averaged over the momentum spectrum.
+The momentum of a downstream track mainly depends on the kink it undergoes in the magnetic field, but also shows a dependence on the slopes in $x$ and $y$. The following parameterisation results in a momentum resolution of about 2\% averaged over the full momentum spectrum.
 \begin{eqnarray}
 \label{eq:momentum}
 p & = & \frac{ \gamma_{0} + \gamma_{1} \cdot t_{x}^{2} + \gamma_{2} \cdot t_{y}^{2} }{ \Delta_{\text{slope}} },
@@ -241,18 +228,18 @@ where $t_{y,TT} $ is the track's slope in $y$ given by equation \ref{eq:track_in
 
 \section{Pattern Recognition}
 
-This section provide an overview of the stages of the pattern recognition in LingLivedTracking, which are presented in the figure \ref{fig:PatLL}. The detailed description on the first step, filtering T seeds, was moved into the separate section  \ref{sec:TSeed}. 
+This section provide an overview of the stages of the pattern recognition in PatLongLivedTracking, which are presented in the form if flow diagram in figure \ref{fig:PatLL}. The detailed description on the first step, filtering T-Seeds, was moved into the separate section~\ref{sec:TSeed}. 
 
 \begin{figure}
 \centering
 \includegraphics[scale=0.65]{figures/PatLL.pdf}
-\caption{Different stages of pattern recognition within the  PatLongLivedTracking algorithm. 
+\caption{Different stages of pattern recognition within the PatLongLivedTracking algorithm. 
 \label{fig:PatLL}}
 \end{figure}
 
 
 \subsection{T-seeds reconstruction}
-The algorithm, that performs pattern recognition for the T-seeds is called PatSeeding \cite{PatSeeding}. It consists of five distinct steps: 
+The algorithm, that performs pattern recognition for the T-Seeds is called PatSeeding \cite{PatSeeding}. It consists of five distinct steps: 
 
 \begin{itemize}
 \item hit preparation;
@@ -262,7 +249,7 @@ The algorithm, that performs pattern recognition for the T-seeds is called PatSe
 \item validation of low-quality tracks left over from the per region search;
 \end{itemize}
 
-Within this algorithm, the track is described as a straight line in $x-y$ plane.  For $x-z$ projection, a cubic model with three parameters is used:
+Within this algorithm, the track is described as a straight line in $x-y$ plane. For $x-z$ projection, a cubic model with three parameters is used:
 \begin{eqnarray}
 x(z)&=&c(z-z_{reference})^2(1+d_{ratio}(z-z_{reference})) + b(z-z_{reference})+a \\
 y(z)&=&b_{y}z+a_y
@@ -487,15 +474,15 @@ is again fitted with the potential removal of outliers.
 \section{Selection of T tracks }
 \label{sec:TSeed}
 
-T-seeds together with TT hits constitute an input to the LongLivedTrackign (LLT) algorithm and their quality has a direct and significant impact on the algorithm performance. Therefore, the very first and crucial step is a filtering procedure, which purpose is to increase purity of the set of T-tracks by rejecting as many unreconstructible track as possible. This also allows to reduce the execution time since the combinatoric is greatly reduced. A previous analysis showed that T-seed filtering based on a simple linear selection using track quality and kinematic variables is not feasible. Therefore, an idea of using Machine Learning techniques was proposed. This section is dedicated to present all studies, starting from preparing and understanding training dataset, to selecting the best model, to attempting to understand the model's prediction. 
+T-Seeds together with TT hits constitute an input to the LongLivedTracking algorithm and their quality has a direct and significant impact on the algorithm performance. Therefore, the very first and crucial step is a filtering procedure, which purpose is to increase purity of the set of T-tracks by rejecting as many unreconstructible track as possible. This also allows to reduce the execution time since the combinatoric is greatly reduced. A previous analysis showed that T-Seed filtering based on a simple linear selection using track quality and kinematic variables is not feasible. Therefore, an idea of using machine learning techniques was proposed. This section is dedicated to present all studies, starting from preparing and understanding training dataset, selecting the best model, to attempting to understand the model's prediction. 
 
-This problem is similar to the email spam detector, in both cases it is desired to keep all true events and remove as much as possible false events. The nature of this problem reflects in selection of the cutoff probability threshold.  
+The T-Seed selection problem is similar to the email spam detector. In both cases it is desired to keep all true events and remove as much as possible false events. The nature of this problem reflects in selection of the cutoff probability threshold.   
 
 \subsection{T-seed classifier: Data Collection} 
 
-The very first step within the training Machine Learning model pipeline is a data collection. It is not possible to build any statistical model without collecting sufficient amount of data. From the perspective of this project the data was generated by the Monte Carlo simulation. To extract required data a dedicated tool within Brunel project was implemented. This tool is dedicated to match track with MC particle. The particle is considered as matched to a given track if they share at least 70\% of the hits. Such a link allows to assign a target value to tracks.    
+The very first step within the machine learning model training pipeline is a data collection. It is not possible to build any statistical model without collecting sufficient amount of the data. From the perspective of this project the data was generated by the Monte Carlo simulation. To retrieve required data a dedicated tool within the Brunel project was implemented. This tool is dedicated to match track with Monte Carlo particle. The particle is considered as matched to a given track if they share at least 70\% of the hits. Such a link allows to assign a target value to a given track. The flag is a binary value whether a given track is a \textbf{true} one.    
 
-One of the most difficult problem during the data preparation step was choosing the track labeling policy. Within this process, for each T-seed a target flag was assigned. What is crucial, every time when a strategy is changed, the entire process of model selection and training has to be redone, which happens at least three times during author's study. The final labelling strategy tells the track is consider as a reconstructable, later called a \textbf{true T-seed}, when it meets the following criteria:
+One of the most difficult problem during the data preparation step was choosing the track labeling policy. Within this process, for each T-Seed a target flag was assigned. What is crucial, every time when this strategy is changed, the entire process of model selection and training has to be redone, which happend at least three times during author's study. The final labelling strategy tells the track is consider as a reconstructable, later called a \textbf{true T-Seed}, when it meets the following criteria:
 \begin{itemize}
     \item Has to be associated with a valid Monte Carlo particle;
     \item From above association the electron is excluded; 
@@ -503,11 +490,11 @@ One of the most difficult problem during the data preparation step was choosing 
     \item no hits in the Velo detector. 
 \end{itemize}
 
-Those criteria can be justified by definition of the Downstream tracks, which are created by the particles that decays outside of the Velo detector. 
+Those criteria can be justified by definition of the Downstream track. Those are the tracks created by the particles that decays outside of the VELO detector. 
 
 \section{T-seed classifier Exploratory Data Analysis}
 
-The next step that were performed is Exploratory Data Analysis. This step is essential to understand the input data, find patterns, relationships, or anomalies that can influence the outcome of the model prediction.   
+The next step that were performed is Exploratory Data Analysis (EDA). This step is essential to understand the structure of input data, find patterns, relationships, or anomalies that can influence the outcome of the model prediction.   
 
 \begin{figure}
 \centering
@@ -517,13 +504,13 @@ distribution is the background.
 \label{fig:input features}}
 \end{figure}
 
-The search for the best classifier was performed using a simulated data sample containing signal events $B^0\rightarrow J/\psi K_S^0 $ decays events. The entire dataset contains more than 2 million T-Seeds. TO avoid bias that could be introduced by considering only one magnet polarization the training dataset contains the data of both magnet polarities.  
+The search for the best classifier was performed using a simulated data sample containing signal events $B^0\rightarrow J/\psi K_S^0 $ decays events. The entire dataset contains more than 2 million T-Seeds (both true and fake). To avoid bias that could be introduced by considering only one magnet polarization the training dataset consist  of combined datasets generated for both magnet polarities, in the equal proportions.  
 The following variables were considered as an initial features set. Further input dimentionality enhancement was done in the feature engineering phase. 
 
 \begin{itemize}
     \item $\chi^2/ndf$: T-track $\chi^2/ndf$ determined by the PatSeeding algorithm, which is defined in the following way: 
     \begin{equation}
-        \chi^2 = \sum_{hits i} \frac{1}{\sigma_i^2} \left( \frac{x_i-x_{track}(z_i)}{\cos \alpha} \pm r_{drift} \right) 
+        \chi^2 = \sum_{i \in hits} \frac{1}{\sigma_i^2} \left( \frac{x_i-x_{track}(z_i)}{\cos \alpha} \pm r_{drift} \right) 
     \end{equation}
     where: $(x_i, z_i)$ is the $x$ coordinates of the i-th hit at the $y(z_i)$ predicted form the track model, $\sigma_i$ is the hit postilion uncertainty and $r_{drift}$ is the drift radius for Outer Tracker hits or 0 for the Inner Tracker. 
     \item $p$: the absolute momentum of a T-track; 
@@ -539,15 +526,15 @@ The following variables were considered as an initial features set. Further inpu
     \end{equation}
     \item $\eta$: pseudorapidity. 
 \end{itemize}
-Each of above feature distributions is presented in the figure \ref{fig:input features}. It is clearly visible that the data is not linearly separable and the distribution for both true and false classes are very similar to each other. 
+The selected feature distributions are presented in figure \ref{fig:input features}. It is clearly visible that the data is not-linearly separable and the distribution for both true and false classes are very similar to each other. This gives a first impression, that the classification task is hard. 
 
-One of the most popular way to show the dependencies among features is to calculate  the Pearson correlation coefficient $\rho$. The formula for $\rho$ is:
+One of the most popular way to show the dependencies among features is to use ate the Pearson correlation coefficient $\rho$. The formula for $\rho$ is given by:
 
 \begin{equation}
-    \rho(X,Y) = \frac{\mathbb{E}(X-\mu_x)(Y-\mu_y)}{\sigma_x \sigma_y}
+    \rho(X,Y) = \frac{\mathbb{E}\left[(X-\mu_x)(Y-\mu_y)\right]}{\sigma_x \sigma_y}
 \end{equation}
 
-This parameter has value in the range of $<-1,1>$. The value of 0 indicates no correlation, the -1 and 1 implies strong negative and positive correlation respectively. In order to visualize all of the correlation coefficients, so called correlation matrix was created. Figure \ref{fig:corrMatrix} shows two correlation matrices, the data separation was done according to the target flag. There is no significant difference between true and false T-Seeds correlation matrices. This gives the first impression, that the classification task is hard. 
+This parameter has value in the range of $<-1,1>$. The value of~0 indicates no correlation, -1 and 1 implies strong negative and positive correlation respectively. In order to visualize all of the correlation coefficients, so called, correlation matrix was created. Figure \ref{fig:corrMatrix} shows two correlation matrices, each of it plotted for a different value of the target flag. There is no significant difference between true and false T-Seeds correlation matrices. 
 
 \begin{figure}
   \centering
@@ -559,7 +546,7 @@ This parameter has value in the range of $<-1,1>$. The value of 0 indicates no c
 \end{figure}
 
     
-The Pearson  correlation coefficient is a good metric to detect linear dependencies among features, but it is not sensitive to more sophisticated relations. To overcome this limitation the pair-plot was made, showed in figure \ref{fig:Pair plot}. A pairs plot allows to see both distribution of single variables and relationships between two variables, which is carried as a scatter plot. This is particularly interesting to visually inspect how the variables are distributed for a given pair of attributes. To make this plot more readable the data were split into two groups according to the target flag. That kind of plot allows to make an initial guess on the features importance. 
+The Pearson correlation coefficient is a good metric to detect linear dependencies among features, however it is not sensitive to more sophisticated (like quadratic) relations. To overcome this limitation the pair-plot, showed in figure \ref{fig:Pair plot}, was made. A pairs plot allows to visualize both distribution of single variables and relationships between two features, which is carried as a scatter plot. It is particularly interesting to visually inspect how the variables are distributed for a given pair of attributes. To make this plot more readable the data were split into two groups according to the target flag. That kind of plot allows making an initial guess on the importance of the features, i.e., if two features are separated from each other, this may indicate that those features can have a significant impact on a classifier decision. Assuming the model will be capable of learning this separation.   
 
 \begin{figure}[!h]
 \centering
@@ -570,27 +557,28 @@ The Pearson  correlation coefficient is a good metric to detect linear dependenc
 
 \section{T-Seed classifier: baseline}
 
-This section dedicated to present the Machine learning study baseline, which was implemented as training of two models, kNN and logistic regression.
+This section is dedicated to present the study baseline, which was implemented as training of two models, namely $k$-NN and logistic regression.
  
-These two models were selected as a baseline due to their simplicity and a short amount of time that is required to train them. The simplicity, except for the model's underlying idea, is manifested by a small number of hyperparameters that needs to be tuned. The baseline score is the entry point to the Machine Learning study. This score  should be over-performed by all of the more sophisticated models. It also provides an initial understanding of how hard the classification problem is. In some cases, excluding this one, the baseline could be an average human performance on the task. 
+These two models were selected as a baseline due to their simplicity indicated as an amount of time that is required to train them. The simplicity, except for the model's underlying idea, is manifested by a small number of hyperparameters that has to be tuned. The baseline score is the entry point to the remaining machine learning study. This score should be over-performed by all of the more sophisticated models. It also provides an initial understanding of how hard the classification problem is. In some cases, excluding this one, the study baseline could be an average human performance on a given task. 
 
-\subsection{$k$NN} 
+\subsection{$k$-NN} 
 \label{sec:KNN_result}
 
-The $k$NN described in section \ref{sec:knn}, is a model that has two hyperparameters that need to be selected - a number of neighbors and the distance metric. The training pipeline contains of the following steps:
+The $k$-NN described in section \ref{sec:knn}, is a model that has two tunable hyperparameters a number of neighbors $k$ and a distance metric. The model training pipeline contains of the following steps:
 
 \begin{itemize}
     \item Data extraction;
-    \item Data normalization: each of the features were normalized by removing the mean and scaled to unit variance. Centering and scaling happen independently on each feature by computing the relevant statistics on the samples in the training set. 
+    \item Data normalization: each of the features were normalized by removing the mean and scaled to unit variance. Centering and scaling happen independently on each feature by computing the relevant statistics on the samples in the training set;
+    \item Model training and performance evaluation. 
 \end{itemize}
-The mentioned pipeline were implemented using sklearn framework\cite{sklearn}.  
+The mentioned pipeline were implemented using the sklearn framework~\cite{sklearn}.  
 
-Figure \ref{fig:kNN score} presents the ROC AUC score versus the number of neighbors. The score and its uncertainty were obtained using the cross-validation method. The classifier's score maximum value, ROC auc score 76, were obtained for $k \approx 210$.  
+Figure \ref{fig:kNN score} presents the area under the ROC curve score versus the number of neighbors. The score and its uncertainty were obtained using the 4-fold cross-validation method. The maximum score value (ROC auc score 76\%) were obtained for $k \approx 210$.  
 
 \begin{figure}[!h]
 \centering
 \hspace*{-1cm}\includegraphics{figures/knn.png}
-\caption{The kNN performance plot, ROC auc score vs the number of neighbor. The green shaded area represents score's one standard deviation region.}
+\caption{The $k$-NN performance plot, ROC auc score vs the number of neighbor. The green shaded area represents score's one standard deviation region.}
 \label{fig:kNN score}
 \end{figure}
 
@@ -598,7 +586,7 @@ Figure \ref{fig:kNN score} presents the ROC AUC score versus the number of neigh
 
 The second baseline mode is Logistic Regression described in section \ref{sec:LogReg}, and implemented using sklearn framework.
 The input to this model has to be normalized, which is the only preprocessing step that was applied, therefore the data processing pipeline was identical to the one described in section \ref{sec:KNN_result}. 
-To maximize the classifier score analysis of the L1 and L2 regularization constants were conducted. These two hyperparameters were introduced to reduce overfitting, although as presented in figure \ref{fig:RL_L1} none of them has significant impact on the classifier performance.
+To maximize the classifier score analysis of the $L_1$ and $L_2$ regularization constants were conducted. These two hyperparameters were introduced to reduce overfitting, although as presented in figure \ref{fig:RL_L1} none of them has significant impact on the classifier performance.
 
 
 \begin{figure}[h]
@@ -608,12 +596,12 @@ To maximize the classifier score analysis of the L1 and L2 regularization consta
     \subfloat{{\includegraphics[width=0.55\textwidth]{figures/RL_L2.png} }}%
 \\
 \end{tabular}
-   \caption{Logistic Regression validation curves. The plots present the impact of L1 (left) and L2 (right) regularization on classifier performance.  
+   \caption{Logistic Regression validation curves. The plots present the impact of $L_1$ (left) and $L_2$ (right) regularization on classifier performance.  
 \label{fig:RL_L1}}  
 \end{figure}
 
   
-Finally, to check the stability of the prediction, the study of model performance versus a number of training entries was performed. The results are shown in figure \ref{fig:LR_NE}. This plot indicates the biggest limitation of the linear model. The model’s performance is not affected by increasing the amount of data, that were used to train them.  
+Finally, to check the stability of the prediction, the study of model performance versus a number of training examples was performed. The results are shown in figure \ref{fig:LR_NE}. This plot indicates the biggest limitation of the linear model. The model’s performance is not affected by increasing the amount of data, that were used to train them.  
 
 \begin{figure}[!h]
 \centering
@@ -626,27 +614,29 @@ The score, measure as ROC AUC, obtained by the Linear Regression model is about 
 
 \section{T-Seed classifier: study based on XGBoost model}
 
-The previous two models were selected to provide the baseline scores. This section presents the training strategy and results that were obtained using the XGBoost model. 
+The previous discussed two models were selected to provide the baseline scores. This section presents the training strategy and results that were obtained using the XGBoost model. 
 
-The first step within this analysis was to train the model with default values of hyper-parameters to get a better understanding of the model initial performance. This step was also executed to estimate the number, or at least the order of magnitude, of weak learners that need to be added to the boosting model. This number can be estimate by detecting moment when model performance starts to saturate. 
+The first step within this analysis was to train the model with default values of hyper-parameters. It was done to get a better understanding of the model initial performance and to estimate the number, or at least the order of magnitude, of weak learners that need to be added to the boosting model. This number can be estimate by detecting moment when model performance starts to saturate. 
 
-The model saturation is a situation when adding a new tree has no positive impact on the performance, measured on both training and the validation datasets. This effect can be easily detected using a learning curve plot. The learning curve plot is a two-dimensional plot with classifier performance on the y-axis and a number of trees on the x-axis. The saturation effect occurs when learning curve Plateau. 
+The model saturation occurs when adding a new tree has no (positive) impact on the performance, measured using both training and the validation datasets. This effect can be easily detected via plotted a \textbf{learning curve}. The learning curve plot is a two-dimensional plot with classifier performance on the y-axis and a number of trees on the x-axis. The saturation effect occurs when learning curve plateau. 
 
 The initial training allows estimates of the number of trees to be around 700. The other hyperparameters, that were taken into consideration are listed below:
 
 \begin{itemize}
     \item \textbf{learning rate} - shrinkage parameters (see section \ref{sec:xgboost}), which control the weight of new tree added to the model;    
-    \item \textbf{max depth} - a maximum allowed depth of each of the trees, increasing its value makes week learners more complex and more likely to overfit. 
-    \item \textbf{gamma} - minimum loss reduction required to make a further partition on a leaf node of the tree. Increasing the gamma values makes the boosting process more conservative. 
+    \item \textbf{max depth} - a maximum allowed depth \footnote{The tree depth is a maximum distance from the root to the leaf.} of each of the trees that constitute xgboost model, increasing this value makes week learners more complex and more likely to overfit thus, it is recommended to keep the value of this hyperparameter reasonably low. 
+    \item \textbf{gamma} - minimum loss \footnote{In this context, the loss refers to the tree-related loss e.g., information gain} reduction required to make a further partition on a leaf node of the tree. Increasing the gamma values makes the boosting process more conservative. 
     \item \textbf{min child weight} - a minimum sum of instance weight needed in a child to make a split. If the tree partition procedure step produces a leaf node with a sum of instance weight smaller than \textbf{min child weight}, then the building tree process is terminated. This parameter can be interpreted as a minimum number of instances needed to be in each node.
     \item \textbf{colsample by tree} - subsample ratio of features used to construct a particular tree. Subsampling occurs once for each tree. 
     \item \textbf{reg alpha, reg lambda} - regularization factor L1 and L2 on weights.      
     
 \end{itemize}
 
-Taking into consideration the dimensionality of this optimization problem, as well as the fact that each training iteration takes about 1 hour the Bayesian Optimization seemed to be the most promising approach to tune the hyperparameters. Although, all three hyperparameters tuning strategies described in section \ref{sec:hyperparameters} were applied. Figure \ref{fig:hyperparameter_xgboost} presents the Bayesian optimization results in a form of coverage plot, where each of the scores is a ROC AUC score calculate using three-fold cross-validation method. Within the presented experiment the Gaussian process was selected as a surrogate function and Expected Improvement played the role of an acquisition function. Each training round was terminated once the performance on the test dataset has not improved after a fixed number of training iterations. This method is called early stopping, and its main purpose is to prevent training the model when it performance saturates. The positive site effect of this method is reduction of overfitting. 
+Taking into consideration the dimensionality of this optimization problem, as well as the fact that each training iteration (or function evaluation) takes about 2 hours the Bayesian Optimization seemed to be the most promising approach to tune the hyperparameters. Although, all three hyperparameters tuning strategies described in section \ref{sec:hyperparameters} were applied. The Bayesian optimization needs about 40 iterations to find the optimal hyperparameter set \footnote{In this context \textbf{optimal} is consider to be the best one for a given subset of hyperparameter's ranges, it is not guaranteed to be globally optimal}. The Grid and Random Search provide similar results, although each of these methods requires more optimization steps to find a set that works as good as the one produced by Gaussian optimization. 
 
-The Bayesian optimization needs about 40 iterations to find the optimal hyperparameter set \footnote{In this context \textbf{optimal} is consider to be the best one for a given subset of hyperparameter's ranges, it is not guaranteed to be globally optimal}. The Grid and Random Search provide similar results, although each of these methods requires more optimization steps to find a set that works as good as the one produced by Gaussian optimization. 
+Figure \ref{fig:hyperparameter_xgboost} presents the Bayesian optimization results in a form of coverage plot, where each of the scores is a ROC AUC score calculate using three-fold cross-validation method. Within the presented experiment the Gaussian process was selected as a surrogate function and Expected Improvement played the role of an acquisition function. Each training round was terminated once the performance on the test dataset has not improved after a fixed number of training iterations. This method is called \textbf{early stopping}, and its main purpose is to prevent training the model when it performance saturates. The positive site effect of this method is reduction of overfitting. 
+
+
 
 \begin{figure}
 \centering
@@ -655,25 +645,25 @@ The Bayesian optimization needs about 40 iterations to find the optimal hyperpar
 \label{fig:hyperparameter_xgboost}
 \end{figure}
 
-Using selected by the Bayesian optimization method set of hyperparameters, the final xgboost based model achieved a score, measured as an area under the ROC curve of 94\%. The figure \ref{fig:xgboost trainig} presents three different learning curve plots. The first one shows the training progress measured as a reduction of the cross-entropy loss versus the number of trees constituted the model. The second one presents the binary classification error rate, which is calculated as a ratio between a number of wrongly classified cases to all test cases, vs the number of training iterations. The final one presents how the area under the ROC curve versus number of weak learners. The learning curve plots were obtained using a test sample that constitutes 20\% of the entire dataset. 
+Using selected by the Bayesian optimization method set of hyperparameters, xgboost based model achieved a score, measured as an area under the ROC curve of 94\%. Figure \ref{fig:xgboost trainig} presents three different learning curve plots. The first one (top left) shows the training progress measured as a reduction of the cross-entropy loss versus the number of trees constituted the model. The second one (top right) presents the binary classification error rate, which is calculated as a ratio between a number of wrongly classified cases to all test cases, vs the number of training iterations. The final, bottom one presents the area under the ROC curve score versus the number of weak learners. Those learning curve plots were generated using a test sample that constitutes 20\% of the entire dataset. 
 
 
 \begin{figure}
 \centering
-\hspace*{-1cm}\includegraphics{figures/learning_curve_xgboost.png}
+\includegraphics{figures/learning_curve_xgboost.png}
 \caption{Learning curve for the XGBoost classifier. The upper left plot presents cross-entropy loss function vs. a number of week estimators, the right upper plot shows miss classification vs the number of trees. The bottom plot presents how the ROC AUC versus training iterations.}
 \label{fig:xgboost trainig}
 \end{figure}
 
 
-The learning curve plot is one of the most important tool to visually investigate whether model is overfitted.  
-Overfitting refers to a model that has learned the training dataset too well, including the statistical noise or random fluctuations in the training dataset. This effect becomes apparent when the performance gap between training and validation curves increase when increasing the model complexity, which is shown in figure \ref{fig:xgboost_overfitting} .Figure \ref{fig:xgboost trainig} clearly indicates that the model perform very well and the effect of overtraining is not present \footnote{This conclusion is based on a specific testset, that constitutes examples comming from the same distribution.}. 
+The learning curve plot is one of the most important tool to visually investigate whether the model is over-fitted.  
+Over-fitting refers to a model that has learned the training dataset too well, including the statistical noise or random fluctuations in the training dataset. This effect becomes apparent when the performance gap between training and validation curves increase when increasing the model complexity, which is shown in figure~\ref{fig:xgboost_overfitting}. Figure \ref{fig:xgboost trainig} clearly indicates that the model perform reasonably well and the effect of over-training is not present \footnote{This conclusion is based on a specific test set. It is not guaranteed to obtain the same test accuracy for all possible test sets.}.
 
 
 \begin{figure}
 \centering
 \includegraphics[scale=0.6]{figures/bbdt_overfitting.png}
-\caption{Cartoon presenting different behaviour of the Boosted Decision Tree classifier. The leftmost region represents the model that is undertrained which is reflected in decreasing learning curves. The rightmost region corresponds to the model that is overtrained, in such a case validation curve is increasing while train curve is decreasing. }
+\caption{Cartoon presenting different behavior of the Boosted Decision Tree classifier. The leftmost region represents the model that is under-fitted which is reflected in decreasing learning curves. The rightmost region corresponds to the model that is over-trained, in such a case validation curve is increasing while train curve is decreasing. }
 \label{fig:xgboost_overfitting}
 \end{figure}
 
@@ -681,26 +671,26 @@ Overfitting refers to a model that has learned the training dataset too well, in
 
 \section{T-Seed classifier as a bonsai Boosted Decision Tree }
 
-As described in section \ref{sec:bbdt}, the evaluation of the continuous complex classifier is too expensive (from the perspective of CPU time) to deploy that kind of model within HLT2. Therefore, the model was binarized and deployed in the form of bBDT, which is visualized in figure \ref{fig:bbt_structure}. 
+As described in section \ref{sec:bbdt}, the evaluation of the continuous complex classifier is too expensive (from the perspective of CPU time) to deploy that kind of model within the HLT2. Therefore, the model was binarized and deployed in the form of bBDT. The structure of the bBDT is visualized in figure \ref{fig:bbt_structure}. 
 
 
 
 \begin{figure}[h]
 \centering
 \hspace*{-1cm}\includegraphics{figures/BBDT_lookup.png}
-\caption{Structure of the bBDT lookup table. Each of the plot presents different range of lookup tables (x-axies) versus reposnse of the classiers (y-axies).}
+\caption{Structure of the bBDT lookup table. Each of the plot presents different range of lookup table indices (x-axies) versus response of the classiers (y-axies).}
 \label{fig:bbt_structure}
 \end{figure}
 
 
 
-The response of the binned BDT and its ROC curve are presented in figures  \ref{bbdt response} and \ref{fig:ROC binned} respectively. A slight drop in the performance of the binned classifier with respect to the full one has been noted. The figures of merit measured for the bBDT algorithm amounted to 87\%. Based on the ROC curve the classification threshold was selected to be $0.07$, see section \ref{sec:CUT finetuning} for more details. This highly conservative value of the threshold was advocated by the fact that the final classifier has to keep more than 99\% of the true seeds. Nevertheless, this threshold value allowed to remove 30 \% of the fake seeds, thus significantly decrease the ghost rate, formally defined in section \ref{sec:physic_performance}.   
+The response of the binned BDT and its ROC curve are presented in figures~\ref{fig:bbdt response} and \ref{fig:ROC binned} respectively. A slight drop in the performance of the binned classifier with respect to the full one has been noted. The figures of merit measured for the bBDT algorithm amounted to 87\%. Based on the ROC curve the classification threshold was selected to be $0.07$, section~\ref{sec:cut finetuning} contains a discussion on a different value of the cut threshold and its influence on the track reconstruction algorithm performance. This highly conservative value of the threshold was advocated by the fact that the final classifier has to keep more than 99\% of the true T-Seeds. Nevertheless, this threshold value allowed to remove 30 \% of the fake seeds, thus significantly decrease the ghost rate, formally defined in section \ref{sec:physic_performance}.   
 
 
 
 \begin{figure}
 \centering
-\hspace*{-1cm}\includegraphics[scale=0.6]{figures/bbdt_response.png}
+\includegraphics[scale=0.6]{figures/bbdt_response.png}
 \caption{bBDT classifier output distribution, blue is background and orange is signal }
 \label{fig:bbdt response}
 \end{figure}
@@ -725,20 +715,23 @@ The response of the binned BDT and its ROC curve are presented in figures  \ref{
 
 The final model that was taken into consideration when working on a T-Seed selection model was deep neural network, described in \ref{sec:DNN}. 
 All described studies were conducted using PyTorch framework \cite{pytorch}, which allows performing tensor computation acceleration via graphics processing units (GPU) and supports automatic differentiation. Moreover, Pytorch supports the C++ interface, which makes the model's deployment within the LHCb trigger convenient. 
-However, studies discussed in this section were never deployed within the LHCb trigger system due to the algorithm's submission deadline \footnote{I am not sure if I should mention this.}, and the model based on bonsai Boosted Decision Trees was selected instead.  Nevertheless, the author decided to include this section since it may be useful for future studies. 
+However, studies discussed in this section were never deployed within the LHCb trigger system due to the algorithm's submission deadline, thus the model based on bonsai Boosted Decision Trees was selected instead.  Nevertheless, the author decided to include this section since it may be useful for the future studies. 
  
 Pytorch provides a number of utility classes that abstract a lot of complexity, such as data parallelization and batching. From a practical perspective, the developer needs to ensure a customized implementation of the following classes: 
 
 \begin{itemize}
-\item \textbf{Dataset}. This class is dedicated to retrieving the input data,  applying data transformations and data argumentation logic, and converting processed data into the PyTorch tensor.  Within the scope of the presented study, the transformations were limited to adding such features as pseudorapidity and the data normalization. 
+\item \textbf{Dataset}. This class is dedicated to retrieving the input data,  applying data transformations and optional augmentation logic, and converting processed data into the PyTorch tensor.  Within the scope of the presented study, the transformations were limited to adding such features as pseudorapidity and the data normalization. 
  \item \textbf{DataLoader}. The DataLoader combines a Datasets object with different samplers producing data batches. Samplers are an implementation of a different strategy for providing data to models. 
-\item \textbf{Criterion}. The criterion is an abstraction of the loss function. Within this study's scope, only the Cross-entropy were used, although other options may be worth trying, see section \ref{sec:Focal_loss}. 
-\item \textbf{Optimizer}. An optimizer is an object that holds the current state of the model and update parameters based on the computed gradients. The choice of the optimizer is considered as a model hyperparameter. However, the recommended and used in the presented studies choice is Adam. 
+ 
+\item \textbf{Criterion}. The criterion is an abstraction of the loss function. Within this study's scope, only the Cross-entropy loss were used, however section \ref{sec:focal_loss} discusses possible alternatives.  
+
+\item \textbf{Optimizer}. An optimizer is an object that holds the current state of the model and update parameters based on the computed gradients. The choice of the optimizer is considered as a model hyperparameter. However, the recommended and used in the presented studies choice is ADAM \cite{ADAM}. 
 \item \textbf{Model}. It is an abstraction that defines the forward propagation, and it contains all components (layers) of the model.
-Thus, the researcher has to implement two methods. The first one is the \textit{init} method, which initializes the network's layers. It is recommended to initialize the layers using the so-called Xavier initialization \cite{xavier}.  The second method that has to be implemented is the \textit{forward} method. It defines how the input tensor is processed in order to get a vector of output probabilities. The framework takes care of the backward propagation, so the researcher does not need to manually calculate the gradients of the loss function. 
+Thus, the researcher has to override two methods. The first one is the \textit{init} method, which defines and initializes the network's architecture. It is recommended to initialize the layers using, so-called, Xavier initialization \cite{xavier}. The second method that has to be implemented is the \textit{forward} method. It defines how the input tensor is processed in order to get a vector of output probabilities. The framework takes care (using autograd mechanism) of the backward propagation, so the researcher does not need to manually calculate the gradients of the loss function.
+
 \item \textbf{Training loop}. This utility function defines the way how the model is trained and allows customizing training progress measurement. 
 Roughly speaking, the training loop consists of two nested loops (one over epochs and the second one over batches of data). 
-Within the presented studies' scope, the training progress was measured as loss function versus epoch and batch. To ensure model implementation correctness, quantities such as information flow and the changes in the model's weight distributions over time were monitored. An exemplary plot of the information flow is shown in figure \ref{fig:gradient_flow}.
+Within the presented studies' scope, the training progress was measured as loss function versus epoches and batches. To ensure model implementation correctness, quantities such as information flow and the changes in the model's weight distributions over time were monitored. An exemplary plot of the information flow is shown in figure \ref{fig:gradient_flow}.
 \end{itemize}
 
 \begin{figure}[!h]
@@ -749,11 +742,11 @@ Within the presented studies' scope, the training progress was measured as loss 
 \end{figure}
 
 
-When all of the mentioned components are implemented, the next step is to check whether the model can overfit a small sample of the data, this method was recommended in \cite{karpathy}. If the model is not able to reach a low error rate that may indicate some issues, bugs, or misconfiguration.
+After all of the beformentioned components were implemented, the next step is to check whether the model can overfit on a small sample of the data, this method was recommended in~\cite{karpathy}. If the model is not able to reach a low error rate that may indicate some issues, bugs, or model misconfiguration.
 
 The most time-consuming part of the study was the optimization of the network's architecture since the number of tested models exceeds one hundred, and training one model might take a couple of hours.
 
-The architecture optimization procedure consists of the following steps. Start with a shallow network, that contains one hidden layer only.  Then iteratively extend the previously tested model by adding a hidden layer, which makes the model deeper.  Within each iteration step, try to optimize the architecture of the current network. The following options were considered: 
+The architecture optimization procedure consists of the following steps. Start with a shallow network, that contains a single hidden layer only. Then iteratively extend the previously tested model by adding a hidden layer, which makes the model deeper. Within each iteration step, try to optimize the architecture of the current network. The following choices of network internal structure were considered: 
 
 \begin{itemize}
 \item Use the constant number of neurons per hidden layer; 
@@ -778,7 +771,7 @@ The architecture optimization procedure consists of the following steps. Start w
 \end{figure}
 
 
-Within the presented study, models with up to fifteen hidden layers were tested. Figure \ref{fig:DNN_learning_rates} presents a selected four learning curves (cross-entropy loss versus the number of training epoch) each of them documents training progress of a model with a different number of hidden layers. Surprisingly, adding more than two hidden layers to the model has a neglectable influence on the model prediction performance, even though the number of the network parameters was increased by two orders of magnitude.  Thus, the recommended architecture of the network contains two hidden layers. Such a shallow network 
+Within the presented study, models with up to fifteen hidden layers were tested. Figure \ref{fig:DNN_learning_rates} presents a selected four learning curves (cross-entropy loss versus the number of training epoch) each of them documents training progress of a model with a different number of hidden layers. Surprisingly, adding more than two hidden layers to the model has a neglectable influence on the model prediction performance, even though the number of the network parameters increased by two orders of magnitude. Thus, the recommended architecture of the network contains two hidden layers. Such a shallow network 
 produce similar results, measured as a ROC AUC, to the optimized xgboost one, which is shown in figure \ref{fig:DNN_roc}.
 
 \begin{figure}[!ht]
@@ -791,8 +784,8 @@ produce similar results, measured as a ROC AUC, to the optimized xgboost one, wh
 
 \section{T-Seed classifier: model output interpretation}
 \label{sec:interpretability}
-This section is dedicated to emphasizing the importance of the model's interpretability. As presented before the T-Seed filter achieved satisfactory overall performance, but the question regarding the reliance still remains open.
-Within the scope of this thesis, the three approaches to interpret Boosted Decision Tree model prediction have been tested, each of them has been described in section \ref{sec:lime}. 
+This section is dedicated to emphasizing the importance of the model's prediction interpretability. As presented before the T-Seed filter achieved satisfactory overall performance, but the question regarding the reliance still remains open.
+Within the scope of this thesis, three approaches to interpret Gradient Boosted Decision Tree model prediction have been tested, each of them has been described in section \ref{sec:lime}. 
 The classical approach to interpret feature importance is to look at the model globally. The usual way to view the importance of the features is to investigate the following metrics: 
 
 \begin{itemize}
@@ -801,9 +794,9 @@ The classical approach to interpret feature importance is to look at the model g
     \item The \textbf{Coverage} describes the relative number of observations related to this feature. In the above example if the \textit{feature1} is used to decide the leaf node for 20, 10, 5 observations in the mentioned trees respectively, then the coverage for this feature is $20+10+5 = 35$.   
 \end{itemize}
 
-Figure \ref{fig:xgboost overall features importance} presents three plots, each for different matrices described above. It is clearly visible, that these plots contradict to each other. According to the feature weights, the most important feature is seed $\chi^2\/dof$ and the $N_{hits}$ is redundant, while the coverage metric scores it as a second most important.
+Figure~\ref{fig:xgboost overal features importance} presents three plots, each for a different matrices described above. It is clearly visible, that these plots contradict to each other. According to the feature weights, the most important feature is seed $\chi^2\/dof$ and the $N_{hits}$ is redundant, while the coverage metric scores it as a second most important.
 
-To understand why some, possibly categorical, feature has smaller weight value consider the following example. Let feature1 be a binary feature, which is highly correlated with the target variable and its inclusion or removal has a significant influence on classifier performance. Due to the nature of feature1, it has a tiny number of possible values compared to the other features. This feature can be used at most once per tree, while continues features may appear more often on a different level of the tree. Therefore, such a feature gets very low weight value. 
+To understand why some, possibly categorical, feature has smaller weight value consider the following example. Let \textit{feature1} be a binary feature, which is highly correlated with the target variable and its inclusion or removal has a significant influence on classifier performance. Due to the nature of feature1, it has a tiny number of possible values compared to the other features. This feature can be used at most once per tree, while continues features may appear more often on a different level of the tree. Therefore, such a feature gets very low weight value. 
 
 For the above reason, none of the presented global metrics gives an ultimate estimation of the importance of the feature. To get a better understating of it, taking into consideration the non-linear nature of the model's decision boundaries, it would be worth investigating different approaches of measuring the feature importance.  
 
@@ -814,24 +807,25 @@ For the above reason, none of the presented global metrics gives an ultimate est
 \label{fig:xgboost overal features importance}}
 \end{figure}
 
-The second method to take a closer look inside the xgboost black box is based on the idea of Shapley value, described in section [??]. The analysis of the importance of the features is usually done by presenting two groups of plots. The first group is presented in figure \ref{fig:shap overall}. The standardized importance plot provides a notion of relative feature importance and can be compared with the classical plots described previously. Although, it doesn't provide any additional information on the distribution of impacts that feature has on the model's output. This plot doesn't give any understanding of the feature's value on the model performance  \cite{Shap2}. To overcome this limitation the Shap summary plot was introduced, which leverages individualized feature attribution to the model's decision. In order to make that kind of plot the features are sorted by their global impact $\sum_{j=1}^{N}|\phi_i^{(j)}|$, then each of the dots corresponding to the Shap values $\phi_i^{(j)}|$ are plotted horizontally, stacked vertically when running out of space. This concept allows achieving similar effect to the violin plots, which can be further enhanced by coloring the dots according to the feature's value. 
+The second method to take a closer look inside the black box is based on the idea of Shapley value, described in section~\ref{sec:shap}. The analysis of  feature importance is usually done by presenting two groups of plots. The first one is presented in figure \ref{fig:shap overall}. The standardized importance plot provides a notion of relative feature importance and can be compared with the classical plots described previously. Although, it does not provide any additional information regarding the impacts that particular feature has on the model's output. To overcome this limitation the Shap summary plot was introduced, which leverages individualized feature attribution to the model's decision. In order to make that kind of plot the features are sorted by their global impact $\sum_{j=1}^{N}|\phi_i^{(j)}|$, then each of the dots corresponding to the Shap values $\phi_i^{(j)}|$ are plotted horizontally, stacked vertically when running out of space. This concept allows achieving similar effect to the violin plots \cite{ViolinPlot}, which can be further enhanced by coloring the dots according to the feature's value. 
 
 \begin{figure}
+\centering
 \begin{tabular}{c}
-\subfloat{{\includegraphics[width=\textwidth]{figures/Shap_overall.png} }}%
+\subfloat{{\includegraphics[width=0.9\textwidth]{figures/Shap_overall.png} }}%
 \\
-\subfloat{{\includegraphics[width=\textwidth]{figures/Shap_mean.png}}}%
+\subfloat{{\includegraphics[width=0.9\textwidth]{figures/Shap_mean.png}}}%
 \end{tabular}
    \caption{Shap summary plots of all T-Seed classifier features. The plots were obtained using a sample of 50 thousand test examples. The interpretation of this plot is straightforward, the higher Shap value of the feature, the higher influence on the decision of whether T-Seed is reconstructable. In the upper plot, each dot represents every feature for every individual test example that was run through the model. Dot's are colored by the feature's value (red high, blue low). The bottom plot presents the standard feature importance bar plot. The x-axis is essentially the average magnitude change in model output when a feature is hidden from the model.}  
 \label{fig:shap overall}
 \end{figure}
 
 
-To get a better understanding of Shap values presented in the figure \ref{fig:shap overall} let focus on one feature - $N_{layers}$. It is the second most important feature to decide whether T-Seed is a ghost. The impact of this feature on a model's output varies smoothly as the value of the feature increases, which is indicated by the smooth color gradient. The long tail reaching the left means that the extreme values of these features can significantly increase the probability that this T-Seed is not a valid seed. This is consistent with priory intuition saying the seed, that was reconstructed using a small number of hits are more likely to be a ghost. 
+To get a better understanding of Shap values presented in figure \ref{fig:shap overall} let focus on one feature - $N_{layers}$. It is the second most important feature to decide whether T-Seed is a ghost. The impact of this feature on a model's output varies smoothly as the value of the feature increases, which is indicated by the smooth color gradient. The long tail reaching the left means that the extreme values of these features can significantly increase the probability that this T-Seed is not a valid seed. This is consistent with priory intuition saying the seed, that was reconstructed using a small number of hits are more likely to be a ghost. 
 
 The second type of Shap based plots is dependence plots presented in figure \ref{fig:shap dep}.  The concept is similar to the pair-plot, which are usually created in order to visualize dependencies between two features. The shap dependence plots also take into consideration the Shap values. The idea is to make a scatter plot, shap value versus feature value, and apply color scheme that is based on the value of the second feature.
 
-The plot (a) is the one that is the easiest to interpret. It shows the shap value versus the number of layers. It is clearly visible that T tracks with the numbers of plates smaller than 15 push strongly the classifier toward negative decisions. This effect is escalated when the track has a big value of $\chi^2 /\ dof $. This means the classifier decision agreed with an initial understanding of the problem, the track that was reconstructed using a small number of hits and it's fit to the track model has a poor quality is more likely to be a ghost. 
+ Figure \ref{fig:shap dep} (upper left) is the one that is the easiest to interpret. It shows the shap value versus the number of layers. It is clearly visible that T tracks with the numbers of plates smaller than 15 push strongly the classifier toward negative decisions. This effect is escalated when the track has a big value of $\chi^2 /\ dof $. This means the classifier decision agreed with an initial understanding of the problem, the track that was reconstructed using a small number of hits and it's fit to the track model has a poor quality is more likely to be a ghost. 
 
 
 \begin{figure}[!ht]
@@ -864,12 +858,12 @@ The red color indicates that the features pushed prediction toward ghost.
 
 
 
-\section{Final machine learning model to select best downstream track candidates}
+\section{Final machine learning model to select the best downstream track candidates}
 
 In the final stage of the downstream tracking pattern recognition algorithm, a neural network is used to find the best downstream track
-candidate for a given input T-seed.
+candidate for a given input T-Seed.
  The network used is a fully-connected neural network with one hidden layer and fifteen nodes in the hidden layer. 
-A rectified linear unit was used as an activation function for the hidden layer. For the output layer, a sigmoid function was used. The following input variables were used:
+A rectified linear unit was used as an activation function for the hidden layer. For the output layer, a sigmoid function was applied. The following input variables were used:
 
 \begin{itemize}
 \item log($\chi^{2}/ndf$): Natural logarithm of track $\chi^{2}\ndf$
@@ -929,8 +923,8 @@ A candidate is written out if its probability of being a true downstream track i
 
 \section{Physics Performance of the modernised downstream tracking}
 \label{sec:physic_performance}
-The previous sections describe the LongLived pattern recognition algorithm. This one is dedicated to showing the physics performance of this algorithm. The performance can be measured using various strategies. The most obvious one is to measure the efficiency of reconstructing a charged particle in the acceptance as a downstream track using Monte Carlo simulated samples.
-The second method uses to evaluate the performance using real data. This method determines and compares the pattern recognition algorithm performance by measuring the mass resolution.  
+The previous sections describe the LongLived pattern recognition algorithm. This one is dedicated to showing the physics performance of this algorithm. The performance of the track reconstruction algorithm can be measured using various methods. The most intuitive one is to measure the efficiency of reconstructing a charged particle in the LHCb acceptance as a downstream track using Monte Carlo simulated samples.
+The second one evaluates the algorithm's performance via analysis based on real data collected by the detector. This approach determines and compares the pattern recognition algorithms performance by measuring the reconstructed long-lived particle invariant mass resolution.
 
 \subsection{Monte Carlo based Downstream Tracking efficiency  }
 
@@ -944,7 +938,7 @@ To discuss the efficiency of the pattern recognition algorithm it is obligatory 
     \item T-Station reconstructible is a particle that has at least one x and one stereo hit in each of the three T-Stations. 
 \end{itemize}
 
-Therefore the definition of particle reconstructible as a Downstream track if it satisfies the TT and T-Stations reconstructibility criteria. In order to associate the reconstructed tracks to the reconstructable ones a cross-check of hits in both of them has to be evaluated. A reconstructed track is considered as matched to a simulated Monte Carlo particle if they share at least 70\% of the hits.  
+Therefore a particle is considered reconstructible as a Downstream track if it satisfies the TT and T-Stations reconstructibility criteria. In order to associate the reconstructed tracks to the reconstructable ones a cross-check of hits in both of them has to be done. A reconstructed track is considered as matched to a simulated Monte Carlo particle if they share at least 70\% of the hits.  
 Based on this definition the following pattern recognition performance metrics can be defined: 
 
 \begin{itemize}
@@ -965,18 +959,17 @@ There are four different categories of track that were considered within the sco
 
 \begin{itemize}
     \item $\varepsilon_{TT+T}$ : efficiency for all downstream reconstructible particles;
-    \item $\varepsilon_{TT+T, p>5Gev/c}$ : efficiency for all downstream reconstructible particles with $p> 5 GeV/c$;
+    \item $\varepsilon_{TT+T, p>5Gev/c}$ : efficiency for all downstream reconstructible particles with momentum $p> 5 GeV/c$;
     \item $\varepsilon_{TT+T, from B/D}$ : efficiency for all downstream reconstructible particles from a decay of $B$ or $D$ meson;
-    \item $\varepsilon_{TT+T, from B/D, p>5 GeV }$ : efficiency for all downstream reconstructible particles from a decay of $B$ or $D$ meson with  $p> 5 GeV/c$.;
+    \item $\varepsilon_{TT+T, from B/D, p>5 GeV }$ : efficiency for all downstream reconstructible particles from a decay of $B$ or $D$ meson with momentum $p> 5 GeV/c$.;
 \end{itemize}
 
-The overall efficiency numbers are collected in upper half of Table \ref{table:overall eff} and the ghost rate related numbers are presented in \ref{tab:overall ghost} (upper half). Plots of the efficiency and the ghost rate as a function of momentum, transverse momentum, and pseudorapidity are shown in 
+The overall efficiency numbers are collected in upper half of table~\ref{tab:overall eff} and the ghost rate related numbers are presented in table~\ref{tab:overall ghost} (upper half). Plots of the efficiency and the ghost rate as a function of momentum, transverse momentum, and pseudorapidity are shown in 
 figures \ref{fig:EffPatLLTBJpsiK}, \ref{fig:ghostPatLLTBJpsiK}  (obtained using  $B^{0} \rightarrow J/\Psi K^{0}_{S}$ ) and \ref{fig:EffPatLLTDstD0pi}, \ref{fig:ghostsPatLLTDstD0pi} (for $D^{*+} \rightarrow D^{0}\pi^+$ decay). No uncertainty is given, because presented numbers were obtained on a Monte Carlo samples not on a collision data. The statistical uncertainty are negligible, at the permille level.  
 
-It was also important to measure the downstream tracking efficiency using the samples that were fitted with Kalman Filter and a quality cut on a $\chi^2\/ndf$ was applied. Those tracks were also proceeded by a clone killing algorithm to remove duplicates, which were reconstructed as long and downstream track simultaneously. The performance numbers referring to those tracks are collected in Table \ref{tab:overall eff}, lower half, and Table \ref{tab:overall ghost} (lower half) gives ghost rates. The performance numbers after these three steps seem worse than before, as the processing steps applied also reject correct tracks, and the cloned killer is inefficient. One of the reasons why it happens, the clon killer sometimes falsely classifies downstream tracks as long
-tracks (for example when the Velo part is a ghost), which then gets removed from the downstream statistics. Furthermore, clone killing prefers long tracks over downstream tracks. 
+It was also important to measure the downstream tracking efficiency using the samples that were fitted with Kalman Filter and a quality cut on a $\chi^2\/ndf$ was applied. Those tracks were also proceeded by a clone killing algorithm to remove duplicates, which were reconstructed as long and downstream track simultaneously. The performance numbers referring to those tracks are collected in table~\ref{tab:overall eff}(lower half), and table~\ref{tab:overall ghost} (lower half) gives ghost rates. The performance numbers after these three steps seem to be worse than before, as the processing steps applied also reject correct tracks, and the clone killer is inefficient. One of the reasons why it happens, the clone killer sometimes falsely classifies downstream tracks as long tracks (for example when the Velo part is a ghost), which then gets removed from the downstream statistics. Furthermore, clone killer prefers long tracks over downstream tracks. 
 
-Downstream tracking efficiency strongly depends on the momentum and transverse momentum of the tracks. The explanation of the phenomenon can be based on factors such as the search windows do not cover the full region necessary to find all tracks. Secondly, for low momentum tracks, search windows are generally larger than for high momentum tracks, which increases the number of hits in the search window, and increases the chances that the pattern recognition identifies the wrong hits.
+Downstream tracking efficiency strongly depends on the momentum and transverse momentum of the tracks. The explanation of the phenomenon can be based on factors such as the search windows do not cover the full region necessary to find all tracks. Therefore, for the low momentum tracks, search windows are generally larger than for high momentum tracks, which increases the number of hits within the search window, thus increases the chances that the pattern recognition identifies the wrong hits.
 
 In addition, the downstream tracks that were also reconstructed as long tracks
 are less prone to be ghosts, which is why the ghost fraction actually increases
@@ -987,9 +980,9 @@ significantly.
 
 \begin{table}[htp]
 \caption{Reconstruction efficiency of downstream tracks on simulated samples of
-$B^{0} \rightarrow J/\Psi K^{0}_{S}$ and $D^{*+} \rightarrow D^{0}\pi^+$ decays. The upper half are non-filtered tracks, the lower half is after the clone killer, Kalman Filter and ghost probability. This efficiency
-includes the efficiency of T-Seed reconstruction and LongLived Tracking. Due to a softer
-momentum spectrum, the efficiency is lower in the$D^{*+} \rightarrow D^{0}\pi^+$
+$B^{0} \rightarrow J/\Psi K^{0}_{S}$ and $D^{*+} \rightarrow D^{0}\pi^+$ decays. The upper half are non-filtered tracks, the lower half is after the clone killer, Kalman Filter and ghost probability cut. This efficiency
+includes the efficiency of T-Seed reconstruction and efficiency of the LongLived Tracking algorithm. Due to a softer
+momentum spectrum, the efficiency is lower in the $D^{*+} \rightarrow D^{0}\pi^+$
 sample.}
 \begin{center}
 \begin{tabular}{c|c|c|c|c|c}
@@ -1008,7 +1001,7 @@ Yes & $D^{*+} \rightarrow D^{0}\pi^+$ & 67.3\% & 73.7\% & 73.1\% & 77.3\%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{table}[htp]
 \caption{Ghost fraction of downstream tracks on simulated samples of
-$B^{0} \rightarrow J/\Psi K^{0}_{S}$ and $D^{*+} \rightarrow D^{0}\pi^+$ decays. The upper half are non-filtered tracks, the lower half is after the clone killer, Kalman Filter and ghost probability. This ghost fraction
+$B^{0} \rightarrow J/\Psi K^{0}_{S}$ and $D^{*+} \rightarrow D^{0}\pi^+$ decays. The upper half are non-filtered tracks, the lower half is after the clone killer, Kalman Filter and ghost probability cut. This ghost fraction
 includes the ghosts produced in T-Seed pattern Recognition and Long-Lived Tracking. Due to a
 softer momentum spectrum, the ghost fraction is higher in the
  $D^{*+} \rightarrow D^{0}\pi^+$ sample.}
@@ -1137,16 +1130,16 @@ fractions are obtained on a simulated sample of $B^{0} \rightarrow J/\Psi K^{0}_
 
 
 \subsection{Comparison between Long-Lived Tracking algorithm and its predecessor}
-The analysis presented within this section is dedicated to comparing the performance of the Long-Lived Tracking algorithm and its predecessor called PatDownstream \cite{PatDownstream}. The corresponding performance numbers are given in tables \ref{tab:PatLLTPatDownstreamEffComp} \ref{tab:PatLLTPatDownstreamEffCompTBTC} \ref{tab:globGhostComp}. 
+The analysis presented within this section is dedicated to comparing the performance of the Long-Lived Tracking algorithm and its predecessor called PatDownstream \cite{PatDownstream}. The corresponding performance numbers are given in tables \ref{tab:PatLLTPatDownstreamEffComp}, \ref{tab:PatLLTPatDownstreamEffCompTBTC}, and \ref{tab:globGhostComp}. 
 
-Figures \ref{} \ref{ } show the efficiency and ghost rates of downstream tracks reconstructed via these two algorithms as a function of momentum, transverse momentum, and pseudorapidity. Those plots visualize tracking algorithm performance that was obtained using a simulated sample of B  and no other processing was applied. 
+Figures \ref{fig:EffCompPatLLTBJpsiK} and \ref{fig:ghostCompPatLLTBJpsiK} show the efficiency and ghost rates of downstream tracks reconstructed via these two algorithms as a function of momentum, transverse momentum, and pseudorapidity. Those plots visualize tracking algorithm performance that was obtained using a simulated sample of B  and no other processing was applied. 
 
-Figures \ref{} \ref{} present the same quantities, after Kalman filtering and clone killer. 
+Figures \ref{fig:EffCompPatLLTBJpsiK_TBTC} and \ref{fig:ghostCompPatLLTBJpsiK_TBTC} present the same quantities, after Kalman filtering and clone killer. 
 It is clearly visible, that the performance gain and the strong reduction of ghost rates were measured for the new algorithm. It is presumed that the significant ghost rate reduction (about 16\%) was achieved due to the good performance of the T-Seed classifier, which was one of the major goals of the author’s study. 
 
 
 \begin{table}[htp]
-\caption{Comparions of reconstruction efficiency of downstream tracks made with Long-Lived Tracking algorithm or PatDownstream, on simulated samples of $B^{0} \rightarrow J/\Psi K^{0}_{S}$ . This efficiency includes the efficiency of PatSeeding and Long-Lived Tracking algorithm.}
+\caption{Comparison of reconstruction efficiency of downstream tracks made with Long-Lived Tracking algorithm or PatDownstream, on simulated samples of $B^{0} \rightarrow J/\Psi K^{0}_{S}$ . This efficiency includes the efficiency of PatSeeding and Long-Lived Tracking algorithm.}
 \begin{center}
 \begin{tabular}{c|c|c|c|c}
 algorithm & $\varepsilon_{TT+T}$ & $\varepsilon_{TT+T, ~p>5 GeV}$ & $\varepsilon_{TT+T\text{, from} B/D}$ & $\varepsilon_{TT+T\text{, from} B/D, ~p>5 GeV}$ \\
@@ -1243,7 +1236,7 @@ The improvements that were performed on a pattern recognition algorithm should b
 
 \subsubsection{Event selection}
 
-This analysis focuses on the algorithm's total event yield difference between the new algorithm and the baseline. Thus the selection was taken from the standard LHCB software, the following list contains an explanation of each cut applied to select the data that were used to reconstruct both $K_s$ and $\Lambda_{0}$:
+This analysis focuses on the algorithm's total event yield difference between the new algorithm and the baseline. Thus the selection was taken from the standard LHCB software. The following list contains an explanation of each cut applied to select the data that were used to reconstruct both $K_s$ and $\Lambda_{0}$:
 
 \begin{itemize}
     \item \textbf{$p(\pi_1, \pi_2 \lor p)$} - minimal momentum of daughter particles;
@@ -1257,10 +1250,11 @@ This analysis focuses on the algorithm's total event yield difference between th
 
  
 \begin{table}[h]
+\centering
 \caption{Selection criteria for $K_s$ and $\Lambda_0$ }
 \begin{tabular}{|c|c|c|}
 \hline
-cut                                      & $K_S$              & $\Lambda_0$        \\ \hline
+cut variable                                  & $K_S$              & $\Lambda_0$        \\ \hline
 $p(\pi_1, \pi_2 \lor p)$ {[}MeV{]}              & \textgreater{}2000 & \textgreater{}2000 \\ \hline
 $p_t(\pi_1, \pi_2 \lor p)$ {[}MeV{]}            & \textgreater{}50   & \textgreater{}100  \\ \hline
 track type                               & Downstream         & Downstream         \\ \hline
@@ -1273,7 +1267,7 @@ $\Delta M(K_S \lor \Lambda_0)$ {[}MeV{]}   & \textless{}100     & \textless{}100
 \end{table}
  
  
- The cuts for $K_s$ and $\Lambda_0$ are given in table \ref{tab:cuts}. The sample that was used to perform this analysis consist of about 100,000 events. Table \ref{tab:signal} presents signal yield of $K_s$ and $\Lambda_0$ and the background. In both cases, a significant increase in signal yield and background reduction is visible. Figures \ref{fig:Lambda_performance} and \ref{fig:Ks_performance} show the reconstructed invariant masses of a discussed particles. The model for mass distribution is a single Gaussian and an exponential background. Although a more complicated fit model would, in principle, be appropriate, e.g. a double Crystal Ball function, these fits were very unstable and showed problems converging. To avoid these complications and have a consistent mass model, a single Gaussian solution was chosen. As only ratios of event yields are considered, the error from using a single Gaussian only largely cancels. 
+ The cuts for $K_s$ and $\Lambda_0$ are given in table~\ref{tab:cuts}. The sample that was used to perform this analysis consist of about 100,000 events. Table~\ref{tab:signal} presents signal yield of $K_s$ and $\Lambda_0$ and the background. In both cases, a significant increase in signal yield and background reduction is visible. Figures \ref{fig:Lambda_performance} and \ref{fig:Ks_performance} show the reconstructed invariant masses of a discussed particles. The model for mass distribution is a single Gaussian with an exponential background. Although a more complicated fit model would, in principle, be appropriate, e.g. a double Crystal Ball function, these fits were very unstable and showed problems converging. To avoid these complications and have a consistent mass model, a single Gaussian solution was chosen. As only ratios of event yields are considered, the error from using a single Gaussian only largely cancels. 
  
 
 \begin{table}[h]
@@ -1314,12 +1308,13 @@ new      & $\Lambda_0 \rightarrow p^+ \pi^-$ & $873 \pm 44$               & $320
 
 
 \subsection{Tuning of the Downstream tracking algorithm}
+\label{sec:cut finetuning}
 
-One of the key algorithm's parameters that has a strong influence on the pattern recognition performance is a T-Seed classification threshold. As described in section \ref{sec:hyperparameters}, its value was chosen to select more than 99\% of true T-seeds. This value corresponds to a very conservative classifier, which requires having extreme confidence to classify a given track as a ghost. As a result, the amount of suppressed background is reduced. Analyzing the ROC curve presented in figure \ref{fig:ROC binned}, one can conclude that devoting the tiny amount of signal data, the classifier can significantly reduce the background. This section is dedicated to fine-tuning the classification threshold. The presented analysis is based on measuring relative events yield for two channels, $K_s$ and $\Lambda_0$. The selection criteria were described in section \ref{sec:performance_data}. 
+One of the key algorithm's parameters that has a strong influence on the pattern recognition performance is a T-Seed classification threshold. As described in section \ref{sec:hyperparameters}, its value was chosen to select more than 99\% of true T-Seeds. This value corresponds to a very conservative classifier, which requires having extreme confidence to classify a given track as a ghost. As a result, the amount of suppressed background is reduced. Analyzing the ROC curve presented in figure \ref{fig:ROC binned}, one can conclude that devoting a tiny amount of signal data, the classifier can significantly reduce the background. This section is dedicated to fine-tuning the classification threshold. The presented analysis is based on measuring relative events yield for two channels, $K_s$ and $\Lambda_0$. The selection criteria were described in section \ref{sec:performance_data}. 
 
-Table \ref{tab:finetuning} presents the results of fine-tuning procedure. Those numbers were taken from the $K_s$ and $\Lambda_0$ invariant mass fits, which are shown in figures \ref{fig:Lambda_finetuning} and \ref{fig:ks_finetuninh}. Each of the rows represents a different classification threshold value. It is clearly visible that increasing the value of T-Seed classification threshold parameter allows significantly reduces the background while preserving almost all signal events. One can conclude that increasing this value from 0.07 to 0.2 allows to suppress 18\% more background.  
+Table \ref{tab:finetuning} presents the results of fine-tuning procedure. Those numbers were taken from the $K_s$ and $\Lambda_0$ invariant mass fits, which are shown in figures \ref{fig:Lambda_finetuning} and \ref{fig:ks_finetuninh} respectively. Each of the rows represents a different classification threshold value. It is clearly visible that increasing the value of T-Seed classification threshold parameter allows significantly reduces the background while preserving almost all signal events. One can conclude that increasing this value from 0.07 to 0.2 allows to suppress 18\% more background.  
 
-To summarize this study, increasing the value of the classification threshold to 0.2 allows reducing the background of about \textbf{ 26\%} while keeping same number of signal events, measured in $K_s$ channel, with respect to the Long-Lived tracking predecessor. 
+To summarize this study, increasing the value of the classification threshold to 0.2 allows reducing the background of about \textbf{ 26\%} while keeping almost the same number of signal events, measured in $K_s$ channel, with respect to the Long-Lived tracking predecessor. 
 
 \begin{table}[h]
 \caption{Evolution of the Long-Lived tracking algorithm $K_s$ and $\Lambda_0$ events yield for change of the T-Seed classification threshold.}
@@ -1368,7 +1363,7 @@ baseline 0.07            & \multirow{4}{*}{$\Lambda_0 \rightarrow \pi^{+} + \pi^
 \subsection{Processing time}
 
 As the Long-Lived Tracking algorithm processing time depends significantly on a type of machine, that is used to run it, and the event multiplicity it is hard to give an absolute unbiased number. On a simulated signal sample for Run II on a single worker node at CERN, Long-Lived Tracking needs $O(5 ms)$ to process an event. This time is not significant for the overall timing budget of HLT 2.
-Comparisons using callgrind show a decrease in processing time compared to Long-Lived Trackig predecessor of about 45\%.
+Comparisons using callgrind show a decrease in processing time compared to Long-Lived Tracking predecessor of about 45\%.
 
 \section{Future work}
 This section is dedicated to present ideas, that can be leverages to solve a similar types of problems and due to the LongLived Tracking algorithm's submission deadline were never implemented. One of the project that can benefit from those ideas is Downstream Tracking reconstruction for the Upgraded LHCb. 
@@ -1376,27 +1371,27 @@ This section is dedicated to present ideas, that can be leverages to solve a sim
 That section contains a collection of concepts, that author would want to try or implement during the study on Downstream Tracking if he would have a time travel machine.
 
 \subsection{Recurrent Neural Network}
-The models that were implemented to classify T-seeds and select tracks candidates use information that represents entire tracks, such as a track fit quality or total momentum. None of the models that were taken into consideration so far utilizes any additional information about the hits that constitute the given track.  The hypothesis is that those hits may provide some hint of whether a particular track is a ghost. 
-Moreover, the hits can be treated as a series and thus processed by the recurrent neural network (RNN). The hits representation produced by the RNN can be combined with features global track features. 
+The models that were implemented to classify T-Seeds and select tracks candidates use information that represents entire tracks, such as a track fit quality or total momentum. None of the models that were taken into consideration so far utilizes any additional information about the hits that constitute a given track. The hypothesis is that those hits may provide some hint of whether a particular track is a ghost. 
+Moreover, the hits can be treated as a series and thus processed by the recurrent neural network (RNN). The hits representation produced by the RNN can be combined with the remainder of the track describing features. 
 
-A recurrent neural network can be thought of as multiple copies of the same network, each passing a message to a successor, and thus it is a promising model to approach a series problem.  Figure \ref{fig:rnn} visualize the idea of how the recurrent neural networks work. 
+A recurrent neural network can be thought of as multiple copies of the same network, each passing a message to a successor, and thus it is a promising model to approach a series problem. Figure \ref{fig:rnn} visualizes the idea of how the recurrent neural networks process the input sequential data. 
 
  \begin{figure}[!h]
 \centering
 \includegraphics{figures/RNN-unrolled.png}
 \caption{Visualization of an unrolled recurrent neural network. $x_i$ may represent a $i$-th hit that constitute a track. Figure taken from \cite{rnn}. 
-\label{fig:Focal loss}}
+\label{fig:rnn}}
 \end{figure}
 
 From practical perspective, such a RNN is not be able to learn long range dependencies \cite{bengio_rnn}. Therefore, it is recommended to use more robust implementation called Long-Short Term Memory (LSTM) \cite{lstm}. 
 
 
-One possible enhancement to the recurrent neural network is leveraging the idea of attention mechanism \cite{attention}. Attention mechanism the method to provides an understanding of other relevant sequence elements into the one that is currently processing. In other words, it relates different positions of a single sequence in order to compute a representation of the sequence. Attention has been used successfully in a variety of tasks Natural Language Processing (NLP) and sequence modeling tasks. 
+One possible enhancement to the recurrent neural network is leveraging the idea of attention mechanism. Attention mechanism the method that allows to explicitly focus on the part of the data that is relevant to the particular task. .The explanation of how the model based on attention mechanism is beyond the scope of this thesis, the detailed explanation of this concept can be found \cite{attention}, however, it is important that attention-based models have been used successfully in a variety of tasks Natural Language Processing (NLP) and sequence modeling tasks. 
 
 \subsection{Focal loss}
 \label{sec:focal_loss}
 
-The imbalanced classification problem occurs very often in the field of High Energy Physics. The distribution of the background examples significantly exceeds the number of interesting signal events. There are a number of methods on how to approach that kind of problem. Thus this section is dedicated to presenting the one based on a modification of a loss function. \footnote{The other method that is usually applied is dataset resampling.  The two main approaches to randomly resampling an imbalanced dataset are to delete examples from the majority class, called undersampling, and to duplicate examples from the minority class, called oversampling.}  The proposed loss function is called \textbf{focal loss} and given by \cite{focal_loss}: 
+The imbalanced classification problem occurs very often in the field of High Energy Physics. The amount of the background examples significantly exceeds the number of interesting signal events. There are a number of methods on how to approach that kind of problem. Thus this section is dedicated to presenting the one based on a modification of a loss function. \footnote{The other method that is usually applied is dataset re-sampling. Two main approaches to randomly re-sampling an imbalanced dataset can be exclusively applied. One of them, called undersampling, drops examples from the majority class, and the second one, called oversampling, duplicates examples from the minority class.}  The proposed loss function is called \textbf{focal loss} and given by \cite{focal_loss}: 
 
 \begin{equation}
 FL(p_t) = -(1-p_t)^{\gamma}log(p_t)
@@ -1420,16 +1415,16 @@ and $y$ specify the grand-true class and $p$ is a model's predicted probability 
 \end{figure}
 
 
-The idea of Focal loss was proposed to improve one stage image detection model. Image detection is a type of problem in which the model needs to find a location (bounding box) of particular objects, for instance, find a face on camera footage. In that kind of problem, the majority of regions are empty, and only a tiny number of them contain relevant objects. Thus this setup is very similar to the searching for an interesting physics signals. The Focal loss adds a factor $(1 - p_t)^\gamma$ to the standard cross-entropy criterion. Setting $\gamma > 0$ reduces the relative loss for well-classified examples ($p_t > 0.5$), putting more focus on hard, misclassified examples.
+The idea of Focal loss was proposed to improve one stage image detection model. Image detection is a type of problem in which the model needs to find a location (bounding box) of particular objects, for instance, find a face on a camera footage. In that kind of problem, the majority of regions are empty, and only a tiny number of them contain relevant objects. Thus this setup is very similar to the searching for an interesting physical signals. The Focal loss adds a factor $(1 - p_t)^\gamma$ to the standard cross-entropy criterion. Setting $\gamma > 0$ reduces the relative loss for well-classified examples ($p_t > 0.5$), putting more focus on hard, misclassified examples.
  
 In order to use Focal Loss as an xgboost objective function, one needs to implement its first and second derivative. Which can be done manually or using one of the automatic derivation packages like Scipy \cite{scipy}.   
 
 \subsection{Workflow Management System}
 
 One of the parts of the study that can be enhanced is a pattern recognition validation and performance check. 
-The current validation process requires a lot of manual intervention. The trained model needs to be extracted, then deployed within a Brunel application, after that Brunel output (DST file) is used as input to the DaVinci which produces Ntuple, which can be used by the custom root scripts to reconstruct the mass to measure its width. Each of the listed steps has to be executed manually. Those processing can be automated using software called Workflow Management System. 
+The current validation process requires a lot of manual interventions. The trained model needs to be extracted, then deployed within a Brunel application, after that Brunel output (DST file) is used as an input to the DaVinci which produces Ntuple. Those Ntuples can be used by the custom root scripts to reconstruct the invariant mass of the particle decaying into long-lived daughters to measure its width. Each of the listed above steps has to be executed manually, which requires a lot of time and it is prune to errors. Those processing can be automated using software called Workflow Management System. 
 
-That kind of tool creates a Directed Acyclic Graph (DAG) \footnote{DAG is a graph that is directed and without cycles connecting the other edges. This means that it is impossible to traverse the entire graph starting at one edge. The edges of the directed graph only go one way. The graph is a topological sorting, where each node is in a certain order.} of tasks that one wants to execute, see exemplary graph in figure \ref{fig:DAG}. The scheduler, that is dedicated to executing tasks organized into the DAG, runs those tasks on an array of workers while following the specified dependencies. One of those programs, that can be easily used within the LHCb environment is an open-sourced Apache Airflow \cite{airflow}.
+That kind of tool organize a tasks into a Directed Acyclic Graph (DAG) \footnote{DAG is a graph (collection of vertices and connecting them edges) that is directed and without cycles. This means that it is impossible to start from a given vertex $v_{start}$ and follow any path (consistently directed sequence of edges) ends in the starting node $v_{start}$.}, see exemplary graph that visualize possible automation of the pattern recognition algorithm performance validation in figure \ref{fig:DAG}. The scheduler, that is dedicated to executing tasks organized into the DAG, runs those tasks on an array of workers while following the specified dependencies. One of those programs, that can be easily used within the LHCb environment is an open-sourced Apache Airflow \cite{airflow}.
 
 
 \begin{figure}[!h]

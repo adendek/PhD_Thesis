@@ -199,6 +199,7 @@ The first two presented models were constructed using the sklearn \cite{sklearn}
 % I wated to add references to the numpy paper (Nature). Highly recommend to read it. 
 
 \subsection{$k$-Nearest Neighbors classifier}
+\label{sec:knn}
 The $k$-NN was selected to play the role of a study baseline. The $k$-NN  is a \textbf{non-parametric} model, which means it takes no assumption on the underlying probability distribution of data \cite{knn}. 
 Instead, the model's fundamental assumption is that similar inputs should produce similar outputs. To make a prediction, the model looks at the K points in the training set nearest to the input $x_i$ and counts how many members of each class are in this set and finally returns the empirical fraction as the estimate. That statement can be formalized in terms of probability:  
 
@@ -332,10 +333,12 @@ where: $\eta$ is a step size, also called learning rate, which has to be set bef
 \caption{Comparison of the learning rate values and its influence on a final model performance. Figure taken from \cite{abu-musafa}  
 \label{fig:Gradient decent}}
 \end{figure}
-The second parameter of the gradient descent algorithm \ref{eq:Gradient decent} is a number of examples $N$, that are used to calculate the new weights. There are three versions of this optimization method. The first one also called Stochastic Gradient Descent (SGD), update weights after each training example, which is equivalent to set $N=1$. For $N>1$ it is called Batch Gradient Descent. The final method uses $N$ equal to all examples, and it is usually called Gradient Descent.  
+The second parameter of the gradient descent algorithm \ref{eq:Gradient decent} is a number of examples $N$, that are used to calculate the new weights. There are three versions of this optimization method. The first one also called Stochastic Gradient Descent (SGD), update weights after each training example, which is equivalent to set $N=1$. For $N>1$ it is called Mini-batch Gradient Descent. The final method uses $N$ equal to all examples, and it is usually called Batch Gradient Descent. Those tree methods and the corresponding weight updates are visualized in figure~\ref{fig:Batch gradient decent}. The SGD frequently updates the model, which provides immediate insight into its performance and improvement rate. However, this method's downside is noisy gradient information, which may affect the model parameters to oscillate around the minimum value, which may reveal a higher variance over training epochs. On the other hands, the Batch version of the Gradient Descent require a lot of memory and can be very slow for large datasets, and more stable error gradient may result in coverage to less optimal local minimum.
 
 %buba jak już wspominasz of paczkowaniu danych, to może wyjaśnimy dlaczego 
 % paczkowanie może prowadzić do lepszych wyników?
+% AD:  czy to wystarczy? Czy mam jeszcze dalej opisywac? 
+
 \begin{figure}[!h]
 \centering
 \includegraphics{figures/batch_descent.png}
@@ -344,7 +347,7 @@ The second parameter of the gradient descent algorithm \ref{eq:Gradient decent} 
 \end{figure}
 
 
-Several enhanced versions of SGD algorithm were proposed in the literature, the summary of them can be found in \cite{GradientDescent}. 
+Several enhanced versions of GD algorithm were proposed in the literature, the summary of them can be found in \cite{GradientDescent}. 
 From the perspective of deep learning, which is a topic of section \ref{sec:DNN}, the ADAM optimization algorithm is the most recommended one \cite{ADAM}. 
 
 \paragraph{Regularization} \mbox{}
@@ -438,7 +441,7 @@ The linear separability of the data is a strong assumption and, in practical app
 
 
 \subsection{XGboost Classifier}
-\label{sed:xgboost}
+\label{sec:xgboost}
 The XGboost stands for Extreme Gradient Boosting \cite{xgboost}. It is the state-of-the-art implementation of the Gradient Boosted Classifier. The Gradient Boosted Classifier is a model that uses $k$ additive functions to predict the output.  
 Each of these functions is called a weak learner. The next section discusses one of the usual choice of week learner - Decision Tree Classifier. 
 
@@ -780,7 +783,7 @@ where $ P(D_{1:t} | f)$ is a likelihood function, $D_{1:t}$ is a dataset of prev
 \end{equation}
 % buba - nie wyjaśnione są podwójne nawiasy
 % AD: Dodalem oznacznie normy. Zastanawiam się, czy dalej opisywać co to jest norma, jakie warunki spełania etc?   
-where  $||\cdot ||$ denote a norm.
+where  $||\cdot ||$ denotes a norm.
 
 
 The posterior probabilities capture updated beliefs about the unknown objective function. 
@@ -910,7 +913,7 @@ One of the crucial problems when building \footnote{in this context model buildi
 % metrykami globalnymi oraz "lokalnymi" dla pojedynczego przypadku. 
 were proposed: LIME (Local Interpretable Model-Agnostic Explanations) \cite{lime} and SHAP (Shapley Additive exPlanations) \cite{shap}. This section starts by presenting a brief overview of both methods. Section \ref{sec:interpretability} resents the results obtained in order to understand the prediction of the trained seed classifier.
 \subsubsection{LIME - Local Interpretable Model-Agnostic Explanations }
-
+\label{sec:lime}
 The discussion of the LIME should start from choosing models, that are human interpretable. An interpretable explanation needs to use a representation that is understandable to humans, regardless of the actual model's architectures or features used to make a decision. For instance, a possible interpretable representation of the text classification is a vector of binary values indicating the presence or absence of a certain word, even though the model may use more complex input features.
 %such as word embedding
 %\footnote{word embedding is a collective term for models that learned to map a set of words to a vector of numerical values. The expected properties of such mapping are the words that have a similar meaning are represented by vectors lying close to each other. Moreover, it allowing to use vector arithmetic to work with analogies for instance: $\overrightarrow{king} - \overrightarrow{man} + \overrightarrow{woman}= \overrightarrow{queen}$}. 
@@ -978,8 +981,8 @@ being explained. LIME samples instances gets predictions using $f$, and weighs t
 
 
 \subsubsection{ Shap - SHapley Additive exPlanation }
-\label{sec:lime}
-To understand the final method of analyzing the feature's importance, an explanation of the shapely value and the coalitional game theory need to be provided. The fowling paragraph was adopted from \cite{GameTheory}. 
+\label{sec:shap}
+To understand the final method of analyzing the feature's importance, an explanation of the shapely value and the coalitional game theory need to be provided. The fowling paragraph was adopted from~\cite{GameTheory}. 
 
 \paragraph{Coalitional game} \mbox{}
 

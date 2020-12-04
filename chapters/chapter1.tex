@@ -370,7 +370,7 @@ The HCAL has an alternating structure of iron and scintillator tiles. The scinti
     \frac{\sigma_E}{E} = \frac{(69\pm 5) \%}{\sqrt{E}} \oplus (9\pm 2) \%
 \end{equation}
  
-\section{LHCb trigger}
+\subsection{LHCb trigger}
 \label{sec:trigger}
 LHCb trigger is an example of the real-time system dedicated to compressing the input data stream. The raw data volume is far beyond the limit of the present storage technology, thus the necessity of employing such a system. The fundamental idea behind the large detector's trigger is to work out a decision whether a given event is interesting, from the point of view of the physics programme, or not. The LHCb trigger was designed to reduce the data rate from the initial bunch crossing rate of 40 MHz (i.e., one collision event each 25 ns) to about 12.5kHz of fully reconstructed events to be recorded on tapes. The data rate reduction is achieved by making a fast decision based on approximate measurement of particle transverse momentum and energy, muon identification, track displacement, and topological properties, which allows selecting some specific decays. 
 
@@ -423,7 +423,7 @@ The trigger efficiency is estimated using the so-called TIS-TOS (Triggered Indep
 Both categories are not exclusive. When estimating the trigger efficiency, detailed knowledge of which class a given event belongs to is very important.
 It should be stressed that the reconstruction algorithm that is the subject of this thesis (described in chapter \ref{chapter:PLLT}) was executed as a part of the HLT2. 
 
-\section{LHCb software}
+\subsection{LHCb software}
 
 In order to produce the Monte Carlo simulated samples (see figure \ref{fig:lhcb_sim}) and analyze data collected by the LHCb spectrometer a dedicated software framework has been designed and implemented \cite{lhcb_software}. Most of the applications were written in  C++, and they are based on two frameworks ROOT \cite{root} and Gaudi \cite{gaudi}. The list below contains a brief description of selected packages:
 
