@@ -3,12 +3,12 @@
 
 This chapter is dedicated to present the emulation and monitoring tool for Upstream Tracker called TbUT.
 To provide a full picture of the data emulation process, this chapter starts by introducing the physics principles of data collection. Within this section, the interaction of particles with matter and review of the principles of particle detection in silicon will be discussed.    
-The TbUT tool was designed to emulate all raw data processing algorithms, as well as generate a number of performance plots. This software was implemented in order to process all raw data collected during the UT testbeams. The described software will also play a crucial role in the future monitoring and calibration of the UT detector. The outcome of this software will help to ensure the quality of the collected data. 
+The TbUT tool was designed to emulate all raw Salt data processing algorithms, as well as to generate a number of performance plots. This software was initially implemented in order to process all raw data collected during the UT testbeams. The described software will also play a crucial role in the future monitoring and calibration of the UT detector. The outcome of this software will help to ensure the quality of the collected data. 
 
 
 \section{Interaction of Particles with Matter}
 \label{sec:Interaction}
-When charged particle traverse through matter, it interacts with the material and loses its energy. The energy deposition is caused mostly by inelastic collisions with atomic electrons and elastic scattering from the nuclei of the absorbing material along the particle trajectory. For particles which masses are well above the mass of an electron the mean loss of energy is described by the Bethe-Bloch-Formula: 
+When a charged particle traverse through matter, it interacts with the material and loses its energy. The energy deposition is caused mostly by inelastic collisions with atomic electrons and elastic scattering from the nuclei of the absorbing material along the particle trajectory. For particles which masses are well above the mass of an electron the mean loss of energy is described by the Bethe-Bloch-Formula: 
 
 \begin{equation}
 \label{eq:Bethe_bloh}
@@ -32,7 +32,7 @@ where:
     \end{equation}
 \end{itemize}
 
-The initial version of formula \ref{eq:Bethe_bloh} was proposed by Bethe \cite{Bethe} only three years after Schrodinger postulated non-relativistic Quantum Mechanic. The quantity $-\left< \frac{dE}{dx} \right>$ that is be calculated using this formula can be interpreted as stopping power of a particular material. Figure \ref{fig:Bethe_bloh} presents the stopping power for positive muons in copper as a function of $\beta \gamma$. 
+The initial version of formula~\ref{eq:Bethe_bloh} was proposed by Bethe \cite{Bethe} only three years after Schrodinger postulated non-relativistic Quantum Mechanic. The quantity $-\left< \frac{dE}{dx} \right>$ can be interpreted as stopping power of a particular material. Figure \ref{fig:Bethe_bloh} presents the stopping power for positive muons in copper as a function of $\beta \gamma$. 
 
 For low energies term $\frac{1}{\beta^2}$ in equation \ref{eq:Bethe_bloh} is dominant and the stopping power decreases with increasing energy, reaching minimum when $(\beta \gamma) \approx 3 $. A particle with an energy loss at the mimimum is called a Minimum Ionizing Particle (MIP). 
 
@@ -42,13 +42,13 @@ For low energies term $\frac{1}{\beta^2}$ in equation \ref{eq:Bethe_bloh} is dom
 \centering
 \includegraphics{figures/Bete_bloh.PNG}
 \caption{ The stopping power $-\left< \frac{dE}{dx} \right>$ as a function of $\beta \gamma$. The region that the Bethe-Bloch formula describes is $0.1 \le (\beta \gamma) \le 1000$ and is highlighted in red. Figure taken from \cite{PDG}.
-\label{fig:event display}}
+\label{fig:Bethe_bloh}}
 \end{figure}
 
 
 It is worth noticing that for a charged particle traversing a material, the number of collisions occurring and the amount of energy transferred in each collision is subject to statistical fluctuations. Formula \ref{eq:Bethe_bloh} provides only the average value of energy loss, which due to the statistical nature of the process, may vary from the actual value. 
-For a relatively thick material, the number of collisions will be large enough to justify modeling distribution of the energy loss by the Gaussian \cite{gauss_sensor}. Although for a thinner materials, which are widely used in the current tracking detector, the average energy loss is small, so the large fluctuation in the deposited energy can be observed.    
- This results in a largely asymmetric charge distribution, which can be parametrized by the long-tailed Landau distribution shown in figure \ref{fig:}.  This distribution is traditionally fit with a Landau convoluted with a Gaussian to extract the peak charge collection, the Most Probable Value (MPV). The Landau-Gauss convolution is given by:
+For a relatively thick material, the number of collisions will be large enough to justify modeling distribution of the energy loss by the Gaussian \cite{gauss_sensor}. Although for a thinner materials, which are widely used in the current tracking detectors, the average energy loss is small, so the large fluctuation in the deposited energy can be observed.    
+ This results in a largely asymmetric charge distribution, which can be parametrized by the long-tailed Landau distribution shown in figure \ref{fig:landau_distribution}.  This distribution is traditionally fit with a Landau convoluted with a Gaussian to extract the peak charge collection, the Most Probable Value (MPV). The Landau-Gauss convolution is given by:
 
 \begin{equation}
     \begin{split}
@@ -58,10 +58,17 @@ For a relatively thick material, the number of collisions will be large enough t
 
 where :
 \begin{equation}
-    Landau(x,\tau) =  \frac{1}{\pi \tau} \int_{0}^{\infty} e^{-t \ln t - \frac{t \cdot x}{\tau}} \sin{\pi t} dt
+    Landau(x,\tau) =  \frac{1}{\pi \tau} \int_{0}^{\infty} e^{-t \ln t - \frac{t \cdot x}{\tau}} \sin{\left(\pi t\right)} dt
 \end{equation}
 and $\tau$ is a Landau Most Provable Value (MPV), $\sigma_{width}$ is a width of a Landau distribution and $\sigma_{noise}$ is a Gaussian standard deviation. Landau Gauss convolution is calculated using numerical integration. 
 
+
+\begin{figure}[h]
+\centering
+\includegraphics{figures/landau-distribution.png}
+\caption{A Landau distribution. This distribution has a long tail which decreases  non exponentially for large values of x. It is defined over the all set of positive real numbers and its mean and variance are undefined.  
+\label{fig:landau_distribution}}
+\end{figure}
 
 \section{Operational principles of silicon detectors}
 
@@ -93,7 +100,16 @@ band gap energy $E_g$. The Fermi level, denoted by the dashed line, is a hypothe
 One of the most important features of semiconductors is their ability to change electrical conductivity by the introduction of impurity atoms, called dopants. These dopants replace atoms of the original material at lattice sites, and typically have more ($n$-type donors) or fewer ($p$-type donors) valence electrons in their outer shell, depending on the specific type of dopant. 
 
 
-Most semiconductor detectors are made of $p-n$ junction, which manifests a diode characteristic. Such a semiconducting device is created by connecting two components of opposite dopping in good thermodynamical contact. The most important property of such a device is the phenomena of electrons diffusing into the $p$ region and holes into the $n$ region where they recombined. As a consequence, an electric field gradient is created, which eventually stops the diffusion process and establishes thermal equilibrium. Due to the electric field, there is a potential difference across the junction. The region of changing potential is known as depletion zone since it is almost fully depleted of all mobile charge carriers. This characteristic can be utilized for radiation detectors. Electron-hole pairs that are generated in the depletion zone by ionizing radiation will be separated by the electric field and can be detected if electrical contacts are connected to the device.
+Most semiconductor detectors are made of $p-n$ junction, which manifests a diode characteristic. Such a semiconducting device is created by connecting two components of opposite dopping in good thermodynamical contact. The most important property of such a device is the phenomena of electrons diffusing into the $p$ region and holes into the $n$ region where they recombined. As a consequence, an electric field gradient is created, which eventually stops the diffusion process and establishes thermal equilibrium. Due to the electric field, there is a potential difference across the junction. The region of changing potential is known as depletion zone since it is almost fully depleted of all mobile charge carriers. This characteristic can be utilized for radiation detectors. Electron-hole pairs that are generated in the depletion zone by ionizing radiation will be separated by the electric field and can be detected if electrical contacts are connected to the device, which is shown in figure~\ref{fig:silicon_det}.
+
+\begin{figure}[h]
+\centering
+\includegraphics{figures/silicon_detector.png}
+\caption{Visualization of principles of operating of silicon strip detector. The charged particle passing though a depleted detector creates electron-hole pairs that are separated in the electric field inducing a signal that is recorded by the dedicated electronics (panel a). Panels (b) and (c) present the development of the space charge region at the boundary between p-type and n-type silicon, which is enhanced by the application of a reverse-bias electric potential. Figure taken from \cite{silicon_nature}}
+\label{fig:silicon_det}
+\end{figure}
+
+
 
 
 \section{TbUT Emulation Software}
@@ -104,7 +120,7 @@ The TbUT package is a software developed entirely by the author, and similarly t
 \begin{figure}[h]
 \centering
 \includegraphics{figures/TBUT.png}
-\caption{The diagram presenting the main component of the TbUT package and interactions between them. The light blue components are algorithms, dark blue is tools, and the violet ones represent serializable data. The direction of the arrows indicates whether the data is an input or output to the algorithm. }
+\caption{The diagram presenting the main components of the TbUT package and interactions between them. The light blue components are algorithms, dark blue are tools, and the violet ones represent serializable data. The direction of the arrows indicates whether the data is an input or output to the algorithm. }
 \label{fig:TbUT}
 \end{figure}
 
@@ -114,17 +130,17 @@ The software was designed based on the Object-oriented Programming paradigm.   T
 Each of the TbUT components inherits from one of the following classes:  
 
 \begin{itemize}
-    \item \textbf{Algorithms}, these objects inherit from \textit{Gaudi::algorithm}, which is an essential part of the Gaudi application. They can read the input data, and via an appropriate tool process, they are able to generate the monitoring plots and store the data for the next processing steps. 
-    \item \textbf{Monitoring algorithm}, these object, similarly to the \textbf{Algorithms}, inherit from  \textit{Gaudi::algorithm}. Their job is to extract data from TES and generate a set of monitoring histograms, which suppose to give an ultimate answer to the performance of the sensor. This component is key to make a  proper calibration. 
-    \item \textbf{Tools} These objects inherit from the pure virtual interface \textit{IProcessingEngine}, and they were designed to perform the processing actions, for instance, pedestal removal. Figure \ref{fig:gaudi flow} presents the main components of the Gaudi framework.   
-    \item \textbf{Serializable data} this objects inherits from the \textit{GaudiKernel::DataObject} are the result of the processing via the \textbf{Tools} and can be stored inside the Transient Event Store (TES). 
-    \item \textbf{ Tool's Factories} these types of objects were implemented to create tools dynamically. Its concept was introduced in the Design Pattern book \cite{DesignPatterns}. 
+    \item \textbf{Algorithms}, these objects inherit from \textit{Gaudi::algorithm}, which is an essential part of the Gaudi application. They can read the input data, and via an appropriate tool process them, as well as they are capable of storing a data for the next processing steps within the TES. 
+    \item \textbf{Monitoring algorithm}, these object, similarly to the \textbf{Algorithms}, inherit from  \textit{Gaudi::algorithm}. Their job is to extract data from the TES and generate a set of monitoring histograms, which suppose to visualize the performance of the sensor. This component is a key to make a proper calibration. 
+    \item \textbf{Tools} These objects inherit from the pure virtual interface \textit{IProcessingEngine}, and they were designed to perform the processing actions, for instance, pedestal removal. 
+    \item \textbf{Serializable data} this objects inherit from the \textit{GaudiKernel::DataObject} and they are the created by the \textbf{Tools}. They can be stored inside the Transient Event Store (TES). 
+    \item \textbf{ Tool's Factories} these types of objects were implemented as a concrete instances of a Factory Design Pattern. This concept was introduced in the Design Pattern book \cite{DesignPatterns}. 
 \end{itemize}
 
 \begin{figure}[h]
 \centering
 \includegraphics{figures/Gaudi.png}
-\caption{Object Diagram of the Gaudi architecture, figure taken from \cite{Gaudi}}
+\caption{Object Diagram of the Gaudi architecture, figure taken from \cite{gaudi} }
 \label{fig:gaudi flow}
 \end{figure}
 
@@ -137,7 +153,7 @@ During the lifetime of this project, the software has to able to process data ac
 Pedestals are the charge values measured by the read-out system in the absence of signal and noise. Each of the read-out channels can have a different ADC value of pedestal, and each pedestal's value depends on such environmental conditions as temperature, humidity, and operating conditions, like applied bias voltage. 
 To ensure proper pedestals are removed from the raw ADC data, prior to each data collection run, the non-signal measurements (pedestal runs) are taken. Usually, pedestal data are quick to collect since no trigger is required. 
 
-The pedestal subtraction algorithm has two phases. In first, the pedestal values are calculated. During the second one, the determined pedestal values are subtracted from the raw ADC data. Figure \ref{fig:ped} presents Pedestal Subtraction algorithm sequence diagram. That kind of UML diagram \cite{UML} is dedicated to depicts an interaction between objects in sequential order. These diagrams are widely used by businessmen and software developers to document and understand requirements for new and existing systems. 
+The pedestal subtraction algorithm has two phases. In first, the pedestal values are calculated. During the second one, the determined pedestal values are subtracted from the raw ADC data. Figure \ref{fig:ped} presents Pedestal Subtraction algorithm sequence diagram. That kind of UML diagram \cite{UML} is dedicated to depicts an interaction between objects in sequential order. These diagrams are widely used by the enterprise and software developers to document and understand requirements for new and existing systems. 
 
 \begin{figure}
 \centering
@@ -159,15 +175,20 @@ Where the $\Delta_{i}(n+1)$ is a event to pedestal correction. This correction i
 \begin{equation}
 \Delta_{i}(n+1)=ADC_{i}(n+1)-P^{sum}_{i}(n)
 \end{equation}
-In the equation \ref{eq:ped}, the $N$ is the weighting factor set by default to 1024. 
+In equation \ref{eq:ped}, $N$ is the weighting factor set by default to 1024. 
 
 
-To increase the suitability of the pedestal, and to remove potential outliers that may bias the pedestal calculation, the limit for correction is applied. If the condition:
+To increase the suitability of the pedestal, and to remove potential outliers that may bias the pedestal value, the limit for correction is applied. Therefore the correction is given by:
 \begin{equation} 
-\left| \Delta_{i}(n+1) \right| \leq 15  
+\Delta_{i}(n+1) =\left\{ \begin{array}{ll}
+\Delta_{i}(n+1) & \left| \Delta_{i}(n+1) \right|<15 \\
+ 15 \cdot sign\left(\Delta_{i}(n+1)\right) & \textrm{otherwise}\\
+\end{array} \right.
 \end{equation}
 
-is not fulfilled the correction value is set to 15. To determinate the pedestal values the pedestal sum should be normalized, so:
+where $sign(x)$ is a function that extract the sign of a real number. 
+
+To determinate the pedestal values the pedestal sum should be normalized, so:
 \begin{equation}
 p_{i}=\frac{P^{sum}_{i}}{N}
 \end{equation}
@@ -175,12 +196,12 @@ p_{i}=\frac{P^{sum}_{i}}{N}
 The initial value of the pedestal sums is a mean value calculated for the first 100 pedestal events. 
 
 \subsubsection{Pedestal removing algorithm}
-The second phase of the pedestal subtraction algorithm is subtraction determined pedestal values from the raw data. This procedure can be expressed as follows:
+The second phase of the pedestal subtraction algorithm is removal of determined pedestal values from the raw ADC data. This procedure can be expressed as follows:
 \begin{equation}
 ADC_{i}=ADC^{RAW}_{i}-p_{i}
 \end{equation} 
 where: $ADC_{i}$ is signal value after pedestal subtraction for event $i$, $ADC^{RAW}_{i}$ is a raw data and the $p_{i}$ is the pedestal value. Each of this quantities are in the unit of ADC counts. 
-The figure \ref{fig:raw vs ped} presents two performance monitoring plots, the first one shows the raw data collected by the DAQ system, which is an input to the TbUT, and the second one is the data after pedestal removal algorithm.  
+Figure \ref{fig:raw vs ped} presents two performance monitoring plots, the first one shows the raw data collected by the DAQ system, which is an input to the TbUT, and the second one is the data after pedestal removal algorithm.  
 
 \begin{figure}[tbph]
 \begin{center}
@@ -194,20 +215,20 @@ The figure \ref{fig:raw vs ped} presents two performance monitoring plots, the f
 
 
 \section{Common mode subtraction}
-The next step within the TbUT processing chain is Common mode subtraction and the noise calculation. The noise, one floating-point number per channel,  is then used as a clustering threshold value for the clusterization algorithm described in the next section. 
+The next step within the TbUT processing chain is Common Mode Subtraction and the noise calculation. The noise, one floating-point number per channel,  is then used as a clustering threshold value for the clusterization algorithm described in the next section. 
 
 
-The total noise affecting the signal measurement consists of two main components,  the first one affects every read-out channel independently, and the second one is common to the group of consecutive channels.  This type of noise is called Common Mode, and its origin can be grand loops in the power supplies, or read-out strips might pick some environmental noise. 
+The total noise affecting the signal measurement consists of two main components,  the first one affects every read-out channel independently, and the second one is common to the group of consecutive channels. This type of noise is called Common Mode, and it may originate from grand from loops in the power supplies, or read-out strips might pick some environmental noise. 
 
-The Common Mode suppression algorithm consists of two phases. The first one was implemented to calculate the average pedestal-subtracted ADC value of the channels in 32-channel groups. This value is calculated for each event independently. Using this mean value, a search for particle hits is performed for each channel. All channels with hits are masked, and a new mean value is calculated for each 32-channel group. The channel is masked when its ADC value fulfills the following condition:
+The Common Mode Suppression algorithm consists of two phases. The first one was implemented to calculate the average pedestal-subtracted ADC value of the channels in 32-channel groups. This value is calculated for each event independently. Using this mean value, a search for particle hits is performed for each channel. All channels with hits are masked, and a new mean value is calculated for each 32-channel group. The channel is masked when its ADC value fulfills the following condition:
 
 \begin{equation}
     |ADC_{i}(n)-CMS^{corr}_{i}| > \alpha \sigma^{RMS}_{i}
 \end{equation}
-where $\sigma^{RMS}_{i}$ is a channel ADC Root Mean Square, $CMS^{corr}_{i} $ is a correction for an event $i$, and $\alpha$ is a tunable parameter, that specifies the required distance between noise and signal. After the initial testbeam studies, this parameter was set to 4. 
+where $ADC_{i}(n)$ is a pedestral-subtracted charge collected in channel $n$ in event $i$, $\sigma^{RMS}_{i}$ is a channel ADC Root Mean Square, $CMS^{corr}_{i} $ is a correction, and $\alpha$ is a tunable parameter, that specifies the required distance between noise and signal. After the initial testbeam studies, this parameter was set to $\alpha = 4$. 
 The previously calculated mean value is then used to correct the ADC values in all channels of the 32-channel group.
 
-The second phase of the CMS algorithm is calculation of the noise per channel, according to the following formula: 
+The second phase of the CMS algorithm is calculation of the noise per channel $n$, according to the following formula: 
 
 \begin{equation}
     \sigma_i  = \sqrt{\frac{\sum_{n=1}^{N} (ADC_{i}(n)-\mu_{i})^2}{N}}
@@ -215,7 +236,7 @@ The second phase of the CMS algorithm is calculation of the noise per channel, a
 where $\mu_{i} = \sum_{n=1}^{N} ADC_{i}(n)$ is a mean ADC value per channel. 
 
 
-Figure \ref{fig:projections} presents the one-dimensional projection of the data after pedestal and Common Mode subtraction. It is clearly visible, based on the noise values, that the Common mode removal step is necessary to reduce the noise level and thus increase the Signal-to-Noise (S/N) ratio. 
+Figure \ref{fig:projections} presents the one-dimensional projection of the data after pedestal and Common Mode subtraction. It is clearly visible, based on the noise values, that the Common Mode removal step is necessary to reduce the noise level and thus increase the Signal-to-Noise (S/N) ratio. 
 
 A few typical events after all corrections applied are shown in figure \ref{fig:Noise}. Here, no requirement is made on the number of tracks. Strips with large ADC counts are indicative of the passage of a beam particle through the detector. The other channels show roughly Gaussian fluctuations about zero, typical of incoherent detector noise. Signals generally
 stand out significantly above the noise. These examples were selected to visualize a couple of cases that may occur, such as double strip clusters (event 14) and multiple clusters per event (event 83).  
@@ -273,17 +294,21 @@ stand out significantly above the noise. These examples were selected to visuali
 
 The final algorithm is executed to reconstruct a cluster using previously proceeded ADC values and noise per channel, which plays the role of the clusterization threshold.  
 The additional algorithm's input parameters are the value of the low and high thresholds. 
-Clusters in the DUT are built up by searching for a seed strip that has a collected charge more than a high threshold value. The outcome of this subroutine is a list of cluster seeds. The next subroutine is dedicated to removing the seeds that belong to the same clusters. Such a situation occurs when the cluster has more than one strip, and all of them have collected charges value higher than the high threshold. 
-Moving away from the seed strip, the adjacent side strips having at least ADC count as low threshold are added to the cluster seed. The cluster is terminated when a side strip charge is below a low threshold. Thus, by definition, a cluster has between 1 and 5 strips included.
+Clusters in the DUT are built up by searching for a seed strip that has a collected charge exceeding a high threshold value. The outcome of this subroutine is a list of cluster seeds. The next subroutine is dedicated to removing the seeds that belong to the same clusters. Such a situation occurs when the cluster has more than one strip, and all of them have collected charges value higher than the high threshold. 
+Moving away from the seed strip, the adjacent side strips having at least ADC count as low threshold are added to the cluster seed. The cluster reconstruction is terminated when a side strip charge is below a low threshold value. The maximum number of strips that can constitute a cluster is limited to 5.
 When there are multiple strips in the cluster, the position is computed using linear charge weighting:
 
 \begin{equation}
     x_{cluster} = \frac{\sum^{S}_{i=1}x_i q_i}{{\sum_{i=1}{S}{q_i}}}
 \end{equation}
 where $x_i$ and $q_i$ are the positions and charges of
-the strips in the cluster, and $S$ is the number of strips that constitute the cluster. 
-\begin{algorithm}[caption={cluster creator algorithm}, label={al:cluster creator}]
-Data: ADC data after Common Mode Suppression ($1 \ldots N$ events), clusterization thresholds (one floating-point number per channel)
+the strips in the cluster, and $S$ is the number of strips that constitute the cluster. Thus, the cluster position is represented by a floating point number. 
+
+\begin{algorithm}[caption={Cluster Creator algorithm}, label={al:cluster creator}]
+Data: ADC data after Common Mode Suppression ($1 \ldots N$ events),
+      clusterization thresholds (one floating-point number per channel),  
+      two integer values to obtain low and high threshold values. 
+
 Result: vector of reconstructed clusters
 
 for event in $1 \ldots N$ do :
@@ -295,7 +320,7 @@ end
 \end{algorithm}
 
 
-The outcome of the clusterization algorithm can be used to visualize the quality of the collected data. One of the most important plots is a histogram presenting the distribution of the cluster charge. To get physics quantities describing the sensor's performance, the cluster charge data is fitted with the Landau Gauss convolution model. The parameter of this fit allows determining the Most Provable Value and the width of the signal.  Figure \ref{fig:clusters_with_landau} presents a collection of cluster charge distribution histograms. Those histograms were created on top of the data collected during the one of the testbeam. They were used to show the sensor performance versus the bias voltage applied to them.  Those studies were conducted to investigate the effect of a drop in the collected charge when sensor irradiation increases, which was seen previously \cite{irradiation}. The collected charge drop may lead to decreasing the Signal to Noise ratio.  
+The analysis using the data reconstructed by this clusterization algorithm can be used to investigate the quality of the collected data by the UT detector. The first example of the handy plot is a histogram presenting the distribution of the cluster charge. Based on it one can get physics quantities describing the sensor's performance, the cluster charge data by fitted with the Landau Gauss convolution model. The parameter of this fit allows determining the Most Provable Value and the width of the signal.  Figure \ref{fig:clusters_with_landau} presents a collection of cluster charge distribution histograms. Those histograms were created on top of the data collected during the one of the testbeam. They were used to show the sensor performance versus the bias voltage applied to them.  Those studies were conducted to investigate the effect of a drop in the collected charge when sensor irradiation increases, which was seen previously \cite{irradiation}. The collected charge drop may lead to decreasing the Signal to Noise ratio.  
 
 
 \begin{figure}
