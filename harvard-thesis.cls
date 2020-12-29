@@ -186,7 +186,8 @@ BoldItalicFont=ArnoPro-BoldItalic
 \end{center}
 %% =====  STRONA TYTULOWA PRACY doktorskiej====
 \afterpage{\blankpage}
-
+\newpage
+\thispagestyle{empty}
 \newpage
 
 %% =====  TYL STRONY TYTULOWEJ PRACY DOKTORSKIEJ====
@@ -206,6 +207,11 @@ have been obtained by legal means.\\[8pt]
 		Supervisor:}}\\[2pt]
 This dissertation is ready to be reviewed.
 \\[8pt]
+\newpage 
+\thispagestyle{empty}
+\ % The empty page
+
+\newpage
 \restoregeometry
 }
 

@@ -428,10 +428,6 @@ $y_{0}$ the displacement in $y$. Note that $c$ is fixed, see section \ref{sec:tr
  \end{center}
 \end{figure}
 
-
-
-
-
 \subsection{Accepting the candidates}
 \label{sec:acceptCandidate}
 The track candidate is accepted in the final selection of track candidates,
@@ -494,7 +490,7 @@ Those criteria can be justified by definition of the Downstream track. Those are
 
 \section{T-seed classifier Exploratory Data Analysis}
 
-The next step that were performed is Exploratory Data Analysis (EDA). This step is essential to understand the structure of input data, find patterns, relationships, or anomalies that can influence the outcome of the model prediction.   
+The next steps that were performed is Exploratory Data Analysis (EDA). This stage is essential to understand the structure of the input data, find patterns, relationships, or anomalies that can influence the outcome of the model prediction.   
 
 \begin{figure}
 \centering
@@ -504,8 +500,8 @@ distribution is the background.
 \label{fig:input features}}
 \end{figure}
 
-The search for the best classifier was performed using a simulated data sample containing signal events $B^0\rightarrow J/\psi K_S^0 $ decays events. The entire dataset contains more than 2 million T-Seeds (both true and fake). To avoid bias that could be introduced by considering only one magnet polarization the training dataset consist  of combined datasets generated for both magnet polarities, in the equal proportions.  
-The following variables were considered as an initial features set. Further input dimentionality enhancement was done in the feature engineering phase. 
+The search for the best classifier was performed using a simulated data sample containing the $B^0\rightarrow J/\psi K_S^0 $ signal events. The entire dataset contains more than 2 million T-Seeds (both true and fake). To avoid bias that could be introduced by considering only one magnet polarization the training dataset consists of combined datasets generated for both magnet polarities, in the equal proportions.  
+The following variables were considered as an initial feature set. Further input dimensionality enhancement was done in the feature engineering phase. 
 
 \begin{itemize}
     \item $\chi^2/ndf$: T-track $\chi^2/ndf$ determined by the PatSeeding algorithm, which is defined in the following way: 
@@ -526,15 +522,16 @@ The following variables were considered as an initial features set. Further inpu
     \end{equation}
     \item $\eta$: pseudorapidity. 
 \end{itemize}
+
 The selected feature distributions are presented in figure \ref{fig:input features}. It is clearly visible that the data is not-linearly separable and the distribution for both true and false classes are very similar to each other. This gives a first impression, that the classification task is hard. 
 
-One of the most popular way to show the dependencies among features is to use ate the Pearson correlation coefficient $\rho$. The formula for $\rho$ is given by:
+One of the most popular way to show the dependencies among features is to use the Pearson correlation coefficient $\rho$. The formula for $\rho$ is given by:
 
 \begin{equation}
     \rho(X,Y) = \frac{\mathbb{E}\left[(X-\mu_x)(Y-\mu_y)\right]}{\sigma_x \sigma_y}
 \end{equation}
 
-This parameter has value in the range of $<-1,1>$. The value of~0 indicates no correlation, -1 and 1 implies strong negative and positive correlation respectively. In order to visualize all of the correlation coefficients, so called, correlation matrix was created. Figure \ref{fig:corrMatrix} shows two correlation matrices, each of it plotted for a different value of the target flag. There is no significant difference between true and false T-Seeds correlation matrices. 
+This parameter has value in the range of $<-1,1>$. The value of~0 indicates no correlation, -1 and 1 implies strong negative and positive correlation respectively. In order to visualize all of the correlation coefficients, so called, correlation matrix was created. Figure \ref{fig:corrMatrix} shows two correlation matrices, each of which is plotted for a different value of the target flag. There are no significant differences between true and false T-Seeds correlation matrices. 
 
 \begin{figure}
   \centering
@@ -544,9 +541,8 @@ This parameter has value in the range of $<-1,1>$. The value of~0 indicates no c
   \caption{Pearson  correlation matrix that were obtained using a subset of input features. The top plot shows correlation matrix for True T-seeds. The bottom plot presents similar Pearson correlation matrix generated using the ghost T-Seeds.  
 \label{fig:corrMatrix}}  
 \end{figure}
-
     
-The Pearson correlation coefficient is a good metric to detect linear dependencies among features, however it is not sensitive to more sophisticated (like quadratic) relations. To overcome this limitation the pair-plot, showed in figure \ref{fig:Pair plot}, was made. A pairs plot allows to visualize both distribution of single variables and relationships between two features, which is carried as a scatter plot. It is particularly interesting to visually inspect how the variables are distributed for a given pair of attributes. To make this plot more readable the data were split into two groups according to the target flag. That kind of plot allows making an initial guess on the importance of the features, i.e., if two features are separated from each other, this may indicate that those features can have a significant impact on a classifier decision. Assuming the model will be capable of learning this separation.   
+The Pearson correlation coefficient is a good metric to detect linear dependencies among features, however it is not sensitive to more sophisticated (like quadratic) relations. To overcome this limitation the pair-plot, showed in figure \ref{fig:Pair plot}, was made. A pairs plot allows to visualize both distribution of single variables and relationships between two features, which is represented as a scatter plot. It is particularly interesting to visually inspect how the variables are distributed for a given pair of attributes. To make this plot more readable the data were split into two groups according to the target flag. That kind of plot allows making an initial guess on the importance of the features, i.e., if two features are separated from each other, this may indicate that those features can have a significant impact on a classifier decision. Assuming the model will be capable of learning this separation.   
 
 \begin{figure}[!h]
 \centering
@@ -599,9 +595,8 @@ To maximize the classifier score analysis of the $L_1$ and $L_2$ regularization 
    \caption{Logistic Regression validation curves. The plots present the impact of $L_1$ (left) and $L_2$ (right) regularization on classifier performance.  
 \label{fig:RL_L1}}  
 \end{figure}
-
   
-Finally, to check the stability of the prediction, the study of model performance versus a number of training examples was performed. The results are shown in figure \ref{fig:LR_NE}. This plot indicates the biggest limitation of the linear model. The model’s performance is not affected by increasing the amount of data, that were used to train them.  
+Finally, to check the stability of the prediction, the study of model performance versus a number of training examples was performed. The results are shown in figure \ref{fig:LR_NE}. This plot indicates the biggest limitation of the linear model. The model’s performance is not very weakly affected by increasing the amount of data, that were used to train them.  
 
 \begin{figure}[!h]
 \centering
@@ -614,13 +609,13 @@ The score, measure as ROC AUC, obtained by the Linear Regression model is about 
 
 \section{T-Seed classifier: study based on XGBoost model}
 
-The previous discussed two models were selected to provide the baseline scores. This section presents the training strategy and results that were obtained using the XGBoost model. 
+The previously discussed two models were selected to provide the baseline scores. This section presents the training strategy and results that were obtained using the XGBoost model. 
 
 The first step within this analysis was to train the model with default values of hyper-parameters. It was done to get a better understanding of the model initial performance and to estimate the number, or at least the order of magnitude, of weak learners that need to be added to the boosting model. This number can be estimate by detecting moment when model performance starts to saturate. 
 
-The model saturation occurs when adding a new tree has no (positive) impact on the performance, measured using both training and the validation datasets. This effect can be easily detected via plotted a \textbf{learning curve}. The learning curve plot is a two-dimensional plot with classifier performance on the y-axis and a number of trees on the x-axis. The saturation effect occurs when learning curve plateau. 
+The model saturation occurs when adding a new tree has no (positive) impact on the performance, measured using both training and the validation datasets. This effect can be easily detected using the \textbf{learning curve}. The learning curve plot is a two-dimensional plot with classifier performance on the y-axis and a number of trees on the x-axis. The saturation effect occurs when learning curve plateau. 
 
-The initial training allows estimates of the number of trees to be around 700. The other hyperparameters, that were taken into consideration are listed below:
+The initial training estimated the number of trees to be around 700. The other hyperparameters, that were taken into consideration are listed below:
 
 \begin{itemize}
     \item \textbf{learning rate} - shrinkage parameters (see section \ref{sec:xgboost}), which control the weight of new tree added to the model;    
@@ -632,32 +627,32 @@ The initial training allows estimates of the number of trees to be around 700. T
     
 \end{itemize}
 
-Taking into consideration the dimensionality of this optimization problem, as well as the fact that each training iteration (or function evaluation) takes about 2 hours the Bayesian Optimization seemed to be the most promising approach to tune the hyperparameters. Although, all three hyperparameters tuning strategies described in section \ref{sec:hyperparameters} were applied. The Bayesian optimization needs about 40 iterations to find the optimal hyperparameter set \footnote{In this context \textbf{optimal} is consider to be the best one for a given subset of hyperparameter's ranges, it is not guaranteed to be globally optimal}. The Grid and Random Search provide similar results, although each of these methods requires more optimization steps to find a set that works as good as the one produced by Gaussian optimization. 
+Taking into consideration the dimensionality of this optimization problem, as well as the fact that each training iteration (or function evaluation) takes about 2 hours the Bayesian Optimization seemed to be the most promising approach to tune the hyperparameters. Although, all three hyperparameters tuning strategies described in section \ref{sec:hyperparameters} were applied. The Bayesian optimization needs about 40 iterations to find the optimal hyperparameter set \footnote{In this context \textbf{optimal} is consider to be the best one for a given subset of hyperparameter's ranges, it is not guaranteed to be globally optimal}. The Grid and Random Search provide similar results, although each of these methods requires more optimization steps to find a set that performs as good as the one produced by the Gaussian optimization. 
 
-Figure \ref{fig:hyperparameter_xgboost} presents the Bayesian optimization results in a form of coverage plot, where each of the scores is a ROC AUC score calculate using three-fold cross-validation method. Within the presented experiment the Gaussian process was selected as a surrogate function and Expected Improvement played the role of an acquisition function. Each training round was terminated once the performance on the test dataset has not improved after a fixed number of training iterations. This method is called \textbf{early stopping}, and its main purpose is to prevent training the model when it performance saturates. The positive site effect of this method is reduction of overfitting. 
+Figure \ref{fig:hyperparameter_xgboost} presents the Bayesian optimization results in a form of coverage plot, where each of the scores is a ROC AUC score calculated using three-fold cross-validation method. Within the presented experiment the Gaussian process was selected as a surrogate function and Expected Improvement played the role of an acquisition function. Each training round was terminated once the performance on the test dataset has not improved after a fixed number of training iterations. This method is called \textbf{early stopping}, and its main purpose is to prevent training the model when it performance saturates. The positive side effect of this method is better control of the overfitting. 
 
 
 
 \begin{figure}
 \centering
 \hspace*{-1cm}\includegraphics{figures/GaussianOptXgboost.png}
-\caption{Bayesian optimization coverage plots. The left plot presents iterations vs. distance between consecutive selected hyperparameters sets, the right plot shows iterations vs. the ROC auc score of the current model.}
+\caption{Bayesian optimization coverage plots. Left plot presents iterations vs. distance between consecutive selected hyperparameters sets, the right plot shows iterations vs. the ROC AUC score of the current model.}
 \label{fig:hyperparameter_xgboost}
 \end{figure}
 
-Using selected by the Bayesian optimization method set of hyperparameters, xgboost based model achieved a score, measured as an area under the ROC curve of 94\%. Figure \ref{fig:xgboost trainig} presents three different learning curve plots. The first one (top left) shows the training progress measured as a reduction of the cross-entropy loss versus the number of trees constituted the model. The second one (top right) presents the binary classification error rate, which is calculated as a ratio between a number of wrongly classified cases to all test cases, vs the number of training iterations. The final, bottom one presents the area under the ROC curve score versus the number of weak learners. Those learning curve plots were generated using a test sample that constitutes 20\% of the entire dataset. 
+Using selected by the Bayesian optimization method set of hyperparameters, xgboost based model achieved a score, measured as an area under the ROC curve of 94\%. Figure \ref{fig:xgboost trainig} presents three different learning curve plots. The first one (top left) shows the training progress measured as a reduction of the cross-entropy loss versus the number of trees constituted the model. The second one (top right) presents the binary classification error rate, which is calculated as a ratio between several wrongly classified cases to all test cases, vs the number of training iterations. The final, bottom one presents the area under the ROC curve score versus the number of weak learners. Those learning curve plots were generated using a test sample that constitutes 20\% of the entire dataset. 
 
 
 \begin{figure}
 \centering
 \includegraphics{figures/learning_curve_xgboost.png}
-\caption{Learning curve for the XGBoost classifier. The upper left plot presents cross-entropy loss function vs. a number of week estimators, the right upper plot shows miss classification vs the number of trees. The bottom plot presents how the ROC AUC versus training iterations.}
+\caption{Learning curve for the XGBoost classifier. Upper left plot presents cross-entropy loss function vs. a number of week estimators, right upper plot shows miss classification vs the number of trees. Bottom plot presents the ROC AUC versus training iterations.}
 \label{fig:xgboost trainig}
 \end{figure}
 
 
-The learning curve plot is one of the most important tool to visually investigate whether the model is over-fitted.  
-Over-fitting refers to a model that has learned the training dataset too well, including the statistical noise or random fluctuations in the training dataset. This effect becomes apparent when the performance gap between training and validation curves increase when increasing the model complexity, which is shown in figure~\ref{fig:xgboost_overfitting}. Figure \ref{fig:xgboost trainig} clearly indicates that the model perform reasonably well and the effect of over-training is not present \footnote{This conclusion is based on a specific test set. It is not guaranteed to obtain the same test accuracy for all possible test sets.}.
+The learning curve plot is one of the most important tools to investigate whether the model is overfitted visually.  
+Overfitting refers to a model that has learned the training dataset too well, including the statistical noise or random fluctuations in the training dataset. This effect becomes apparent when the performance gap between training and validation curves increase when increasing the model complexity, which is shown in figure~\ref{fig:xgboost_overfitting}. Figure \ref{fig:xgboost trainig} indicates that the model performs reasonably well, and the effect of over-training is not present \footnote{This conclusion is based on a specific test set. It is not guaranteed to obtain the same test accuracy for all possible test sets.}.
 
 
 \begin{figure}
@@ -667,13 +662,9 @@ Over-fitting refers to a model that has learned the training dataset too well, i
 \label{fig:xgboost_overfitting}
 \end{figure}
 
-
-
 \section{T-Seed classifier as a bonsai Boosted Decision Tree }
 
-As described in section \ref{sec:bbdt}, the evaluation of the continuous complex classifier is too expensive (from the perspective of CPU time) to deploy that kind of model within the HLT2. Therefore, the model was binarized and deployed in the form of bBDT. The structure of the bBDT is visualized in figure \ref{fig:bbt_structure}. 
-
-
+As described in section \ref{sec:bbdt}, the evaluation of the continuous complex classifier is too expensive (from the perspective of CPU time) to deploy that kind of model within the HLT2 online system. Therefore, the model was binarized and deployed in the form of bBDT. The structure of the bBDT is visualized in figure \ref{fig:bbt_structure}. 
 
 \begin{figure}[h]
 \centering
@@ -682,11 +673,7 @@ As described in section \ref{sec:bbdt}, the evaluation of the continuous complex
 \label{fig:bbt_structure}
 \end{figure}
 
-
-
-The response of the binned BDT and its ROC curve are presented in figures~\ref{fig:bbdt response} and \ref{fig:ROC binned} respectively. A slight drop in the performance of the binned classifier with respect to the full one has been noted. The figures of merit measured for the bBDT algorithm amounted to 87\%. Based on the ROC curve the classification threshold was selected to be $0.07$, section~\ref{sec:cut finetuning} contains a discussion on a different value of the cut threshold and its influence on the track reconstruction algorithm performance. This highly conservative value of the threshold was advocated by the fact that the final classifier has to keep more than 99\% of the true T-Seeds. Nevertheless, this threshold value allowed to remove 30 \% of the fake seeds, thus significantly decrease the ghost rate, formally defined in section \ref{sec:physic_performance}.   
-
-
+The response of the binned BDT and its ROC curve are presented in figures~\ref{fig:bbdt response} and \ref{fig:ROC binned} respectively. A slight drop in the performance of the binned classifier with respect to the full one is visible. The figures of merit measured for the bBDT algorithm amounted to 87\%. Based on the ROC curve the classification threshold was selected to be $0.07$, section~\ref{sec:cut finetuning} contains a discussion on different values of the cut threshold and its influence on the track reconstruction algorithm performance. This highly conservative value of the threshold was advocated by the fact that the final classifier has to keep more than 99\% of the true T-Seeds. Nevertheless, this threshold value allowed to remove 30 \% of the fake seeds, thus significantly decreased the ghost rate, formally defined in section \ref{sec:physic_performance}. 
 
 \begin{figure}
 \centering
@@ -714,43 +701,41 @@ The response of the binned BDT and its ROC curve are presented in figures~\ref{f
 \section{T-Seed classifier: studies based on the deep neural networks}
 
 The final model that was taken into consideration when working on a T-Seed selection model was deep neural network, described in \ref{sec:DNN}. 
-All described studies were conducted using PyTorch framework \cite{pytorch}, which allows performing tensor computation acceleration via graphics processing units (GPU) and supports automatic differentiation. Moreover, Pytorch supports the C++ interface, which makes the model's deployment within the LHCb trigger convenient. 
+All described studies were conducted using PyTorch framework \cite{pytorch}, which allows for tensor computation acceleration via graphics processing units (GPU) and supports automatic differentiation. Moreover, Pytorch supports the C++ interface, which makes the model's deployment within the LHCb trigger convenient. 
 However, studies discussed in this section were never deployed within the LHCb trigger system due to the algorithm's submission deadline, thus the model based on bonsai Boosted Decision Trees was selected instead.  Nevertheless, the author decided to include this section since it may be useful for the future studies. 
  
 Pytorch provides a number of utility classes that abstract a lot of complexity, such as data parallelization and batching. From a practical perspective, the developer needs to ensure a customized implementation of the following classes: 
 
 \begin{itemize}
 \item \textbf{Dataset}. This class is dedicated to retrieving the input data,  applying data transformations and optional augmentation logic, and converting processed data into the PyTorch tensor.  Within the scope of the presented study, the transformations were limited to adding such features as pseudorapidity and the data normalization. 
- \item \textbf{DataLoader}. The DataLoader combines a Datasets object with different samplers producing data batches. Samplers are an implementation of a different strategy for providing data to models. 
+ \item \textbf{DataLoader}. The DataLoader combines a Datasets object with different samplers producing data batches. Samplers are implementations of different strategies for providing data to models. 
  
 \item \textbf{Criterion}. The criterion is an abstraction of the loss function. Within this study's scope, only the Cross-entropy loss were used, however section \ref{sec:focal_loss} discusses possible alternatives.  
 
 \item \textbf{Optimizer}. An optimizer is an object that holds the current state of the model and update parameters based on the computed gradients. The choice of the optimizer is considered as a model hyperparameter. However, the recommended and used in the presented studies choice is ADAM \cite{ADAM}. 
 \item \textbf{Model}. It is an abstraction that defines the forward propagation, and it contains all components (layers) of the model.
-Thus, the researcher has to override two methods. The first one is the \textit{init} method, which defines and initializes the network's architecture. It is recommended to initialize the layers using, so-called, Xavier initialization \cite{xavier}. The second method that has to be implemented is the \textit{forward} method. It defines how the input tensor is processed in order to get a vector of output probabilities. The framework takes care (using autograd mechanism) of the backward propagation, so the researcher does not need to manually calculate the gradients of the loss function.
+Thus, the researcher has to override two methods. The first one is the \textit{init} method, which defines and initializes the network's architecture. It is recommended to initialize the layers using, so-called, Xavier initialization \cite{xavier}. The second method that has to be implemented is the \textit{forward} technique. It defines how the input tensor is processed in order to get a vector of output probabilities. The framework takes care of the backward propagation, so the user does not need to manually calculate the gradients of the loss function.
 
 \item \textbf{Training loop}. This utility function defines the way how the model is trained and allows customizing training progress measurement. 
 Roughly speaking, the training loop consists of two nested loops (one over epochs and the second one over batches of data). 
-Within the presented studies' scope, the training progress was measured as loss function versus epoches and batches. To ensure model implementation correctness, quantities such as information flow and the changes in the model's weight distributions over time were monitored. An exemplary plot of the information flow is shown in figure \ref{fig:gradient_flow}.
+Within the presented studies' scope, the training progress was measured as loss function versus epoches and batches. To ensure that the model is optimal, quantities such as information flow and the changes in the model's weight distributions over time were monitored. An exemplary plot of the information flow is shown in figure \ref{fig:gradient_flow}.
 \end{itemize}
 
 \begin{figure}[!h]
 \centering
 \includegraphics[width=\textwidth]{figures/NN/Gradient_flow.png}
-\caption{Information or gradient flow visualization. This figure was generated for network with ten hidden layers. The light blue bars indicate mean value of the information flow, while the dark blue bars represent maximum value of it.    
+\caption{Information or gradient flow visualization. This figure was generated for network with nine hidden layers. The light blue bars indicate mean value of the information flow, while the dark blue bars represent maximum value of it.    
 \label{fig:gradient_flow}}
 \end{figure}
 
-
 After all of the beformentioned components were implemented, the next step is to check whether the model can overfit on a small sample of the data, this method was recommended in~\cite{karpathy}. If the model is not able to reach a low error rate that may indicate some issues, bugs, or model misconfiguration.
-
 The most time-consuming part of the study was the optimization of the network's architecture since the number of tested models exceeds one hundred, and training one model might take a couple of hours.
 
 The architecture optimization procedure consists of the following steps. Start with a shallow network, that contains a single hidden layer only. Then iteratively extend the previously tested model by adding a hidden layer, which makes the model deeper. Within each iteration step, try to optimize the architecture of the current network. The following choices of network internal structure were considered: 
 
 \begin{itemize}
 \item Use the constant number of neurons per hidden layer; 
-\item Build a triangle-type of a network, where the number of the hidden neurons decrease with network depth; 
+\item Build a triangle-type network, where the number of the hidden neurons decrease with network depth; 
 \item Optimize number of hidden units per layer using Bayesian Optimization;
 \item Use the Batch Normalization layer. This special layer normalizes the output of a previous activation layer by subtracting the batch mean and dividing by the batch standard deviation. For more details on how the Batch Normalization works, see \cite{batch_norm}. 
 \item Use dropout layer. The dropout layer works by randomly setting the outgoing edges of hidden units (neurons that make up hidden layers) to zero at each update of the training phase. The detailed description of the dropout layer can be found in the original paper \cite{dropout}. 
@@ -770,8 +755,7 @@ The architecture optimization procedure consists of the following steps. Start w
 \label{fig:DNN_learning_rates}}  
 \end{figure}
 
-
-Within the presented study, models with up to fifteen hidden layers were tested. Figure \ref{fig:DNN_learning_rates} presents a selected four learning curves (cross-entropy loss versus the number of training epoch) each of them documents training progress of a model with a different number of hidden layers. Surprisingly, adding more than two hidden layers to the model has a neglectable influence on the model prediction performance, even though the number of the network parameters increased by two orders of magnitude. Thus, the recommended architecture of the network contains two hidden layers. Such a shallow network 
+Within the presented study, models with up to fifteen hidden layers were tested. Figure \ref{fig:DNN_learning_rates} presents a selected four learning curves (cross-entropy loss versus the number of training epochs) each of them documents training progress of a model with a different number of hidden layers. Surprisingly, adding more than two hidden layers to the model has a neglectable influence on the model prediction performance, even though the number of the network parameters increased by two orders of magnitude. Thus, the recommended architecture of the network contains two hidden layers. Such a shallow network 
 produce similar results, measured as a ROC AUC, to the optimized xgboost one, which is shown in figure \ref{fig:DNN_roc}.
 
 \begin{figure}[!ht]
@@ -785,29 +769,28 @@ produce similar results, measured as a ROC AUC, to the optimized xgboost one, wh
 \section{T-Seed classifier: model output interpretation}
 \label{sec:interpretability}
 This section is dedicated to emphasizing the importance of the model's prediction interpretability. As presented before the T-Seed filter achieved satisfactory overall performance, but the question regarding the reliance still remains open.
-Within the scope of this thesis, three approaches to interpret Gradient Boosted Decision Tree model prediction have been tested, each of them has been described in section \ref{sec:lime}. 
+Within the scope of this thesis, three approaches to interpret Gradient Boosted Decision Tree model prediction have been tested; each of them has been described in section \ref{sec:lime}. 
 The classical approach to interpret feature importance is to look at the model globally. The usual way to view the importance of the features is to investigate the following metrics: 
 
 \begin{itemize}
     \item The feature \textbf{weight} is the number of times a feature appears in a tree across an ensemble of trees. For instance, if the model was built on top of the dataset consisting  of 100 entries, five features and the model itself consist of 3 trees, and suppose the \textit{feature1} occurs in the 1 splits, 2 splits, and 3 splits in each of three trees respectively, then the weight for \textit{feature1} will be $1+2+3=6$.   
-    \item The \textbf{Gain} measures the relative contribution of the corresponding feature to model by taking each feature's contribution for each tree within the model. This metric can be interpreted as an average training loss reduction gained when using the feature for a split, in the other words is the improvement of the accuracy brought by a feature to the branches it is on. 
+    \item The \textbf{Gain} measures the relative contribution of the corresponding feature to model by taking each feature's contribution for each tree within the model. This metric can be interpreted as an average training loss reduction gained when using the feature for a split. 
     \item The \textbf{Coverage} describes the relative number of observations related to this feature. In the above example if the \textit{feature1} is used to decide the leaf node for 20, 10, 5 observations in the mentioned trees respectively, then the coverage for this feature is $20+10+5 = 35$.   
 \end{itemize}
 
-Figure~\ref{fig:xgboost overal features importance} presents three plots, each for a different matrices described above. It is clearly visible, that these plots contradict to each other. According to the feature weights, the most important feature is seed $\chi^2\/dof$ and the $N_{hits}$ is redundant, while the coverage metric scores it as a second most important.
+Figure~\ref{fig:xgboost overal features importance} presents three plots, each for a different metric described above. It is clearly visible, that these plots contradict each other. According to the feature weights, the most important feature is seed $\chi^2\/dof$ and the $N_{hits}$ is redundant, while the coverage metric scores it as a second most important.
 
-To understand why some, possibly categorical, feature has smaller weight value consider the following example. Let \textit{feature1} be a binary feature, which is highly correlated with the target variable and its inclusion or removal has a significant influence on classifier performance. Due to the nature of feature1, it has a tiny number of possible values compared to the other features. This feature can be used at most once per tree, while continues features may appear more often on a different level of the tree. Therefore, such a feature gets very low weight value. 
-
-For the above reason, none of the presented global metrics gives an ultimate estimation of the importance of the feature. To get a better understating of it, taking into consideration the non-linear nature of the model's decision boundaries, it would be worth investigating different approaches of measuring the feature importance.  
+To understand why some, possibly categorical, features have smaller weight value consider the following example. Let \textit{feature1} be a binary feature, which is highly correlated with the target variable and its inclusion or removal has a significant influence on classifier performance. Due to the nature of feature1, it has a tiny number of possible values compared to the other features. Such variable can be used at most once per tree, while continues ones may appear more often on a different level of the tree. Therefore, such a feature gets very low weight value. 
+For this reason, none of the presented global metrics gives an ultimate estimation of the importance of the feature. To get a better understating of it, and taking into consideration the non-linear nature of the model's decision boundaries, it would be worth investigating different approaches of measuring the feature importance.  
 
 \begin{figure}[!h]
 \centering
 \includegraphics[scale=0.8]{figures/feature_importance.png}
-\caption{Feature Importance plots for XGBoost model. Each of the plots were obtained for a different global feature importance metrics: coverage (upper left), gain (upper right) and weight (bottom). 
+\caption{Feature importance plots for XGBoost model. Each of the plots were obtained for a different global feature importance metric. According to the coverage (upper left) the four most important features are \textbf{($|y_{Ttrack}|[mm]$,$N_{hits}$,$|t_{y}|$, $p_{t}[MeV \slash c^{2}]$)}, gain (upper right) selects \textbf{($p[MeV\slash c^{2}]$,$p_{t}[MeV\slash c^{2}]$,$|y_{Ttrack}|[mm]$,$r_{track}[mm]$)} as the most important ones and finally according to the weight metrics (bottom) such features as ( \textbf{($\chi^2\slash ndf$,$|y_{Ttrack}|[mm]$,$t_{y}$,$p_{t}[MeV\slash c^{2}]$)} are the most important ones. Each feature importance score is measured as a F-score. 
 \label{fig:xgboost overal features importance}}
 \end{figure}
 
-The second method to take a closer look inside the black box is based on the idea of Shapley value, described in section~\ref{sec:shap}. The analysis of  feature importance is usually done by presenting two groups of plots. The first one is presented in figure \ref{fig:shap overall}. The standardized importance plot provides a notion of relative feature importance and can be compared with the classical plots described previously. Although, it does not provide any additional information regarding the impacts that particular feature has on the model's output. To overcome this limitation the Shap summary plot was introduced, which leverages individualized feature attribution to the model's decision. In order to make that kind of plot the features are sorted by their global impact $\sum_{j=1}^{N}|\phi_i^{(j)}|$, then each of the dots corresponding to the Shap values $\phi_i^{(j)}|$ are plotted horizontally, stacked vertically when running out of space. This concept allows achieving similar effect to the violin plots \cite{ViolinPlot}, which can be further enhanced by coloring the dots according to the feature's value. 
+The second method to take a closer look inside the black box is based on the idea of Shapley value, described in section~\ref{sec:shap}. The analysis of  feature importance is usually done by presenting two groups of plots. The first one is presented in figure \ref{fig:shap overall}. The standardized importance plot provides a notion of relative feature importance and can be compared with the classical plots described previously. Although, it does not provide any additional information regarding the impact that a particular feature has on the model's output. To overcome this limitation the Shap summary plot was introduced, which leverages individualized feature attribution to the model's decision. In order to make that kind of plot the features are sorted by their global impact $\sum_{j=1}^{N}|\phi_i^{(j)}|$, then each of the dots corresponding to the Shap values $\phi_i^{(j)}|$ are plotted horizontally, stacked vertically when running out of space. This concept allows achieving similar effect to the violin plots \cite{ViolinPlot}, which can be further enhanced by coloring the dots according to the feature's value. 
 
 \begin{figure}
 \centering
@@ -816,16 +799,16 @@ The second method to take a closer look inside the black box is based on the ide
 \\
 \subfloat{{\includegraphics[width=0.9\textwidth]{figures/Shap_mean.png}}}%
 \end{tabular}
-   \caption{Shap summary plots of all T-Seed classifier features. The plots were obtained using a sample of 50 thousand test examples. The interpretation of this plot is straightforward, the higher Shap value of the feature, the higher influence on the decision of whether T-Seed is reconstructable. In the upper plot, each dot represents every feature for every individual test example that was run through the model. Dot's are colored by the feature's value (red high, blue low). The bottom plot presents the standard feature importance bar plot. The x-axis is essentially the average magnitude change in model output when a feature is hidden from the model.}  
+   \caption{Shap summary plots of all T-Seed classifier features. The plots were obtained using a sample of 50 thousand test examples. The interpretation of this plot is straightforward, the higher Shap value of the feature, the higher influence on the decision of whether T-Seed is reconstructable. In the upper plot, each dot represents every feature for every individual test example that was run through the model. Dots are colored by the feature's value (red high, blue low). The bottom plot presents the standard feature importance bar plot. The x-axis is essentially the average magnitude change in model output when a feature is hidden from the model.}  
 \label{fig:shap overall}
 \end{figure}
 
 
-To get a better understanding of Shap values presented in figure \ref{fig:shap overall} let focus on one feature - $N_{layers}$. It is the second most important feature to decide whether T-Seed is a ghost. The impact of this feature on a model's output varies smoothly as the value of the feature increases, which is indicated by the smooth color gradient. The long tail reaching the left means that the extreme values of these features can significantly increase the probability that this T-Seed is not a valid seed. This is consistent with priory intuition saying the seed, that was reconstructed using a small number of hits are more likely to be a ghost. 
+To get a better understanding of Shap values presented in figure \ref{fig:shap overall} let focus on one feature - $N_{layers}$. It is the second most important one to decide whether a T-Seed is a ghost. The impact of this feature on a model's output varies smoothly as the value of the feature increases, which is indicated by the smooth color gradient. The long tail reaching the left means that the extreme values of this variable can significantly increase the probability that this T-Seed is not a valid track segment. This is consistent with the priory intuition saying that seeds, that were reconstructed using a small number of hits are more likely to be ghosts. 
 
-The second type of Shap based plots is dependence plots presented in figure \ref{fig:shap dep}.  The concept is similar to the pair-plot, which are usually created in order to visualize dependencies between two features. The shap dependence plots also take into consideration the Shap values. The idea is to make a scatter plot, shap value versus feature value, and apply color scheme that is based on the value of the second feature.
+The second type of Shap based plot is dependence plot presented in figure \ref{fig:shap dep}.  The concept is similar to the pair-plot, which are usually created in order to visualize dependencies between two features. The shap dependence plots also take into consideration the Shap values. The idea is to make a scatter plot, shap value versus feature value, and apply color scheme that is based on the value of the second feature.
 
- Figure \ref{fig:shap dep} (upper left) is the one that is the easiest to interpret. It shows the shap value versus the number of layers. It is clearly visible that T tracks with the numbers of plates smaller than 15 push strongly the classifier toward negative decisions. This effect is escalated when the track has a big value of $\chi^2 /\ dof $. This means the classifier decision agreed with an initial understanding of the problem, the track that was reconstructed using a small number of hits and it's fit to the track model has a poor quality is more likely to be a ghost. 
+ Figure \ref{fig:shap dep} (upper left) is the one that is the easiest to interpret. It shows the shap value versus the number of layers. It is clearly visible that T tracks with the numbers of measurements smaller than 15 push strongly the classifier toward negative decisions. This effect is escalated when the track has a big value of $\chi^2 /\ dof $. This means the classifier decisions are compatible with an initial understanding of the problem, the track that was reconstructed using a small number of hits and it's fit to the track model has a poor quality is more likely to be a ghost. 
 
 
 \begin{figure}[!ht]
@@ -839,7 +822,7 @@ The second type of Shap based plots is dependence plots presented in figure \ref
  \end{center}
  \end{figure}
 
-The result of the evaluation of the third and final approach, the one that is base on LIME model, is shown in figure \ref{fig:limeResult}. The presented LIME outcome ware obtained for two randomly chosen test examples. Each of these examples represents one of the target classes. It provides a good indication of the importance of the features and highlights why particular decision was made. The length of each bar is proportional to the feature's value times linear regression weight associated with this feature.  It is easy to notice, that one of the most important feature is the number of hits, that were used to reconstruct T-Seeds and this is consistent with the initial intuition.  
+The result of the evaluation of the third and final approach, the one that is base on LIME model, is shown in figure \ref{fig:limeResult}. The presented LIME outcome ware obtained for two randomly chosen test examples. Each of these examples represents one of the target classes. It provides a good indication of the importance of the features and highlights why a particular decision was made. The length of each bar is proportional to the feature's value times linear regression weight associated with this feature.  It is easy to note that one of the most important features is the number of hits, that were used to reconstruct T-Seeds, and this is consistent with the initial intuition.  
 
 \begin{figure}
 \begin{subfigure}
@@ -896,7 +879,7 @@ simulated particle were used. The distributions of input variables are shown in 
 \begin{figure}[!htbp]
 \begin{center}
 \includegraphics[width=0.99\linewidth]{figures/NN/input_mva.PNG}
-\caption{Input variables for the training Fully-connected neural network to select the best downstream track candidates. The training dataset contains of
+\caption{Input variables for the training of a Fully-connected neural network to select the best downstream track candidates. The training dataset contains of
  $D^{*+} \rightarrow D^{0}\pi^{+}$ decays. The blue solid histogram is the signal
 distribution, while the hashed red distribution is the background.}
 \label{fig:MVAVars}
@@ -915,11 +898,6 @@ background. The default cut is at 0.1. Right: ROC curve for the fully-connected 
 \end{figure}
 
 A candidate is written out if its probability of being a true downstream track is larger than a specific tunable threshold.
-
-
-
-
-
 
 \section{Physics Performance of the modernised downstream tracking}
 \label{sec:physic_performance}
@@ -1409,7 +1387,7 @@ and $y$ specify the grand-true class and $p$ is a model's predicted probability 
 
  \begin{figure}[!h]
 \centering
-\includegraphics{figures/Focal_loss.png}
+\includegraphics[scale=0.5]{figures/Focal_loss.png}
 \caption{Visualization of the Focal loss (FL) versus the probability of true class, obtained for a different value of hyperparameter $\gamma$. $\gamma=0$ corresponds to the cross-entropy. Figure taken from \cite{focal_loss}. 
 \label{fig:Focal loss}}
 \end{figure}
@@ -1417,7 +1395,12 @@ and $y$ specify the grand-true class and $p$ is a model's predicted probability 
 
 The idea of Focal loss was proposed to improve one stage image detection model. Image detection is a type of problem in which the model needs to find a location (bounding box) of particular objects, for instance, find a face on a camera footage. In that kind of problem, the majority of regions are empty, and only a tiny number of them contain relevant objects. Thus this setup is very similar to the searching for an interesting physical signals. The Focal loss adds a factor $(1 - p_t)^\gamma$ to the standard cross-entropy criterion. Setting $\gamma > 0$ reduces the relative loss for well-classified examples ($p_t > 0.5$), putting more focus on hard, misclassified examples.
  
-In order to use Focal Loss as an xgboost objective function, one needs to implement its first and second derivative. Which can be done manually or using one of the automatic derivation packages like Scipy \cite{scipy}.   
+In order to use Focal Loss as an xgboost objective function, one needs to implement its first and second derivative. Which can be done manually or using one of the automatic derivation packages like Scipy \cite{scipy}.  
+
+
+\subsection{Message passing Graph Neural Networks}
+
+The application of machine learning models within the Downstream Tracking was limited to enhancing handcrafted pattern recognition algorithm via adding a classifier that removes tracks (or track seeds) that are likely to be ghosts. This section describes an idea that completely replaces the pattern recognition part with a Deep Learning model.
 
 \subsection{Workflow Management System}
 
