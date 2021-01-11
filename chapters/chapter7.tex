@@ -13,17 +13,17 @@ This chapter is dedicated to describes the testbeam studies performed on prototy
 \section{Experimental setup}
 
 \subsection{The beam}
-The tests were performed in CERN SPS North Area, see figure \ref{fig:LHC}. The beam consisted of secondary particles produced by the interaction of high intensity of 450 GeV/c primary proton beam with a fixed target made of beryllium and lead. The beam had average energy of $180 GeV$.  
+The tests were performed in CERN SPS North Area, see Figure~\ref{fig:LHC}. The beam consisted of secondary particles produced by the interaction of high intensity of 450 GeV/c primary proton beam with a fixed target made of beryllium and lead. The beam had average energy of $180 GeV$.  
 The beam typically produced four spills/minute. The spill lasted about 4 seconds, and it was intermittent by 40 seconds window with no beam. For most of the data taking, the beam size was collimated down to about 0.5 cm in diameter.
 
 \subsection{Timepix3 telescope}
-The essential tool that allows making many silicon sensor performance studies is the TimePix3 telescope, presented in figure \ref{fig:telescope}. 
+The essential tool that allows making many silicon sensor performance studies is the TimePix3 telescope, presented in Figure~\ref{fig:telescope}. 
 
 
 \begin{figure}[!h]
 \centering
 \includegraphics{figures/telescope.png}
-\caption{Layout of the Timepix Telescope mechanics, pixel planes and scintillators with respect to the beam axis. Figure taken from \cite{telescope}}
+\caption{Layout of the Timepix Telescope mechanics, pixel planes and scintillators with respect to the beam axis. Figure taken from~\cite{telescope}}
 \label{fig:telescope}
 \end{figure}
 
@@ -51,25 +51,25 @@ The x and y positions of the cluster are calculated using the center of gravity 
 \end{equation}
 where $\{x,y\}_{i} $ is the $x$ or $y$  coordinates of $i$th pixel and $S_i$ its signal. 
 
-The clusters are then used as input for the tracking algorithm, which is based on the timing information of the clusters.  The tracking algorithm starts by taking a cluster form the first plane and then looks for the matching cluster on the second plane. The hits are considered matched when the time difference is within ten nanoseconds. These two clusters constitute a track seed which is then extrapolated to the next plane, excluding the device under test, looking for a cluster within a cone with an opening angle of 0.01 radians and the ten nanoseconds time window. The procedure ends when all planes have been considered. Figure \ref{fig:telescope_tracks} shows four examples of Timepix3 tracks. 
+The clusters are then used as input for the tracking algorithm, which is based on the timing information of the clusters.  The tracking algorithm starts by taking a cluster form the first plane and then looks for the matching cluster on the second plane. The hits are considered matched when the time difference is within ten nanoseconds. These two clusters constitute a track seed which is then extrapolated to the next plane, excluding the device under test, looking for a cluster within a cone with an opening angle of 0.01 radians and the ten nanoseconds time window. The procedure ends when all planes have been considered. Figure~\ref{fig:telescope_tracks} shows four examples of Timepix3 tracks. 
 
 
 
 \begin{figure}
 \centering
 \includegraphics[scale=0.9]{figures/telescope_tracks.png}
-\caption{Four exemplary tracks reconstructed in the Timepix3 telescope. Figure taken from \cite{Sophie}.}
+\caption{Four exemplary tracks reconstructed in the Timepix3 telescope. Figure taken from~\cite{Sophie}.}
 \label{fig:telescope_tracks}
 \end{figure}
 
 
 \subsection{Read-out electronic}
-During all of the testbeam experiments conducted from 2015 till 2017, the SALT ASIC was not ready. Therefore, the sensor was read-out by the Beetle chip, which is the ASIC used as a front-end chip in Velo and TT during Run 1 and Run 2. The Beetle chip can read-out the signals from 128 channels and returns semi-Gaussian analog pules. The detailed description of the Beetle chip data processing can be found \cite{Beetle}. In contrary to the SALT ASIC, the Beetle chip has no digital signal processing module. Thus, data have to digitalized and processed by the external components.  
-The analog data read-out by the Beetle chip was digitalized by the Mamba board designed by INFN in Milan and produced by Nuclear Instrument \cite{NuclearInstruments}.   
+During all of the testbeam experiments conducted from 2015 till 2017, the SALT ASIC was not ready. Therefore, the sensor was read-out by the Beetle chip, which is the ASIC used as a front-end chip in Velo and TT during Run 1 and Run 2. The Beetle chip can read-out the signals from 128 channels and returns semi-Gaussian analog pules. The detailed description of the Beetle chip data processing can be found ~\cite{Beetle}. In contrary to the SALT ASIC, the Beetle chip has no digital signal processing module. Thus, data have to digitalized and processed by the external components.  
+The analog data read-out by the Beetle chip was digitalized by the Mamba board designed by INFN in Milan and produced by Nuclear Instrument ~\cite{NuclearInstruments}.   
 The processing of the digitalized data was done by the software described in chapter \ref{chapter:tbut}. 
 
 \section{Testbeam studies and the results}
-In the course of the last five years, the LHCb UT Upgrade team has organized a number of testbeam campaigns to test new prototyped sensors. Figure \ref{fig:DUT} presents the photography of a sensor that was used during the testbeam with equipment which allowed to cool
+In the course of the last five years, the LHCb UT Upgrade team has organized a number of testbeam campaigns to test new prototyped sensors. Figure~\ref{fig:DUT} presents the photography of a sensor that was used during the testbeam with equipment which allowed to cool
 them and collect the data. 
 
 \begin{figure}
@@ -91,12 +91,12 @@ During this testbeams, the following tests were conducted:
 \item Charge collection near the quarter-circle region. One type of sensor that will constitute the UT sensor has a quarter-circle region where there are no strips. This study aimed to investigate whether there is any drop in charge collected as a cluster approaches the quarter-circle radially. 
 \end{itemize}
 
-The results of this studies lead to the following publications \cite{tb1} \cite{tb2} \cite{tb3}. To get a broader picture of the UT testbeam studies, one can also refer to these PhD thesis \cite{Federica} and \cite{Kelsey}.
+The results of this studies lead to the following publications ~\cite{tb1}  \cite{tb2} \cite{tb3}. To get a broader picture of the UT testbeam studies, one can also refer to these PhD thesis~\cite{Federica} and \cite{Kelsey}.
 
 
 \section{Cross-talk correction}
 \label{sec:cross_talk}
-One of the effects that may influence sensor performance measurements is an asymmetric cross-talk between $N$-th and $(N+1)$-th channel. This effect can be measure by studying the asymmetry between $(N-1)$-th and $(N+1)$th channel, where $N$-th channel is a cluster seed strip position. The effect was studied separately for odd and even channels since it was observed, that this cross-talk effect is stronger for even channels, see figure \ref{fig:charge asymmetry profile}.  
+One of the effects that may influence sensor performance measurements is an asymmetric cross-talk between $N$-th and $(N+1)$-th channel. This effect can be measure by studying the asymmetry between $(N-1)$-th and $(N+1)$th channel, where $N$-th channel is a cluster seed strip position. The effect was studied separately for odd and even channels since it was observed, that this cross-talk effect is stronger for even channels, see Figure~\ref{fig:charge asymmetry profile}.  
 
 
 \begin{figure}[htb]
@@ -106,9 +106,9 @@ One of the effects that may influence sensor performance measurements is an asym
 \label{fig:charge asymmetry profile}
 \end{figure}
 
-To get a better understanding of the signal cross-talk effect on a collected data, the difference between $ADC(N-1)$ and $ADC(N+1)$ as a function of a cluster charge was studied. Figure \ref{fig:difference_odd_even} shows that this difference is strongly dependent on a cluster charge. Thus any proposed correction should take this fact into consideration.  The idea to correct this effect is to create a two-dimensional map with a strip position and cluster charge as indexes and a correction as a value. The correction can be modeled using Gaussian distribution since it was empirically discovered that the charge difference is normally distributed.
+To get a better understanding of the signal cross-talk effect on a collected data, the difference between $ADC(N-1)$ and $ADC(N+1)$ as a function of a cluster charge was studied. Figure~\ref{fig:difference_odd_even} shows that this difference is strongly dependent on a cluster charge. Thus any proposed correction should take this fact into consideration.  The idea to correct this effect is to create a two-dimensional map with a strip position and cluster charge as indexes and a correction as a value. The correction can be modeled using Gaussian distribution since it was empirically discovered that the charge difference is normally distributed.
 Therefore the correction algorithm splits the cluster data into bins according to strip position $N$ and the cluster charge, then for each of the bin, the correction is calculated by fitting Gaussian distribution to the charge difference  $ADC(N-1)$ and $ADC(N+1)$. 
-Figure \ref{fig:correction} present this correction calculation procedure for cluster seed charge between 300 and 400 ADC, and figure \ref{fig:correction_map} present the entire 2D correction map. 
+Figure~\ref{fig:correction} present this correction calculation procedure for cluster seed charge between 300 and 400 ADC, and Figure~\ref{fig:correction_map} present the entire 2D correction map. 
 
 \begin{figure}[htb]
 \begin{center}
@@ -149,23 +149,23 @@ Figure \ref{fig:correction} present this correction calculation procedure for cl
 \end{figure}
 
 
-After application of this correction the cross-talk is not detectable anymore, since the difference is smaller than 1 ADC, see figure \ref{fig:after_correction}. 
+After application of this correction the cross-talk is not detectable anymore, since the difference is smaller than 1 ADC, see Figure~\ref{fig:after_correction}. 
 All DUTs have similar odd–even cross-talk corrections. The even/odd cross-talk correction was similar for all of the DUTs, but not identical. Therefore, each sensor had a unique cross-talk correction to remove this bias.
 
 
 
 \section{Charge sharing}
-Charge sharing is manifested when a particle deposits charge between two strips.  In this case, the charge can flow to both the left and right strips, see figure \ref{fig:eta}. The theoretical explanation of this effect can be seen as a transverse diffusion of the holes (or electrons) during the drift towards the strip implant \cite{semiconductors_det_sys}. 
+Charge sharing is manifested when a particle deposits charge between two strips.  In this case, the charge can flow to both the left and right strips, see Figure~\ref{fig:eta}. The theoretical explanation of this effect can be seen as a transverse diffusion of the holes (or electrons) during the drift towards the strip implant~\cite{semiconductors_det_sys}. 
  
 
 \begin{figure}[htb]
 \centering
 \includegraphics[scale=0.8]{figures/eta/eta.PNG}
-\caption{Cartoon of the charge deposited by a particle passing through the silicon. The charge, $C_{\{L, R\}}$, is deposited on the strips left and right of the particle’s impact point x. On the far-left strip some charge is measured as well due to capacitive coupling. Figure adapted from \cite{eta_note} } 
+\caption{Cartoon of the charge deposited by a particle passing through the silicon. The charge, $C_{\{L, R\}}$, is deposited on the strips left and right of the particle’s impact point x. On the far-left strip some charge is measured as well due to capacitive coupling. Figure adapted from~\cite{eta_note} } 
 \label{fig:eta}
 \end{figure}
 
-This phenomenon can be quantified via parameter $\eta$, proposed in \cite{eta}, given by:
+This phenomenon can be quantified via parameter $\eta$, proposed in ~\cite{eta}, given by:
 \begin{equation}
     \eta = \frac{Q_{left}}{Q_{left}+Q_{right}}
 \end{equation}
@@ -182,17 +182,17 @@ where $a$, $b$ are constants,  $\mu$ is a mean interstrip position, $\sigma$ is 
 erf(x) = \frac{2}{\pi} \int^{0}_{x} e^{-t^2} dt
 \end{equation}
 
-This charge sharing non-linear model can be interpreted as a smeared step function in which the width of the charge sharing ($ \sigma $) equals the width of the Gaussian smearing.   The full derivation of this formula can be find \cite{eta_note}. 
+This charge sharing non-linear model can be interpreted as a smeared step function in which the width of the charge sharing ($ \sigma $) equals the width of the Gaussian smearing.   The full derivation of this formula can be find ~\cite{eta_note}. 
 
 The purpose of this analysis was to measure the dependence of charge sharing $ \eta $ versus the angle of particle incidence.  Different incidence angles were obtained by rotating the stage where the DUT box was mounted around the $y$ axis. 
 
-The data that were used within this analysis comes from May 2016 testbeam.  This section presented studies related to one selected unirradiated mini sensor produced by Hamamatsu Photonics \cite{Hamamatsu}. The sensor is $p^{+}-on-n$ and has a thickness of $320 \mu m$ and a pitch of $190 \mu m$. The clusters that were considered during the presented have to lie in the beam region, be matched with a telescope tracks.  Moreover, the reconstruction quality of those matched tracks should also be satisfactory ($\chi^{2}\/ndf<10$).
+The data that were used within this analysis comes from May 2016 testbeam.  This section presented studies related to one selected unirradiated mini sensor produced by Hamamatsu Photonics ~\cite{Hamamatsu}. The sensor is $p^{+}-on-n$ and has a thickness of $320 \mu m$ and a pitch of $190 \mu m$. The clusters that were considered during the presented have to lie in the beam region, be matched with a telescope tracks.  Moreover, the reconstruction quality of those matched tracks should also be satisfactory ($\chi^{2}\/ndf<10$).
 Finally the cross-talk correction described in section \ref{sec:cross_talk} was applied.
 
-Figure \ref{fig:eta_distribution} present the $\eta$ distributions integrated overall connected and not masked channels of the mini sensor. Each subfigure is dedicated to present the  $\eta$ for a different particle incidence angle. 
+Figure~\ref{fig:eta_distribution} present the $\eta$ distributions integrated overall connected and not masked channels of the mini sensor. Each subfigure is dedicated to present the  $\eta$ for a different particle incidence angle. 
 The charge sharing seems to be symmetric, thus no further correction was recommended. 
 
-To get a better understanding of the charge sharing, its dependence versus the cluster interstrip position on the rotation around the $y$-axis is shown in figure \ref{fig:eta_distribution_2d}. Figure \ref{fig:eta_fit} presents same distribution but with mode \ref{eq:eta_model} fitted to the data. One can find that the effect of clockwise and anticlockwise rotations around the $y$-axis is the same.  The $\sigma$ as a function
+To get a better understanding of the charge sharing, its dependence versus the cluster interstrip position on the rotation around the $y$-axis is shown in Figure~\ref{fig:eta_distribution_2d}. Figure~\ref{fig:eta_fit} presents same distribution but with model \ref{eq:eta_model} fitted to the data. One can find that the effect of clockwise and anticlockwise rotations around the $y$-axis is the same.  The $\sigma$ as a function
 of the particle incident angle have a minimum at zero degrees and to is symmetrically distributed around the minimum. The effect of a rotation around the $y$-axis is to increase the charge sharing between neighbouring strips, which can be quantified using the value of $\sigma$ obtained from the fit. 
 
 

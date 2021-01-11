@@ -32,23 +32,23 @@ where:
     \end{equation}
 \end{itemize}
 
-The initial version of formula~\ref{eq:Bethe_bloh} was proposed by Bethe \cite{Bethe} only three years after Schrodinger postulated non-relativistic Quantum Mechanic. The quantity $-\left< \frac{dE}{dx} \right>$ can be interpreted as stopping power of a particular material. Figure \ref{fig:Bethe_bloh} presents the stopping power for positive muons in copper as a function of $\beta \gamma$. 
+The initial version of Formula~\ref{eq:Bethe_bloh} was proposed by Bethe~\cite{Bethe} only three years after Schrodinger postulated non-relativistic Quantum Mechanic. The quantity $-\left< \frac{dE}{dx} \right>$ can be interpreted as stopping power of a particular material. Figure~\ref{fig:Bethe_bloh} presents the stopping power for positive muons in copper as a function of $\beta \gamma$. 
 
-For low energies term $\frac{1}{\beta^2}$ in equation \ref{eq:Bethe_bloh} is dominant and the stopping power decreases with increasing energy, reaching minimum when $(\beta \gamma) \approx 3 $. A particle with an energy loss at the mimimum is called a Minimum Ionizing Particle (MIP). 
+For low energies term $\frac{1}{\beta^2}$ in Equation~\ref{eq:Bethe_bloh} is dominant and the stopping power decreases with increasing energy, reaching minimum when $(\beta \gamma) \approx 3 $. A particle with an energy loss at the mimimum is called a Minimum Ionizing Particle (MIP). 
 
 
 
 \begin{figure}[h]
 \centering
 \includegraphics{figures/Bete_bloh.PNG}
-\caption{ The stopping power $-\left< \frac{dE}{dx} \right>$ as a function of $\beta \gamma$. The region that the Bethe-Bloch formula describes is $0.1 \le (\beta \gamma) \le 1000$ and is highlighted in red. Figure taken from \cite{PDG}.
+\caption{ The stopping power $-\left< \frac{dE}{dx} \right>$ as a function of $\beta \gamma$. The region that the Bethe-Bloch formula describes is $0.1 \le (\beta \gamma) \le 1000$ and is highlighted in red. Figure taken from~\cite{PDG}.
 \label{fig:Bethe_bloh}}
 \end{figure}
 
 
-It is worth noticing that for a charged particle traversing a material, the number of collisions occurring and the amount of energy transferred in each collision is subject to statistical fluctuations. Formula \ref{eq:Bethe_bloh} provides only the average value of energy loss, which due to the statistical nature of the process, may vary from the actual value. 
-For a relatively thick material, the number of collisions will be large enough to justify modeling distribution of the energy loss by the Gaussian \cite{gauss_sensor}. Although for a thinner materials, which are widely used in the current tracking detectors, the average energy loss is small, so the large fluctuation in the deposited energy can be observed.    
- This results in a largely asymmetric charge distribution, which can be parametrized by the long-tailed Landau distribution shown in figure \ref{fig:landau_distribution}.  This distribution is traditionally fit with a Landau convoluted with a Gaussian to extract the peak charge collection, the Most Probable Value (MPV). The Landau-Gauss convolution is given by:
+It is worth noticing that for a charged particle traversing a material, the number of collisions occurring and the amount of energy transferred in each collision is subject to statistical fluctuations. Formula~\ref{eq:Bethe_bloh} provides only the average value of energy loss, which due to the statistical nature of the process, may vary from the actual value. 
+For a relatively thick material, the number of collisions will be large enough to justify modeling distribution of the energy loss by the Gaussian~\cite{gauss_sensor}. Although for a thinner materials, which are widely used in the current tracking detectors, the average energy loss is small, so the large fluctuation in the deposited energy can be observed.    
+ This results in a largely asymmetric charge distribution, which can be parametrized by the long-tailed Landau distribution shown in Figure~\ref{fig:landau_distribution}.  This distribution is traditionally fit with a Landau convoluted with a Gaussian to extract the peak charge collection, the Most Probable Value (MPV). The Landau-Gauss convolution is given by:
 
 \begin{equation}
     \begin{split}
@@ -73,39 +73,39 @@ and $\tau$ is a Landau Most Provable Value (MPV), $\sigma_{width}$ is a width of
 \section{Operational principles of silicon detectors}
 
 As described in chapter 1, a number of technologies are used for full event reconstruction at LHCb.  However, to achieve the highest precision and resolution, semiconducting detectors are currently the best option, since that kind of detector uses a minimal amount of material which particles need to traverse in order to be detected.  The only limitation of using this technology is its cost. Therefore they are placed where the highest resolution is required, such as around the interaction point in the LHCb detector. 
-Most of the semiconducting detectors are made of silicon.  This is due to the fact that silicon is the second most abundant element on Earth as well as it is widely used in industrial applications. Silicon has an atomic number of 14, so it has 14 electrons in three shells (2,8,4 arrangement). The electrons arranged in the outer shell are the valence electrons.  Due to this electron arrangement, within the crystalline lattice structure, each silicon atom is surrounded by four neighbors, see figure \ref{fig:silicon}.  
+Most of the semiconducting detectors are made of silicon.  This is due to the fact that silicon is the second most abundant element on Earth as well as it is widely used in industrial applications. Silicon has an atomic number of 14, so it has 14 electrons in three shells (2,8,4 arrangement). The electrons arranged in the outer shell are the valence electrons.  Due to this electron arrangement, within the crystalline lattice structure, each silicon atom is surrounded by four neighbors, see Figure~\ref{fig:silicon}.  
 
 \begin{figure}[h]
 \centering
 \includegraphics{figures/silicon.PNG}
 \caption{Lattice structure of silicon. The building block of the lattice is formed by a central atom bonded to four
-equidistant neighbors (indicated in gray). Figure taken from \cite{semiconductors_det_sys}}
+equidistant neighbors (indicated in gray). Figure taken from~\cite{semiconductors_det_sys}}
 \label{fig:silicon}
 \end{figure}
 
 
 The periodic potential of the crystalline structure results in the formation of electron energy bands. The energy bounds can be interpreted as a collection of the individual energy levels of electrons surrounding each atom. The wavefunctions of the individual electrons are overlapped with those of electrons enclosed to neighboring atoms, and due to the Pauli exclusion principle, the electron energy levels are prohibited from being the same so that one obtains a set of closely spaced energy levels, forming an energy band. 
 
-At a temperature of absolute zero, the highest energy electrons lie in the valence band. Those electrons are strongly bonded to the atoms and thus are not able to carry the charge.  However, at the higher temperatures, electrons also occupy higher energy states known as the conduction band. The energy between the valence and conduction bands is called the band gap energy $E_g$.  The value of the band gap allows classifying materials into conductors, semiconductors, and insulators, which is shown in figure \ref{fig:boundgap}. 
+At a temperature of absolute zero, the highest energy electrons lie in the valence band. Those electrons are strongly bonded to the atoms and thus are not able to carry the charge.  However, at the higher temperatures, electrons also occupy higher energy states known as the conduction band. The energy between the valence and conduction bands is called the band gap energy $E_g$.  The value of the band gap allows classifying materials into conductors, semiconductors, and insulators, which is shown in Figure~\ref{fig:boundgap}. 
 
 
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.7]{figures/bound_gap.PNG}
 \caption{Classification of metals, semiconductors and insulators according to their
-band gap energy $E_g$. The Fermi level, denoted by the dashed line, is a hypothetical energy level which would have a 50\% probability of being occupied at thermal equilibrium.  Figure adapted from \cite{radiation_damage}}
+band gap energy $E_g$. The Fermi level, denoted by the dashed line, is a hypothetical energy level which would have a 50\% probability of being occupied at thermal equilibrium.  Figure adapted from~\cite{radiation_damage}}
 \label{fig:boundgap}
 \end{figure}
 
 One of the most important features of semiconductors is their ability to change electrical conductivity by the introduction of impurity atoms, called dopants. These dopants replace atoms of the original material at lattice sites, and typically have more ($n$-type donors) or fewer ($p$-type donors) valence electrons in their outer shell, depending on the specific type of dopant. 
 
 
-Most semiconductor detectors are made of $p-n$ junction, which manifests a diode characteristic. Such a semiconducting device is created by connecting two components of opposite dopping in good thermodynamical contact. The most important property of such a device is the phenomena of electrons diffusing into the $p$ region and holes into the $n$ region where they recombined. As a consequence, an electric field gradient is created, which eventually stops the diffusion process and establishes thermal equilibrium. Due to the electric field, there is a potential difference across the junction. The region of changing potential is known as depletion zone since it is almost fully depleted of all mobile charge carriers. This characteristic can be utilized for radiation detectors. Electron-hole pairs that are generated in the depletion zone by ionizing radiation will be separated by the electric field and can be detected if electrical contacts are connected to the device, which is shown in figure~\ref{fig:silicon_det}.
+Most semiconductor detectors are made of $p-n$ junction, which manifests a diode characteristic. Such a semiconducting device is created by connecting two components of opposite dopping in good thermodynamical contact. The most important property of such a device is the phenomena of electrons diffusing into the $p$ region and holes into the $n$ region where they recombined. As a consequence, an electric field gradient is created, which eventually stops the diffusion process and establishes thermal equilibrium. Due to the electric field, there is a potential difference across the junction. The region of changing potential is known as depletion zone since it is almost fully depleted of all mobile charge carriers. This characteristic can be utilized for radiation detectors. Electron-hole pairs that are generated in the depletion zone by ionizing radiation will be separated by the electric field and can be detected if electrical contacts are connected to the device, which is shown in Figure~\ref{fig:silicon_det}.
 
 \begin{figure}[h]
 \centering
 \includegraphics{figures/silicon_detector.png}
-\caption{Visualization of principles of operating of silicon strip detector. The charged particle passing though a depleted detector creates electron-hole pairs that are separated in the electric field inducing a signal that is recorded by the dedicated electronics (panel a). Panels (b) and (c) present the development of the space charge region at the boundary between p-type and n-type silicon, which is enhanced by the application of a reverse-bias electric potential. Figure taken from \cite{silicon_nature}}
+\caption{Visualization of principles of operating of silicon strip detector. The charged particle passing though a depleted detector creates electron-hole pairs that are separated in the electric field inducing a signal that is recorded by the dedicated electronics (panel a). Panels (b) and (c) present the development of the space charge region at the boundary between p-type and n-type silicon, which is enhanced by the application of a reverse-bias electric potential. Figure taken from~\cite{silicon_nature}}
 \label{fig:silicon_det}
 \end{figure}
 
@@ -113,7 +113,7 @@ Most semiconductor detectors are made of $p-n$ junction, which manifests a diode
 
 
 \section{TbUT Emulation Software}
-The TbUT package is a software developed entirely by the author, and similarly to all of the official LHCb software, it is based on the Gaudi framework \cite{gaudi}. Gaudi identifies components with specific purposes and well-defined interfaces, interacting with each other to provide the complete functionality of an application. Gaudi provides to the application general-purpose components, like messaging and configuration services, see figure \ref{fig:gaudi flow}. The configuration is performed via the customized python scripts. By design, the Gaudi framework decouples objects describing data from those describing algorithms.
+The TbUT package is a software developed entirely by the author, and similarly to all of the official LHCb software, it is based on the Gaudi framework~\cite{gaudi}. Gaudi identifies components with specific purposes and well-defined interfaces, interacting with each other to provide the complete functionality of an application. Gaudi provides to the application general-purpose components, like messaging and configuration services, see Figure~\ref{fig:gaudi flow}. The configuration is performed via the customized python scripts. By design, the Gaudi framework decouples objects describing data from those describing algorithms.
 
 
 
@@ -125,7 +125,7 @@ The TbUT package is a software developed entirely by the author, and similarly t
 \end{figure}
 
 
-The software was designed based on the Object-oriented Programming paradigm.   This paradigm states that the software design is focused on data (also called \textbf{object}) rather than functions. An object can be defined as a data field that has unique attributes and behavior \cite{programming_paradigma}. 
+The software was designed based on the Object-oriented Programming paradigm.   This paradigm states that the software design is focused on data (also called \textbf{object}) rather than functions. An object can be defined as a data field that has unique attributes and behavior~\cite{programming_paradigma}. 
 
 Each of the TbUT components inherits from one of the following classes:  
 
@@ -134,26 +134,26 @@ Each of the TbUT components inherits from one of the following classes:
     \item \textbf{Monitoring algorithm}, these object, similarly to the \textbf{Algorithms}, inherit from  \textit{Gaudi::algorithm}. Their job is to extract data from the TES and generate a set of monitoring histograms, which suppose to visualize the performance of the sensor. This component is a key to make a proper calibration. 
     \item \textbf{Tools} These objects inherit from the pure virtual interface \textit{IProcessingEngine}, and they were designed to perform the processing actions, for instance, pedestal removal. 
     \item \textbf{Serializable data} this objects inherit from the \textit{GaudiKernel::DataObject} and they are the created by the \textbf{Tools}. They can be stored inside the Transient Event Store (TES). 
-    \item \textbf{ Tool's Factories} these types of objects were implemented as a concrete instances of a Factory Design Pattern. This concept was introduced in the Design Pattern book \cite{DesignPatterns}. 
+    \item \textbf{ Tool's Factories} these types of objects were implemented as a concrete instances of a Factory Design Pattern. This concept was introduced in the Design Pattern book~\cite{DesignPatterns}. 
 \end{itemize}
 
 \begin{figure}[h]
 \centering
 \includegraphics{figures/Gaudi.png}
-\caption{Object Diagram of the Gaudi architecture, figure taken from \cite{gaudi} }
+\caption{Object Diagram of the Gaudi architecture, figure taken from~\cite{gaudi} }
 \label{fig:gaudi flow}
 \end{figure}
 
 
-The first algorithm within the TbUT is dedicated to decoding the raw data acquired by the acquisition board, which is visualized in figure \ref{fig:TbUT}.  
-During the lifetime of this project, the software has to able to process data acquired by the number of different DAQ systems, each of these producing the data in a completely different format.  To achieve that kind of flexibility the tool, that is responsible for reading the input data was implemented using a Factory Design Pattern \cite{DesignPatterns}. 
+The first algorithm within the TbUT is dedicated to decoding the raw data acquired by the acquisition board, which is visualized in Figure~\ref{fig:TbUT}.  
+During the lifetime of this project, the software has to able to process data acquired by the number of different DAQ systems, each of these producing the data in a completely different format.  To achieve that kind of flexibility the tool, that is responsible for reading the input data was implemented using a Factory Design Pattern~\cite{DesignPatterns}. 
 
 \subsection{Pedestal Subtraction}
 
 Pedestals are the charge values measured by the read-out system in the absence of signal and noise. Each of the read-out channels can have a different ADC value of pedestal, and each pedestal's value depends on such environmental conditions as temperature, humidity, and operating conditions, like applied bias voltage. 
 To ensure proper pedestals are removed from the raw ADC data, prior to each data collection run, the non-signal measurements (pedestal runs) are taken. Usually, pedestal data are quick to collect since no trigger is required. 
 
-The pedestal subtraction algorithm has two phases. In first, the pedestal values are calculated. During the second one, the determined pedestal values are subtracted from the raw ADC data. Figure \ref{fig:ped} presents Pedestal Subtraction algorithm sequence diagram. That kind of UML diagram \cite{UML} is dedicated to depicts an interaction between objects in sequential order. These diagrams are widely used by the enterprise and software developers to document and understand requirements for new and existing systems. 
+The pedestal subtraction algorithm has two phases. In first, the pedestal values are calculated. During the second one, the determined pedestal values are subtracted from the raw ADC data. Figure~\ref{fig:ped} presents Pedestal Subtraction algorithm sequence diagram. That kind of UML diagram~\cite{UML} is dedicated to depicts an interaction between objects in sequential order. These diagrams are widely used by the enterprise and software developers to document and understand requirements for new and existing systems. 
 
 \begin{figure}
 \centering
@@ -175,7 +175,7 @@ Where the $\Delta_{i}(n+1)$ is a event to pedestal correction. This correction i
 \begin{equation}
 \Delta_{i}(n+1)=ADC_{i}(n+1)-P^{sum}_{i}(n)
 \end{equation}
-In equation \ref{eq:ped}, $N$ is the weighting factor set by default to 1024. 
+In Equation~\ref{eq:ped}, $N$ is the weighting factor set by default to 1024. 
 
 
 To increase the suitability of the pedestal, and to remove potential outliers that may bias the pedestal value, the limit for correction is applied. Therefore the correction is given by:
@@ -201,7 +201,7 @@ The second phase of the pedestal subtraction algorithm is removal of determined 
 ADC_{i}=ADC^{RAW}_{i}-p_{i}
 \end{equation} 
 where: $ADC_{i}$ is signal value after pedestal subtraction for event $i$, $ADC^{RAW}_{i}$ is a raw data and the $p_{i}$ is the pedestal value. Each of this quantities are in the unit of ADC counts. 
-Figure \ref{fig:raw vs ped} presents two performance monitoring plots, the first one shows the raw data collected by the DAQ system, which is an input to the TbUT, and the second one is the data after pedestal removal algorithm.  
+Figure~\ref{fig:raw vs ped} presents two performance monitoring plots, the first one shows the raw data collected by the DAQ system, which is an input to the TbUT, and the second one is the data after pedestal removal algorithm.  
 
 \begin{figure}[tbph]
 \begin{center}
@@ -236,9 +236,9 @@ The second phase of the CMS algorithm is calculation of the noise per channel $n
 where $\mu_{i} = \sum_{n=1}^{N} ADC_{i}(n)$ is a mean ADC value per channel. 
 
 
-Figure \ref{fig:projections} presents the one-dimensional projection of the data after pedestal and Common Mode subtraction. It is clearly visible, based on the noise values, that the Common Mode removal step is necessary to reduce the noise level and thus increase the Signal-to-Noise (S/N) ratio. 
+Figure~\ref{fig:projections} presents the one-dimensional projection of the data after pedestal and Common Mode subtraction. It is clearly visible, based on the noise values, that the Common Mode removal step is necessary to reduce the noise level and thus increase the Signal-to-Noise (S/N) ratio. 
 
-A few typical events after all corrections applied are shown in figure \ref{fig:Noise}. Here, no requirement is made on the number of tracks. Strips with large ADC counts are indicative of the passage of a beam particle through the detector. The other channels show roughly Gaussian fluctuations about zero, typical of incoherent detector noise. Signals generally
+A few typical events after all corrections applied are shown in Figure~\ref{fig:Noise}. Here, no requirement is made on the number of tracks. Strips with large ADC counts are indicative of the passage of a beam particle through the detector. The other channels show roughly Gaussian fluctuations about zero, typical of incoherent detector noise. Signals generally
 stand out significantly above the noise. These examples were selected to visualize a couple of cases that may occur, such as double strip clusters (event 14) and multiple clusters per event (event 83).  
 
 
@@ -320,24 +320,24 @@ end
 \end{algorithm}
 
 
-The analysis using the data reconstructed by this clusterization algorithm can be used to investigate the quality of the collected data by the UT detector. The first example of the handy plot is a histogram presenting the distribution of the cluster charge. Based on it one can get physics quantities describing the sensor's performance, the cluster charge data by fitted with the Landau Gauss convolution model. The parameter of this fit allows determining the Most Provable Value and the width of the signal.  Figure \ref{fig:clusters_with_landau} presents a collection of cluster charge distribution histograms. Those histograms were created on top of the data collected during the one of the testbeam. They were used to show the sensor performance versus the bias voltage applied to them.  Those studies were conducted to investigate the effect of a drop in the collected charge when sensor irradiation increases, which was seen previously \cite{irradiation}. The collected charge drop may lead to decreasing the Signal to Noise ratio.  
+The analysis using the data reconstructed by this clusterization algorithm can be used to investigate the quality of the collected data by the UT detector. The first example of the handy plot is a histogram presenting the distribution of the cluster charge. Based on it one can get physics quantities describing the sensor's performance, the cluster charge data by fitted with the Landau Gauss convolution model. The parameter of this fit allows determining the Most Provable Value and the width of the signal.  Figure~\ref{fig:clusters_with_landau} presents a collection of cluster charge distribution histograms. Those histograms were created on top of the data collected during the one of the testbeam. They were used to show the sensor performance versus the bias voltage applied to them.  Those studies were conducted to investigate the effect of a drop in the collected charge when sensor irradiation increases, which was seen previously~\cite{irradiation}. The collected charge drop may lead to decreasing the Signal to Noise ratio.  
 
 
 \begin{figure}
 \centering
 \includegraphics{figures/landau.png}
 \caption{Cluster charge distributions. The data are fit to a Landau 
-convoluted with a Gaussian resolution function, and the fit is shown (solid blue line). Figures taken from \cite{tb1}. 
+convoluted with a Gaussian resolution function, and the fit is shown (solid blue line). Figures taken from~\cite{tb1}. 
 }\label{fig:clusters_with_landau}
 \end{figure}
 
-The second type of monitoring plot is a distribution of cluster size. That plot allows better understanding of how the resolution of the sensors changes as a function of the angle between the incident particle and the normal to the sensor. Figure \ref{fig:clusters_size} presents a cluster size as a function of the sensor rotation angle obtained using data collected during the 2015 testbeam. 
+The second type of monitoring plot is a distribution of cluster size. That plot allows better understanding of how the resolution of the sensors changes as a function of the angle between the incident particle and the normal to the sensor. Figure~\ref{fig:clusters_size} presents a cluster size as a function of the sensor rotation angle obtained using data collected during the 2015 testbeam. 
 
 
 \begin{figure}
 \centering
 \includegraphics{figures/Cluster_size.PNG}
-\caption{Cluster size distributions. Figures taken from \cite{tb1}. 
+\caption{Cluster size distributions. Figures taken from~\cite{tb1}. 
 }\label{fig:clusters_size}
 \end{figure}
 
