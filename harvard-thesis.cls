@@ -227,7 +227,7 @@ This dissertation is ready to be reviewed.
 \newcommand{\abstractpage}{
 	\newpage
 	\pagenumbering{roman}
-	\setcounter{page}{3}
+	\setcounter{page}{6}
 	\pagestyle{fancy}
 	\lhead{Thesis advisor: \@advisor} \rhead{\@author}
 	\renewcommand{\headrulewidth}{0.0pt} 
@@ -246,6 +246,8 @@ This dissertation is ready to be reviewed.
 }
 
 \newcommand{\dedicationpage}{
+	\pagenumbering{roman}
+	\setcounter{page}{5}
 	\pagestyle{fancy}
 	\newpage \thispagestyle{fancy} \vspace*{\fill}
 	\sc \noindent \input{frontmatter/dedication}
