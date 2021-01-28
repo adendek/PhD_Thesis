@@ -6,7 +6,7 @@ The Artificial Intelligence is the New Electricity.
 \chapter{Principles of Machine Learning}
 \label{chapter:ML}
 This chapter provides a formal introduction to Machine Learning. It begins by presenting the concept of supervised learning. Next section is dedicated to discussing each of the models, which were taken into consideration during the author's research. It contains a brief mathematical description of each model and the overall approach to training them. The next section introduces the methodology of how the performance of each model can be measured and discusses the problem of the model's prediction interpretation. In other words, it tries to answer the vital question, "why should I trust the model that I built?". 
-The final section covers the idea of bonsai Boosted Decision Trees, which are the binned version of this classifier. It explains the concept of discretization, its implementation, the reason this approach was chosen, and the issues it addresses. 
+The final section covers the idea of bonsai Boosted Decision Trees, which are the binned version of the Boosted Decision Tree classifier. It explains the concept of discretization, its implementation, the reason this approach was chosen, and the issues it addresses. 
 
 \section{What is Machine Learning?}
 This introductory section is dedicated to providing answers to the following questions: 
@@ -33,7 +33,7 @@ Figure~\ref{fig:big_data} shows the quantity of data generated per minute by the
 \label{fig:big_data}}
 \end{figure}
 
-Machine Learning as a discipline can be divided into three main areas: \textbf{supervised},\textbf{unsupervised} and \textbf{reinforcement learning}. Figure~\ref{fig:ML_types} presents all mentioned types of Machine Learning approaches together with a description of problems that can be solved by them. 
+Machine Learning as a discipline can be divided into three main areas: \textbf{supervised}, \textbf{unsupervised} and \textbf{reinforcement learning}. Figure~\ref{fig:ML_types} presents all mentioned types of Machine Learning approaches together with a description of problems that can be solved by them. 
 
 The unsupervised learning describes problems, where the data has no manually assigned target value. One of the most interesting unsupervised problems is synthetical data generation. It is is usually performed using the idea of Generative Adversarial Networks (GANs)~\cite{GAN}. Another type of unsupervised problem is a dimensionality reduction, which reduces the number of random variables under consideration by selecting a set of principal variables. 
 One of the methods that are widely used to achieve this goal is the PCA or Principal Component Analysis. 
@@ -54,7 +54,7 @@ Finally, supervised learning is a group of problems that are characterized by th
  
 As a concrete example, let us consider a problem of a real track segment (or seed) selection, which is a topic of chapter~\ref{chapter:PLLT}. This is a supervised classification problem because the input to the model was a pair $(track_seed, label)$, which were obtained using Monte Carlo simulation, and the task is to predict whether a particular seed is suitable for further processing.
 
-To give a more precise and formal definition of the classification task, let us consider a given set of $N$ training examples of the form \\ $\{(x_0,y_0), \dotsb , (x_{N-1} , y_{N-1})\}$, where $x_{i} \in R^{M}$ is a M-dimensional feature vector and $y_i \in \mathbb{N}_{>1}$\footnote{Within the context of this thesis, the one class classification problem, e.g. an outlier detection, is not not taken into consideration as a classification one} is a label. During the training phase, an algorithm tries to find the function $f: X\rightarrow Y$, where X is an input space and Y is the output space. The fitted function $f$ is an element of some space of all possible mapping functions, which by convention, is called hypothesis space and denoted as $\mathcal{H}$. To measure how well the function $f$ fits to the training data, a loss function $\mathcal{L}(y,f(x))$ needs to be defined~\cite{DLBook}. This function reduces all the various good and bad aspects of a possibly complex system down to a single number. This scalar value allows candidate solutions to be ranked and compared to others.
+To give a more precise and formal definition of the classification task, let us consider a given set of $N$ training examples of the form  $\{(x_0,y_0), \dotsb , (x_{N-1} , y_{N-1})\}$, where $x_{i} \in R^{M}$ is a M-dimensional feature vector and $y_i \in \mathbb{N}_{>1}$\footnote{Within the context of this thesis, the one class classification problem, e.g. an outlier detection, is not not taken into consideration as a classification one} is a label. During the training phase, an algorithm tries to find the function $f: X\rightarrow Y$, where X is an input space and Y is the output space. The fitted function $f$ is an element of some space of all possible mapping functions, which by convention, is called hypothesis space and denoted as $\mathcal{H}$. To measure how well the function $f$ fits to the training data, a loss function $\mathcal{L}(y,f(x))$ needs to be defined~\cite{DLBook}. This function reduces all the various good and bad aspects of a possibly complex system down to a single number. This scalar value allows candidate solutions to be ranked and compared to others.
 
 
 When a loss function is selected the training procedure aims to minimize it with respect to the fitted function's parameters (these are the parameters of the selected model). This statement can be formalized in a following way: 
@@ -75,7 +75,7 @@ where $\Phi:\Zeta \rightarrow Y$, and the $S$ is a subset where the function $\P
 \paragraph{Information Theory} \mbox{}
  
 To get a better understanding of a common choice for the cost function, the remainder of this section provides a brief introduction to the Information Theory.
-Back in 1964, Claude Shannon and Warren Weaver published the paper "The mathematical theory of communication"~\cite{Shannon}, where they introduced the concept of information entropy. This quantity was used to determine the optimal, with respect to the expected length,  message encoding. The basic intuition behind the entropy is that more likely events are less informative than the rare ones. To be more precise, the entropy needs to fulfil the following requirements:
+Back in 1964, Claude Shannon and Warren Weaver published the paper "The mathematical theory of communication"~\cite{Shannon}, where they introduced the concept of information entropy. This quantity was used to determine the optimal, with respect to the expected length,  message encoding. The basic intuition behind the entropy is that more likely events are less informative than the rare ones. To be more precise, the entropy needs to fulfill the following requirements:
 \begin{enumerate}
 \item Rare events should have high information content. 
 \item In opposition, likely events should have very low information content, and in the case of a certain event, the information content should be $0$. 
@@ -710,7 +710,7 @@ From the practical perspective, the one who wants to build a model using the PyT
 \begin{figure}[!ht]
 \centering
 \includegraphics[width=0.7\textwidth]{figures/Comput_graph_2.PNG}
-\caption{Computational graph used to perform the forward propagation and estimate the cross-entropy loss with L2 regularization for a single layer full-connected neural network. The blue rectangles represent tensors and the gray operations applied on those tensors. Figure generated by author's implementation of the autograd tool.
+\caption{Computational graph used to perform the forward propagation and estimate the cross-entropy loss with L2 regularization for a single layer full-connected neural network. The blue rectangles represent tensors and the gray operations applied on those tensors. Figure generated by author's implementation of the autograd~\cite{utorch}.
 }
 \label{fig:Comput_graph}
 \end{figure} 
@@ -1030,7 +1030,7 @@ where S is the set of non-zero indexes in $z'$, and $\mathbf{E}[f(x)|x_S]$ is th
         \phi_{i} = \sum_{S \subseteq N} \frac{(M-|S|-1)!|S|!}{M!}(\mathbf{E}[f(x)| S\cup \{i\}] - \mathbf{E}[f(x)|S])
 \end{equation}
 
-Figure~\ref{fig:shap_exp} visualize the idea of model explanation and feature importance based on a Shap method. 
+Figure~\ref{fig:shap_exp} visualizes the idea of model explanation and feature importance based on a Shap method. 
 
 
 \begin{figure}[!h]

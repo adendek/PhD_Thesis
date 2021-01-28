@@ -6,10 +6,10 @@ In that sense, this new knowledge has all to do with honor and country, but it h
 
 \chapter{The LHCb Experiment and its Upgrade}
 \label{chapter:detector}
-This chapter is split into two parts, and the first one is dedicated to present a detailed description of the LHCb detector that was deployed during both Run I and Run II.  This part starts by presenting the CERN (The European Organization for Nuclear Research). Then a basic understanding of how the LHC ( \textsc{Large Hadron Collider} works is explained. The mentioned section is followed by a description of the LHCb detector, which consists of a paragraph dedicated to each sub-detectors.  The final section discusses the LHCb Upgrade by presenting its motivation and summarizing all changes that have been planned. 
+This chapter is split into two parts, and the first one is dedicated to present a detailed description of the LHCb detector that was deployed during both Run I and Run II.  This part starts by presenting the CERN (The European Organization for Nuclear Research). Then a basic understanding of how the LHC ( \textsc{Large Hadron Collider}) works is explained. The mentioned section is followed by a description of the LHCb detector, which consists of a paragraph dedicated to each sub-detectors.  The final section discusses the LHCb Upgrade by presenting its motivation and summarizing all changes that have been planned. 
 
 \section{CERN}
-The European Organization for Nuclear Research CERN is the world's largest scientific organization in the field of High Energy Physics. It was established in 1954 by twelve western European countries to create one of the very first European joint ventures. Currently, the CERN associate 22 members state, including Poland. The Institution is based on the Swiss-France border very close to Geneva. The CERN's primary focus is to design and construct instruments to study the fundamental building of matter and its interactions.  
+The European Organization for Nuclear Research CERN is the world's largest scientific organization in the field of High Energy Physics. It was established in 1954 by twelve western European countries to create one of the very first European joint ventures. Currently, the CERN associate 22 members state, including Poland. The Institution is based on the Swiss-France border very close to Geneva. The CERN's primary focus is to design and construct instruments to study the fundamental building blocks of matter and its interactions.  
 
 \begingroup
     \expandafter\patchcmd\csname Gin@ii\endcsname   % needed etoolbox
@@ -28,11 +28,11 @@ To achieve this performance, the particle acceleration is done by a series of ac
 \begin{figure}
 \centering
 \includegraphics{figures/LHC.png}
-\caption{The LHC accelerator complex showing all accelerator facilities and the four main experiments, denoted by a yellow dots. The North Area is the location where all testbeam data were collected, see chapter~\ref{chapter:testbeam}. Figure adapted from~\cite{LHC_complex}
+\caption{The LHC accelerator complex showing all accelerator facilities and the four main experiments, denoted by a yellow dots. The North Area is the location where all testbeam data were collected, see chapter~\ref{chapter:testbeam}. Figure taken from~\cite{LHC_complex}
 \label{fig:LHC}}
 \end{figure}
 
-The entire boosting process starts from the small red bottle full of hydrogen. It is shown in Figure~\ref{fig:Bottle}. This bottle is the only and sufficient proton source for the entire, massive LHC acceleration system. This shows how sophisticated and resource-efficient LHC is. Then, the hydrogen atoms are ionized by the external electric field to yield the protons. These particles are injected into the Liniac2, the first linear accelerator in the chain, to boost its energy to the 50 MeV. After that, the beam is inserted into the Proton Synchrotron Booster, followed by the Proton Synchrotron (PS), which pushes the beam to the energy of 25 GeV. The next step in the acceleration sequence is performed by the Super Proton Synchrotron (SPS). It accelerates the beam to the energy of 450 GeV. \footnotes{The beam form SPS was used during the testbeam experiments, which is the topic of chapter \ref{chapter:testbeam}.} 
+The entire boosting process starts from the small red bottle full of hydrogen. It is shown in Figure~\ref{fig:Bottle}. This bottle is the only and sufficient proton source for the entire, massive LHC acceleration system. This shows how sophisticated and resource-efficient LHC is. Then, the hydrogen atoms are ionized by the external electric field to yield the protons. These particles are injected into the Liniac2, the first linear accelerator in the chain, to boost its energy to the 50 MeV. After that, the beam is inserted into the Proton Synchrotron Booster, followed by the Proton Synchrotron (PS), which pushes the beam to the energy of 25 GeV. The next step in the acceleration sequence is performed by the Super Proton Synchrotron (SPS). It accelerates the beam to the energy of 450 GeV. \footnote{The beam form SPS was used during the testbeam experiments, which is the topic of Chapter \ref{chapter:testbeam}.} 
 
 The protons are finally injected into two beam pipes of the LHC. The beam in one pipe circulates clockwise while the beam in the second pipe circulates anticlockwise. It takes 4 minutes and 20 seconds to fill each LHC ring, and 20 minutes for the protons to reach their maximum energy of 6.5 TeV. The two beams interact inside four detectors – ALICE~\cite{Alice}, ATLAS~\cite{Atlas}, CMS~\cite{CMS}, and LHCb.
 
@@ -73,7 +73,7 @@ Figure~\ref{fig:Luminosity} presents the integrated luminosity delivered to each
 
 \section{LHCb detrctor}
 
-The heart of the LHCb experiment is its detector. It was built to produce proton-proton collisions at a centre-of-mass energy of $\sqrt{s}=$14 TeV. It is located in the cavern that previously was used to host the LEP's experiment Delphi~\cite{deplhi}. The unique feature of the LHCb detector is its design. It is significantly different from other general-purpose detectors like Atlas or CMS, which look like multi-layer barrels surrounding the collision point (so-called $4 \pi$ geometry).
+The heart of the LHCb experiment is its detector. It was built to produce proton-proton collisions at a centre-of-mass energy of $\sqrt{s}=$14 TeV. It is located in the cavern that previously was used to host the LEP's experiment Delphi~\cite{deplhi}. The unique feature of the LHCb detector is its design. It is significantly different from other general-purpose detectors like ATLAS or CMS, which look like multi-layer barrels surrounding the collision point (so-called $4 \pi$ geometry).
 On the contrary, the LHCb is a forward single-arm spectrometer, that was designed to cover the pseudorapidity range of $2< \eta < 5 $ ~\cite{lhcb}. The pseudorapidity is a spatial coordinate describing the angle of a particle relative to the beam axis. The  pseudorapidity can be calculated from the following formula: 
 
 \begin{equation}
@@ -91,7 +91,7 @@ The choice of such layout was motivated by the LHCb physics programme, particula
  \begin{center}
   \includegraphics[width=0.48\linewidth]{figures/bb_2.png}
    \includegraphics[width=0.48\linewidth]{figures/bb_1.png}
-   \caption{Production of  $b \overline{b}$ quarks at LHC at 14 TeV. The left plot presents the production of the $b \overline{b}$ quarks as a function of polar angle $\theta$. The right plot shows the same distribution as a function of the rapidity of each quark. The pseudorapidity region inside a yellow square corresponds to the acceptance region of the Atlas and CMS detectors, while the red box highlights the acceptance region of LHCb. The figure was taken from~\cite{bbangles}. 
+   \caption{Production of  $b \overline{b}$ quarks at LHC at 14 TeV. The left plot presents the production of the $b \overline{b}$ quarks as a function of polar angle $\theta$. The right plot shows the same distribution as a function of the rapidity of each quark. The pseudorapidity region inside a yellow square corresponds to the acceptance region of the ATLAS and CMS detectors, while the red box highlights the acceptance region of LHCb. Figure taken from~\cite{bbangles}. 
      \label{fig:bb}}
  \end{center}
 \end{figure}
@@ -99,9 +99,9 @@ The choice of such layout was motivated by the LHCb physics programme, particula
 
 The LHCb, like all of the currently operating High Energy Physics experiments, consists of several sub-detectors, each of which was carefully designed to provide highly efficient system, capable of detecting physics phenomena beyond the Standard Model (BSM). To correctly identify and reconstruct the decays and their kinematical properties, the LHCb detector needs to provide an excellent vertex reconstruction precision, momentum resolution, and particle identification. The following section is dedicated to describing each of the sub-systems.
 
-\subsection{LCHb tracking sub-system}
+\subsection{LHCb tracking sub-system}
 \label{sec:lhcb_tracking_subsystem}
-The tracking system was designed to reconstruct the trajectory of charged particles by combining information from a set of tracking stations. The reconstructed track information is used to estimate the momentum of the charged particles. This estimation is possible due to the magnet's installation, which creates a magnetic field used to bend a particle trajectory. The LHCb tracking system is composed of the Vertex Locator (VELO), the Tracker Turicensis (TT), and the three tracking stations T1, T2, and T3; see \ref{fig:LHCBlayout}.  The brief description of each tracking sub-detectors is a topic of this subsection. 
+The tracking system was designed to reconstruct the trajectory of charged particles by combining information from a set of tracking stations. The reconstructed track information is used to estimate the momentum of the charged particles. This estimation is possible due to the magnet's installation, which creates a magnetic field used to bend a particle trajectory. The LHCb tracking system is composed of the Vertex Locator (Velo), the Tracker Turicensis (TT), and the three tracking stations T1, T2, and T3; see Figure \ref{fig:LHCBlayout}.  The brief description of each tracking sub-detectors is a topic of this subsection. 
 
 \subsubsection{Velo}
 \label{sec:velo}
@@ -133,12 +133,12 @@ The first type of the Velo sensor is called $R$-type, and it is dedicated to mea
    %\includegraphics[width=0.4\linewidth]{figures/Velo_photo.jpg}
    \caption{Geometry of the Velo $R$ and  $\varphi$ sensors, with only a small portion of strips visible for clarity (left). 
    %The photo of the Velo module with 16 readout Beetle chips (right). 
-   Figure was taken from\cite{lhcb}.  
+   Figure was taken from~\cite{lhcb}.  
      \label{fig:velo}}
  \end{center}
 \end{figure}
 
-The read-out of the data is performed by the Beetle front-end ASIC\footnote{ASIC stands from Application-specific integrated circuit}\cite{Beetle}. These chips are placed on the outer edge of the sensor, see Figure~\ref{fig:velo1}. The Beetle chip integrates 128 channels with low-noise charge-sensitive preamplifiers and shapers, an analogue pipelined memory, and a multiplexer.
+The read-out of the data is performed by the Beetle front-end ASIC\footnote{ASIC stands from Application-specific integrated circuit}~\cite{Beetle}. These chips are placed on the outer edge of the sensor, see Figure~\ref{fig:velo1}. The Beetle chip integrates 128 channels with low-noise charge-sensitive preamplifiers and shapers, an analogue pipelined memory, and a multiplexer.
 
 \begin{figure}[h]
  \begin{center}
@@ -170,7 +170,7 @@ Silicon Tracker~\cite{Silicon_Tracker} sub-system consists of two detectors base
 
 The primary purpose of the TT detector is to reconstruct low-momentum tracks and decays of the long-lived particles, which decay outside of the Velo. The IT detector reconstructs tracks with momentum larger than $1.5 GeV/c$, near the beam axis, that passed through the magnetic field. It covers approximately $2\%$ of the T stations acceptance, which corresponds to $20\%$ of all tracks that pass through this detector. On the other hand, TT is designed to cover the full LHCb acceptance region.  
 
-Both TT stations (TTa and TTb) are composed of two measuring planes capable of providing a 3d space point for each particle hit. By convention, the sensitive planes are denoted as $(TTaX, TTaU, TTbV, TTbX)$. The $X$ coordinate is measured in the direction perpendicular to the direction of TT sensor vertical strips. Coordinates $U$ and $V$ are identical to the $X$ but tilted  by $-5^{\circ}$ and $5^{\circ}$ respectively (see Figure~\ref{fig:TT}). The distance between the two adjacent layers within each station is about 4 cm, and the distance between the TTa and TTb stations is 27 cm. The TT silicon sensors (p-on-n) are $500 \mu m$ thick with a constant strip pitch of $183 \mu m$.  
+Both TT stations (TTa and TTb) are composed of two measuring planes capable of providing a 3d space point for each particle hit. By convention, the sensitive planes are denoted as \\ ~$(TTaX, TTaU, TTbV, TTbX)$. The $X$ coordinate is measured in the direction perpendicular to the direction of TT sensor vertical strips. Coordinates $U$ and $V$ are identical to the $X$ but tilted  by $-5^{\circ}$ and $5^{\circ}$ respectively (see Figure~\ref{fig:TT}). The distance between the two adjacent layers within each station is about 4 cm, and the distance between the TTa and TTb stations is 27 cm. The TT silicon sensors (p-on-n) are $500 \mu m$ thick with a constant strip pitch of $183 \mu m$.  
 
 \begin{figure}[h]
  \begin{center}
@@ -374,10 +374,10 @@ The HCAL has an alternating structure of iron and scintillator tiles. The scinti
 \label{sec:trigger}
 LHCb trigger is an example of the real-time system dedicated to compressing the input data stream. The raw data volume is far beyond the limit of the present storage technology, thus the necessity of employing such a system. The fundamental idea behind the large detector's trigger is to work out a decision whether a given event is interesting, from the point of view of the physics programme, or not. The LHCb trigger was designed to reduce the data rate from the initial bunch crossing rate of 40 MHz (i.e., one collision event each 25 ns) to about 12.5kHz of fully reconstructed events to be recorded on tapes. The data rate reduction is achieved by making a fast decision based on approximate measurement of particle transverse momentum and energy, muon identification, track displacement, and topological properties, which allows selecting some specific decays. 
 
-The LHCb trigger is built as a two-stage system. The first one, called Level-$O$ trigger (or L$O$ for brevity), is implemented as a hardware layer with the fixed response time of 6 $mu s$. The processing power is provided by FPGA \footnote{FPGA stands for Field Programmable Gate Arrays, which are devices based on a matrix of configurable logic blocks. Their design has a benefit compared to a general-purpose CPU that allows massive parallelism since FPGA programable blocks can work independently and simultaneously as streaming processors.} chips. L$O$ trigger uses the information from calorimeters and muon stations to reduce the bunch-crossing rate to 1.1 MHz, which is the maximum input rate of the front-end ASICs used by other sub-systems. This partial information is then combined and process by dedicated electronics boards that give a final decision to process a given event further or drop it. 
+The LHCb trigger is built as a two-stage system. The first one, called Level-0 trigger (or L0 for brevity), is implemented as a hardware layer with the fixed response time of 6 $mu s$. The processing power is provided by FPGA \footnote{FPGA stands for Field Programmable Gate Arrays, which are devices based on a matrix of configurable logic blocks. Their design has a benefit compared to a general-purpose CPU that allows massive parallelism since FPGA programable blocks can work independently and simultaneously as streaming processors.} chips. L0 trigger uses the information from calorimeters and muon stations to reduce the bunch-crossing rate to 1.1 MHz, which is the maximum input rate of the front-end ASICs used by other sub-systems. This partial information is then combined and process by dedicated electronics boards that give a final decision to process a given event further or drop it. 
 
 %The L0 pileup triggers contribute to luminosity measurements~\cite{trigger}.
-The L$O$ calorimeter trigger leverage the information from ECAL, HCAL, PS, and  SPD detectors. Its decision is mostly based on transverse energy deposited in a cluster of $2\times 2$ cells (the cells are presented in Figure~\ref{fig:ECAL}) of the same size. The transverse energy, which is rather interesting quantity, is defined as:
+The L0 calorimeter trigger leverage the information from ECAL, HCAL, PS, and  SPD detectors. Its decision is mostly based on transverse energy deposited in a cluster of $2\times 2$ cells (the cells are presented in Figure~\ref{fig:ECAL}) of the same size. The transverse energy, which is rather interesting quantity, is defined as:
 
 \begin{equation}
     E_T = \sum_{i=1}^{4} E_i \sin\theta_i
@@ -481,7 +481,7 @@ Both the expected performance of the track reconstruction efficiency and impact 
 \begin{figure}[!h]
 \centering
 \includegraphics[width=\linewidth]{figures/Velo_upgraded_module.pdf}
-\caption{Layout of a module of the upgraded VELO detector, see detailed description in text. Figure taken from~\cite{velo_upgrade_tdr}
+\caption{Layout of a module of the upgraded Velo detector, see detailed description in text. Figure taken from~\cite{velo_upgrade_tdr}
 \label{fig:veloUpgradeModule}}
 \end{figure}
 

@@ -182,7 +182,7 @@ BoldItalicFont=ArnoPro-BoldItalic
 
 \begin{center}
 	
-	\vspace*{12ex} {\sf \large \bf Cracow, July 2020}
+	\vspace*{12ex} {\sf \large \bf Cracow, January 2021}
 \end{center}
 %% =====  STRONA TYTULOWA PRACY doktorskiej====
 \afterpage{\blankpage}

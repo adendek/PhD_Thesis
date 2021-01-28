@@ -32,15 +32,15 @@ The tracks reconstructed in the LHCb detector are split into five categories. Th
 \label{fig:track_types}}
 \end{figure}
 
-The first category of the tracks is \textbf{VELO tracks}. That tracks are reconstructed using only hits measured in the VELO detector. Therefore, for this track, momentum measurement is impossible \footnote{As mentioned in section \ref{sec:velo}, in the VELO region there is no bending magnetic field, so the track are modeled as a straight lines}. Nevertheless, VELO tracks also play an essential role to select isolated particles, for instance, when the analysis focuses on searching for a rare or forbidden decays. 
+The first category of the tracks is \textbf{VELO tracks}. That tracks are reconstructed using only hits measured in the Velo detector. Therefore, for this track, momentum measurement is impossible \footnote{As mentioned in section \ref{sec:velo}, in the Velo region there is no bending magnetic field, so the track are modeled as a straight lines}. Nevertheless, Velo tracks also play an essential role to select isolated particles, for instance, when the analysis focuses on searching for a rare or forbidden decays. 
 
-The second type of track is \textbf{Upstream tracks}. They consist of VELO segments matched with hits in the TT detector. Those tracks are reconstructed to expand the detector acceptance for low momentum particles, which would otherwise be removed by the magnet. Moreover, because of the weak residual magnetic field in TT, the estimated momentum resolution for these tracks is worst than 10\%.
+The second type of track is \textbf{Upstream tracks}. They consist of Velo segments matched with hits in the TT detector. Those tracks are reconstructed to expand the detector acceptance for low momentum particles, which would otherwise be removed by the magnet. Moreover, because of the weak residual magnetic field in TT, the estimated momentum resolution for these tracks is worst than 10\%.
 
 \textbf{T tracks} are defined as those which have measurements only in the T stations. Despite the worst momentum resolution, estimated to be around 25\%, they play a vital role in improving the purity of LHCB's photon reconstruction by identifying ECAL's clusters create by the electrons. 
 
 The most important category of the tracks is \textbf{Long tracks}, which contains those tracks originating in the vertex detector and traverse the full tracker acceptance, including passing through T and TT stations. These tracks provide the best momentum resolution for particles that traverse the full tracking detector and are used in the majority of LHCb analyses.
 
-The final and the most significant, from this thesis perspective, group of tracks is \textbf{Downstream tracks}. The Downstream track contains T-segments matched to the hits in the TT detector. Those tracks are created by the daughters of the long-lived particles, which decays outside of the VELO detector. The reconstruction of the Downstream tracks allows to almost double the LHCb acceptance for long-lived particles. Those tracks are reconstructed by, the PatLongLivedTracking algorithm~\cite{PATLLT}. 
+The final and the most significant, from this thesis perspective, group of tracks is \textbf{Downstream tracks}. The Downstream track contains T-segments matched to the hits in the TT detector. Those tracks are created by the daughters of the long-lived particles, which decays outside of the Velo detector. The reconstruction of the Downstream tracks allows to almost double the LHCb acceptance for long-lived particles. Those tracks are reconstructed by, the PatLongLivedTracking algorithm~\cite{PATLLT}. 
 The accurate description of this algorithm is a topic of section \ref{Sec:Downstrean Overview}. 
 
 Within the framework of LHCb experiment, a track is modeled as a series of straight line segments, known as track states. A track state is defined as a 5 dimensional vector of the form:
@@ -437,7 +437,7 @@ with the goal of keeping a balance between signal retention and background rejec
 \begin{itemize}
 \item It has at least three hits in at least three different layers of the TT.
 \item The $\chi^{2}/ndf$is below a given threshold. This value is different for
-three-hit tracks (\texttt{MaxChi2ThreeHits}) and tracks with four or more hits (\texttt{MaxChi2}),
+three-hit tracks \\ (\texttt{MaxChi2ThreeHits}) and tracks with four or more hits (\texttt{MaxChi2}),
 see Figure~\ref{fig:chi2Cuts}. 
 \item It contains at least as many hits as any other candidate for a given T track.
 \item The track has a pseudorapidity larger than 1.8 and smaller than 5.2.
@@ -486,7 +486,7 @@ One of the most difficult problem during the data preparation step was choosing 
     \item no hits in the Velo detector. 
 \end{itemize}
 
-Those criteria can be justified by definition of the Downstream track. Those are the tracks created by the particles that decays outside of the VELO detector. 
+Those criteria can be justified by definition of the Downstream track. Those are the tracks created by the particles that decays outside of the Velo detector. 
 
 \section{T-seed classifier Exploratory Data Analysis}
 
@@ -804,9 +804,9 @@ The second method to take a closer look inside the black box is based on the ide
 \end{figure}
 
 
-To get a better understanding of Shap values presented in Figure~\ref{fig:shap overall} let focus on one feature - $N_{layers}$. It is the second most important one to decide whether a T-Seed is a ghost. The impact of this feature on a model's output varies smoothly as the value of the feature increases, which is indicated by the smooth color gradient. The long tail reaching the left means that the extreme values of this variable can significantly increase the probability that this T-Seed is not a valid track segment. This is consistent with the priory intuition saying that seeds, that were reconstructed using a small number of hits are more likely to be ghosts. 
+To get a better understanding of Shap values presented in Figure~\ref{fig:shap overall} let focus on one feature - $N_{layers}$. It is the second most important one to decide whether a T-Seed is a ghost. The impact of this feature on a model's output varies smoothly as the value of the feature increases, which is indicated by the smooth color gradient. The long tail reaching to the left means that the extreme values of this variable can significantly increase the probability that this T-Seed is not a valid track segment. This is consistent with the priory intuition saying that seeds, that were reconstructed using a small number of hits are more likely to be ghosts. 
 
-The second type of Shap based plot is dependence plot presented in Figure~\ref{fig:shap dep}.  The concept is similar to the pair-plot, which are usually created in order to visualize dependencies between two features. The shap dependence plots also take into consideration the Shap values. The idea is to make a scatter plot, shap value versus feature value, and apply color scheme that is based on the value of the second feature.
+The second type of Shap based plot is dependence plot presented in Figure~\ref{fig:shap dep}. The concept is similar to the pair-plot, which are usually created in order to visualize dependencies between two features. The shap dependence plots also take into consideration the Shap values. The idea is to make a scatter plot, shap value versus feature value, and apply color scheme that is based on the value of the second feature.
 
  Figure~\ref{fig:shap dep} (upper left) is the one that is the easiest to interpret. It shows the shap value versus the number of layers. It is clearly visible that T tracks with the numbers of measurements smaller than 15 push strongly the classifier toward negative decisions. This effect is escalated when the track has a big value of $\chi^2 /\ dof $. This means the classifier decisions are compatible with an initial understanding of the problem, the track that was reconstructed using a small number of hits and it's fit to the track model has a poor quality is more likely to be a ghost. 
 
@@ -822,7 +822,7 @@ The second type of Shap based plot is dependence plot presented in Figure~\ref{f
  \end{center}
  \end{figure}
 
-The result of the evaluation of the third and final approach, the one that is base on LIME model, is shown in Figure~\ref{fig:limeResult}. The presented LIME outcome ware obtained for two randomly chosen test examples. Each of these examples represents one of the target classes. It provides a good indication of the importance of the features and highlights why a particular decision was made. The length of each bar is proportional to the feature's value times linear regression weight associated with this feature.  It is easy to note that one of the most important features is the number of hits, that were used to reconstruct T-Seeds, and this is consistent with the initial intuition.  
+The result of the evaluation of the third and final approach, the one that is based on LIME model, is shown in Figure~\ref{fig:limeResult}. The presented LIME outcome were obtained for two randomly chosen test examples. Each of these examples represents one of the target classes. It provides a good indication of the importance of the features and highlights why a particular decision was made. The length of each bar is proportional to the feature's value times linear regression weight associated with this feature.  It is easy to note that one of the most important features is the number of hits, that were used to reconstruct T-Seeds, and this is consistent with the initial intuition.  
 
 \begin{figure}
 \begin{subfigure}
@@ -839,13 +839,10 @@ The red color indicates that the features pushed prediction toward ghost.
 }\label{fig:limeResult}
 \end{figure}
 
-
-
 \section{Final machine learning model to select the best downstream track candidates}
 
-In the final stage of the downstream tracking pattern recognition algorithm, a neural network is used to find the best downstream track
-candidate for a given input T-Seed.
- The network used is a fully-connected neural network with one hidden layer and fifteen nodes in the hidden layer. 
+In the final stage of the downstream tracking pattern recognition algorithm, a neural network is used to find the best downstream track candidate for a given input T-Seed.
+ The network used is a fully-connected neural network with one hidden layer built using fifteen nodes. 
 A rectified linear unit was used as an activation function for the hidden layer. For the output layer, a sigmoid function was applied. The following input variables were used:
 
 \begin{itemize}
@@ -870,16 +867,16 @@ $z=0$
 \end{itemize}
 
 The network was trained on simulated $D^{*+} \rightarrow D^{0}\pi^{+}$ decays. The sample was chosen, such that also tracks from $D$ decays are considered, which tend to have a softer momentum spectrum than tracks from $B$ 
-decays and are more similar to low-momentum background tracks. Only downstream reconstructible tracks
-coming from a strange particle decay that are not electrons were used as
-signal events. As a background sample, 
+decays and are more similar to low-momentum background tracks. Only downstream reconstructible tracks 
+%coming from a strange particle decays 
+that are not electrons were used as signal events. As a background sample, 
 tracks that could not be matched to a single
 simulated particle were used. The distributions of input variables are shown in Figure~\ref{fig:MVAVars}. The classifier output distribution and the ROC curve is shown in Figure~\ref{fig:ROC}. 
 
 \begin{figure}[!htbp]
 \begin{center}
 \includegraphics[width=0.99\linewidth]{figures/NN/input_mva.PNG}
-\caption{Input variables for the training of a Fully-connected neural network to select the best downstream track candidates. The training dataset contains of
+\caption{Input variables for the training of a Fully-connected neural network to select the best downstream track candidates. The training dataset consists of
  $D^{*+} \rightarrow D^{0}\pi^{+}$ decays. The blue solid histogram is the signal
 distribution, while the hashed red distribution is the background.}
 \label{fig:MVAVars}
@@ -897,22 +894,22 @@ background. The default cut is at 0.1. Right: ROC curve for the fully-connected 
 \end{center}
 \end{figure}
 
-A candidate is written out if its probability of being a true downstream track is larger than a specific tunable threshold.
+A candidate is selected out if its probability of being a true downstream track is larger than a specific tunable threshold.
 
 \section{Physics Performance of the modernised downstream tracking}
 \label{sec:physic_performance}
 The previous sections describe the LongLived pattern recognition algorithm. This one is dedicated to showing the physics performance of this algorithm. The performance of the track reconstruction algorithm can be measured using various methods. The most intuitive one is to measure the efficiency of reconstructing a charged particle in the LHCb acceptance as a downstream track using Monte Carlo simulated samples.
 The second one evaluates the algorithm's performance via analysis based on real data collected by the detector. This approach determines and compares the pattern recognition algorithms performance by measuring the reconstructed long-lived particle invariant mass resolution.
 
-\subsection{Monte Carlo based Downstream Tracking efficiency  }
+\subsection{Monte Carlo based Downstream Tracking efficiency}
 
-The pattern recognition algorithm performance measurement can be determined from Monte Carlo simulations by comparing the number of track that the algorithm managed to find (reconstructed tracks) with the maximum number of track that it could possibly find (reconstructable tracks). 
+The pattern recognition algorithm performance measurement can be determined from Monte Carlo simulations by comparing the number of tracks that the algorithm managed to find (reconstructed tracks) with the maximum number of tracks that it could possibly find (reconstructable tracks). 
 
-To discuss the efficiency of the pattern recognition algorithm it is obligatory to define a number of quantities that are used in this study.  First of all, the MC particle is said to be \textbf{reconstructible}, if it left the sufficient number of hits in the detector. The particle reconstructible criteria vary for one subdetector to another, and they are summarized~\cite{track_def}:
+To discuss the efficiency of the pattern recognition algorithm it is obligatory to define a number of quantities that are used in this study.  First of all, the MC particle is said to be \textbf{reconstructible}, if it left the sufficient number of hits in the detector. The particle reconstructible criteria vary for one subdetector to another~\cite{track_def}, and they are summarized here:
 
 \begin{itemize}
     \item Velo reconstructible is a particle that has at least three hits in $R$ and $\varphi$ sensors.
-    \item TT reconstructible particle is consider when it has at least one hit in the first two planes (TTa) and one hit in the last tow planes (TTb). 
+    \item TT reconstructible particle is consider when it has at least one hit in the first two planes (TTa) and one hit in the last two planes (TTb). 
     \item T-Station reconstructible is a particle that has at least one x and one stereo hit in each of the three T-Stations. 
 \end{itemize}
 
@@ -920,7 +917,7 @@ Therefore a particle is considered reconstructible as a Downstream track if it s
 Based on this definition the following pattern recognition performance metrics can be defined: 
 
 \begin{itemize}
-    \item The \textbf{Tracking efficiency} ($\varepsilon$) is defined as a ratio between the amount od reconstructed and matched track to the total amount of reconstructable tracks. 
+    \item The \textbf{Tracking efficiency} ($\varepsilon$) is defined as a ratio between the number of reconstructed and matched tracks to the total number of reconstructable tracks. 
     \begin{equation}
         \varepsilon  = \frac{\textrm{reconstructed} \cap  \textrm{matched}}{\textrm{reconstructable}}
     \end{equation}
@@ -933,7 +930,7 @@ Based on this definition the following pattern recognition performance metrics c
  Within the scope of this analysis the efficiency of a Downstream Tracking algorithm is calculated as the one that includes the efficiency of a Long-Lived Tracking pattern recognition algorithm combined together with the efficiency of the T-Seed reconstruction.
 
 In the presented studies, the analysis was performed on a sample constituted of 50,000 simulated events of both magnet polarities. Two types of decays were simulated: $B^{0} \rightarrow J/\Psi K^{0}_{S}$ and $D^{*+} \rightarrow D^{0}\pi^+$. The first type of decay was selected to represent $B$ meson decays and the second one for a charm. 
-There are four different categories of track that were considered within the scope of this performance analysis on MC data:
+There are four different categories of tracks that were considered within the scope of this performance analysis on MC data:
 
 \begin{itemize}
     \item $\varepsilon_{TT+T}$ : efficiency for all downstream reconstructible particles;
@@ -945,14 +942,14 @@ There are four different categories of track that were considered within the sco
 The overall efficiency numbers are collected in upper half of Table~\ref{tab:overall eff} and the ghost rate related numbers are presented in Table~\ref{tab:overall ghost} (upper half). Plots of the efficiency and the ghost rate as a function of momentum, transverse momentum, and pseudorapidity are shown in 
 Figures~\ref{fig:EffPatLLTBJpsiK}, \ref{fig:ghostPatLLTBJpsiK}  (obtained using  $B^{0} \rightarrow J/\Psi K^{0}_{S}$ ) and \ref{fig:EffPatLLTDstD0pi}, \ref{fig:ghostsPatLLTDstD0pi} (for $D^{*+} \rightarrow D^{0}\pi^+$ decay). No uncertainty is given, because presented numbers were obtained on a Monte Carlo samples not on a collision data. The statistical uncertainty are negligible, at the permille level.  
 
-It was also important to measure the downstream tracking efficiency using the samples that were fitted with Kalman Filter and a quality cut on a $\chi^2\/ndf$ was applied. Those tracks were also proceeded by a clone killing algorithm to remove duplicates, which were reconstructed as long and downstream track simultaneously. The performance numbers referring to those tracks are collected in Table~\ref{tab:overall eff}(lower half), and Table~\ref{tab:overall ghost} (lower half) gives ghost rates. The performance numbers after these three steps seem to be worse than before, as the processing steps applied also reject correct tracks, and the clone killer is inefficient. One of the reasons why it happens, the clone killer sometimes falsely classifies downstream tracks as long tracks (for example when the Velo part is a ghost), which then gets removed from the downstream statistics. Furthermore, clone killer prefers long tracks over downstream tracks. 
+It was also important to measure the downstream tracking efficiency using the samples that were fitted with Kalman Filter and a quality cut on a $\chi^2\/ndf$ was applied. Those tracks were also processed by a clone killing algorithm to remove duplicates, which were reconstructed as long and downstream track simultaneously. The performance numbers referring to those tracks are collected in Table~\ref{tab:overall eff}(lower half), and Table~\ref{tab:overall ghost} (lower half) gives ghost rates. The performance numbers after these three steps seem to be worse than before, as the processing steps applied also reject correct tracks, and the clone killer is inefficient. One of the reasons why it happens, the clone killer sometimes falsely classifies downstream tracks as long tracks (for example when the Velo part is a ghost), which then gets removed from the downstream statistics. Furthermore, clone killer prefers long tracks over downstream tracks. 
 
 Downstream tracking efficiency strongly depends on the momentum and transverse momentum of the tracks. The explanation of the phenomenon can be based on factors such as the search windows do not cover the full region necessary to find all tracks. Therefore, for the low momentum tracks, search windows are generally larger than for high momentum tracks, which increases the number of hits within the search window, thus increases the chances that the pattern recognition identifies the wrong hits.
 
 In addition, the downstream tracks that were also reconstructed as long tracks
 are less prone to be ghosts, which is why the ghost fraction actually increases
 after the Kalman Filter, the clone killer and the ghost probability cut. However, it should be noted that
-in a physics analysis of a decay channel, a strict cut is normally placed on the ghost probability of the downstream tracks, which reduces the ghost fraction
+in a physics analysis of a decay channel, a strict cut is normally placed on the ghost probability variable of the downstream tracks, which reduces the ghost fraction
 significantly.
 
 
@@ -1106,15 +1103,13 @@ fractions are obtained on a simulated sample of $B^{0} \rightarrow J/\Psi K^{0}_
  \end{center}
  \end{figure}
 
-
 \subsection{Comparison between Long-Lived Tracking algorithm and its predecessor}
 The analysis presented within this section is dedicated to comparing the performance of the Long-Lived Tracking algorithm and its predecessor called PatDownstream~\cite{PatDownstream}. The corresponding performance numbers are given in Tables~\ref{tab:PatLLTPatDownstreamEffComp}, \ref{tab:PatLLTPatDownstreamEffCompTBTC}, and \ref{tab:globGhostComp}. 
 
-Figures~\ref{fig:EffCompPatLLTBJpsiK} and \ref{fig:ghostCompPatLLTBJpsiK} show the efficiency and ghost rates of downstream tracks reconstructed via these two algorithms as a function of momentum, transverse momentum, and pseudorapidity. Those plots visualize tracking algorithm performance that was obtained using a simulated sample of B  and no other processing was applied. 
+Figures~\ref{fig:EffCompPatLLTBJpsiK} and \ref{fig:ghostCompPatLLTBJpsiK} show the efficiency and ghost rates of downstream tracks reconstructed via these two algorithms as a function of momentum, transverse momentum, and pseudorapidity. Those plots visualize tracking algorithm performance that was obtained using a simulated sample of B decays and no other processing was applied. 
 
 Figures \ref{fig:EffCompPatLLTBJpsiK_TBTC} and \ref{fig:ghostCompPatLLTBJpsiK_TBTC} present the same quantities, after Kalman filtering and clone killer. 
 It is clearly visible, that the performance gain and the strong reduction of ghost rates were measured for the new algorithm. It is presumed that the significant ghost rate reduction (about 16\%) was achieved due to the good performance of the T-Seed classifier, which was one of the major goals of the author’s study. 
-
 
 \begin{table}[htp]
 \caption{Comparison of reconstruction efficiency of downstream tracks made with Long-Lived Tracking algorithm or PatDownstream, on simulated samples of $B^{0} \rightarrow J/\Psi K^{0}_{S}$ . This efficiency includes the efficiency of PatSeeding and Long-Lived Tracking algorithm.}
@@ -1210,11 +1205,11 @@ PatDownstream & 46.3\% & 52.1\% \\
 
 \subsection{Performance measured using collision data}
 \label{sec:performance_data}
-The improvements that were performed on a pattern recognition algorithm should be reflected in improvements to the reconstruction of decayed particles. To investigate this, the reconstruction of $K_s$ and $\Lambda_0$ in minimum bias events \footnote{The minimum bias samples are those which try to reproduce proton-proton collisions as close to the reality as possible, with no bias from restricted trigger conditions.} were analyzed. 
+The improvements introduced to the pattern recognition algorithm should be reflected in improvements to the reconstruction of long-lived particles. To investigate this, the reconstruction of $K_s$ and $\Lambda_0$ in minimum bias events \footnote{The minimum bias samples are those which try to reproduce proton-proton collisions as close to the reality as possible, with no bias from restricted trigger conditions.} were analyzed. 
 
 \subsubsection{Event selection}
 
-This analysis focuses on the algorithm's total event yield difference between the new algorithm and the baseline. Thus the selection was taken from the standard LHCB software. The following list contains an explanation of each cut applied to select the data that were used to reconstruct both $K_s$ and $\Lambda_{0}$:
+This analysis focuses on the algorithm's relative event yield difference between the new algorithm and the baseline. Thus the selection was taken from the standard LHCb software. The following list contains an explanation of each cut applied to select the data that were used to reconstruct both $K_s$ and $\Lambda_{0}$:
 
 \begin{itemize}
     \item \textbf{$p(\pi_1, \pi_2 \lor p)$} - minimal momentum of daughter particles;
@@ -1245,8 +1240,10 @@ $\Delta M(K_S \lor \Lambda_0)$ {[}MeV{]}   & \textless{}100     & \textless{}100
 \end{table}
  
  
- The cuts for $K_s$ and $\Lambda_0$ are given in Table~\ref{tab:cuts}. The sample that was used to perform this analysis consist of about 100,000 events. Table~\ref{tab:signal} presents signal yield of $K_s$ and $\Lambda_0$ and the background. In both cases, a significant increase in signal yield and background reduction is visible. Figures~\ref{fig:Lambda_performance} and \ref{fig:Ks_performance} show the reconstructed invariant masses of a discussed particles. The model for mass distribution is a single Gaussian with an exponential background. Although a more complicated fit model would, in principle, be appropriate, e.g. a double Crystal Ball function, these fits were very unstable and showed problems converging. To avoid these complications and have a consistent mass model, a single Gaussian solution was chosen. As only ratios of event yields are considered, the error from using a single Gaussian only largely cancels. 
- 
+ The cuts for $K_s$ and $\Lambda_0$ are given in Table~\ref{tab:cuts}. The sample that was used to perform this analysis consisted of about 100,000 events. Table~\ref{tab:signal} presents signal yield of $K_s$ and $\Lambda_0$ and the background. In both cases, an increase in signal yield and background reduction (sample purity and yield) is visible. Figures~\ref{fig:Lambda_performance} and \ref{fig:Ks_performance} show the reconstructed invariant masses of a discussed particles. The model for mass distribution is a single Gaussian with an exponential background. Although a more complicated fit model would, in principle, be appropriate, e.g. a double Crystal Ball function, these fits were very unstable and showed problems converging. To avoid these complications and have a consistent mass model, a single Gaussian solution was chosen. As only ratios of event yields are considered, the error from using a single Gaussian only largely cancels. 
+ In case of $\Lambda_{0}$ decays the number of reconstructed particles increase by $7\%$
+ and the number of background events was approximately $4\%$ lower in favour of the new algorithm. More gains can be noted for the $K_{s}$ decays reconstruction were the number of background events, when processed by the new algorithm, dropped by more than $11\%$
+ and the sample purity increased by $22\%$. It should be noted that these studies were only performed as the sanity checks to confirm that the algorithm selecting tracks using computational intelligence can be better that the one based purely on statistical approach \footnote{A number of full physics selections based on the new algorithm have been performed after the Run 2 concluded data taking. Results showed that the modernised trigger code improved long-lived particles reconstruction capabilities}. 
 
 \begin{table}[h]
 \centering
@@ -1282,13 +1279,10 @@ new      & $\Lambda_0 \rightarrow p^+ \pi^-$ & $873 \pm 44$               & $320
  \end{center}
  \end{figure}
 
-
-
-
 \subsection{Tuning of the Downstream tracking algorithm}
 \label{sec:cut finetuning}
 
-One of the key algorithm's parameters that has a strong influence on the pattern recognition performance is a T-Seed classification threshold. As described in section \ref{sec:hyperparameters}, its value was chosen to select more than 99\% of true T-Seeds. This value corresponds to a very conservative classifier, which requires having extreme confidence to classify a given track as a ghost. As a result, the amount of suppressed background is reduced. Analyzing the ROC curve presented in Figure~\ref{fig:ROC binned}, one can conclude that devoting a tiny amount of signal data, the classifier can significantly reduce the background. This section is dedicated to fine-tuning the classification threshold. The presented analysis is based on measuring relative events yield for two channels, $K_s$ and $\Lambda_0$. The selection criteria were described in section \ref{sec:performance_data}. 
+One of the key algorithm's parameters that has a strong influence on the pattern recognition performance is a T-Seed classification threshold. As described in section \ref{sec:hyperparameters}, its value was chosen to select more than 99\% of true T-Seeds. This value corresponds to a very conservative classifier, which requires having extreme confidence to classify a given track as a ghost. As a result, the amount of suppressed background is reduced. Analyzing the ROC curve presented in Figure~\ref{fig:ROC binned}, one can conclude that devoting a tiny amount of signal data, the classifier can significantly reduce the background. This section is dedicated to fine-tuning the classification threshold. The presented analysis is based on measuring relative events yield for two channels, $K_s$ and $\Lambda_0$. The selection criteria were described in section \ref{sec:performance_data}. The results obtained in various physics analyses as well as further simulation studies performed after the new algorithm has been commissioned proved that this very conservative approach should be changed for the Run 3 data taking period. On top of that it may be very beneficial to remove all the seed segments flagged as being a part of the long tracks from the input of the long-lived track reconstruction algorithm. 
 
 Table~\ref{tab:finetuning} presents the results of fine-tuning procedure. Those numbers were taken from the $K_s$ and $\Lambda_0$ invariant mass fits, which are shown in Figures~\ref{fig:Lambda_finetuning} and \ref{fig:ks_finetuninh} respectively. Each of the rows represents a different classification threshold value. It is clearly visible that increasing the value of T-Seed classification threshold parameter allows significantly reduces the background while preserving almost all signal events. One can conclude that increasing this value from 0.07 to 0.2 allows to suppress 18\% more background.  
 
@@ -1364,7 +1358,7 @@ A recurrent neural network can be thought of as multiple copies of the same netw
 From practical perspective, such a RNN is not be able to learn long range dependencies~\cite{bengio_rnn}. Therefore, it is recommended to use more robust implementation called Long-Short Term Memory (LSTM)~\cite{lstm}. 
 
 
-One possible enhancement to the recurrent neural network is leveraging the idea of attention mechanism. Attention mechanism the method that allows to explicitly focus on the part of the data that is relevant to the particular task. .The explanation of how the model based on attention mechanism is beyond the scope of this thesis, the detailed explanation of this concept can be found~\cite{attention}, however, it is important that attention-based models have been used successfully in a variety of tasks Natural Language Processing (NLP) and sequence modeling tasks. 
+One possible enhancement to the recurrent neural network is leveraging the idea of attention mechanism. Attention mechanism is the method that allows to explicitly focus on the part of the data that is relevant to the particular task. The explanation of how the model based on attention mechanism is beyond the scope of this thesis, the detailed explanation of this concept can be found in~\cite{attention}, however, it is important that attention-based models have been used successfully in a variety of tasks Natural Language Processing (NLP) and sequence modeling tasks. 
 
 \subsection{Focal loss}
 \label{sec:focal_loss}
@@ -1398,16 +1392,12 @@ The idea of Focal loss was proposed to improve one stage image detection model. 
 In order to use Focal Loss as an xgboost objective function, one needs to implement its first and second derivative. Which can be done manually or using one of the automatic derivation packages like Scipy~\cite{scipy}.  
 
 
-\subsection{Message passing Graph Neural Networks}
-
-The application of machine learning models within the Downstream Tracking was limited to enhancing handcrafted pattern recognition algorithm via adding a classifier that removes tracks (or track seeds) that are likely to be ghosts. This section describes an idea that completely replaces the pattern recognition part with a Deep Learning model.
-
 \subsection{Workflow Management System}
 
 One of the parts of the study that can be enhanced is a pattern recognition validation and performance check. 
-The current validation process requires a lot of manual interventions. The trained model needs to be extracted, then deployed within a Brunel application, after that Brunel output (DST file) is used as an input to the DaVinci which produces Ntuple. Those Ntuples can be used by the custom root scripts to reconstruct the invariant mass of the particle decaying into long-lived daughters to measure its width. Each of the listed above steps has to be executed painstakingly, which requires a lot of time and it is prune to errors. This processing chain can be automated using software called Workflow Management System. 
+The current validation process requires a lot of manual interventions. The trained model needs to be extracted, then deployed within a Brunel application, after that Brunel output (DST file) is used as an input to the DaVinci which produces Ntuple. Those Ntuples can be used by the custom root scripts to reconstruct the invariant mass of the particle decaying into long-lived daughters to measure its width. Each of the listed above steps has to be executed painstakingly, which requires a lot of time and it is prone to errors. This processing chain can be automated using software called Workflow Management System. 
 
-That kind of tool organize a tasks into a Directed Acyclic Graph (DAG) \footnote{DAG is a graph (collection of vertices and connecting them edges) that is directed and without cycles. This means that it is impossible to start from a given vertex $v_{start}$ and follow any path (consistently directed sequence of edges) ends in the starting node $v_{start}$.}, see exemplary graph that visualize possible automation of the pattern recognition algorithm performance validation in Figure~\ref{fig:DAG}. The scheduler, that is dedicated to executing tasks organized into the DAG, runs those tasks on an array of workers while following the specified dependencies. One of those programs, that can be easily used within the LHCb environment is an open-sourced Apache Airflow~\cite{airflow}.
+That kind of tool organizes tasks into a Directed Acyclic Graph (DAG) \footnote{DAG is a graph (collection of vertices and connecting them edges) that is directed and without cycles. This means that it is impossible to start from a given vertex $v_{start}$ and follow any path (consistently directed sequence of edges) ends in the starting node $v_{start}$.}, see an exemplary graph that visualizes possible automation of the pattern recognition algorithm performance validation in Figure~\ref{fig:DAG}. The scheduler that is dedicated to executing tasks organized into the DAG runs those tasks on an array of workers while following the specified dependencies. One of those programs, that can be easily used within the LHCb environment is an open-sourced Apache Airflow~\cite{airflow}.
 
 
 \begin{figure}[!h]
